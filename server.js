@@ -76,8 +76,12 @@ async function enviarRecordatorioWhatsApp(reserva) {
     const params = new URLSearchParams();
     params.append('To', `whatsapp:${reserva.telefono}`);
     params.append('From', `whatsapp:${TWILIO_FROM_NUM}`);
+    const barberos = await readDB(DB_BARBEROS);
+    const b = barberos.find(x => x.id === reserva.barbero);
+    const nombreBarbero = b ? `${b.nombre} ${b.apellido || ''}`.trim() : reserva.barbero;
+
     const fechaFormateada = reserva.fecha.split('-').reverse().join('/');
-    const msg = `Hola *${reserva.nombre}*, nos ponemos en contacto contigo desde *Escarcha Grooming Club / Barbería* para confirmar la cita que tienes el día *${fechaFormateada}* 📅 a las *${reserva.hora}* 🕒
+    const msg = `Hola *${reserva.nombre}*, nos ponemos en contacto contigo desde *Escarcha Grooming Club / Barbería* para confirmar la cita que tienes con *${nombreBarbero}* el día *${fechaFormateada}* 📅 a las *${reserva.hora}* 🕒
 
 🤝 La reserva es un compromiso de asistencia en la fecha y hora acordadas, por eso te rogamos encarecidamente que, en caso de no poder acudir, por favor, avísanos a la mayor brevedad posible para poder agendar a otro cliente en lista de espera y así no perder esa hora 😊
 

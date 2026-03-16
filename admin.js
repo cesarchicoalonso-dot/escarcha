@@ -184,7 +184,7 @@
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td class="td-small" style="font-family:monospace;letter-spacing:0.05em;color:var(--color-gold)">${r.id}</td>
+        <td class="td-small col-ref" style="font-family:monospace;letter-spacing:0.05em;color:var(--color-gold)">${r.id}</td>
         <td>${formatFecha(r.fecha)}</td>
         <td>${r.hora}</td>
         <td>${escHtml(r.servicio)}</td>
@@ -194,11 +194,11 @@
           <span style="cursor:pointer;text-decoration:underline dotted;color:var(--color-white)" data-ver-historial="${escHtml(r.nombre)}">${escHtml(r.nombre)}</span>${manualBadge}<br>
           <span class="td-small">${escHtml(r.email)}</span>
         </td>
-        <td class="td-small">${escHtml(r.telefono)}</td>
+        <td class="td-small col-tel">${escHtml(r.telefono)}</td>
         <td><span class="badge badge-${r.estado}">${r.estado}</span></td>
-        <td class="td-small">${renderNotifBadge(emailEnviado)}<br>${btnEmail}</td>
-        <td class="td-small">${renderNotifBadge(waEnviado)}<br>${btnWA}</td>
-        <td class="td-small">${renderNotifBadge(fidEnviada)}<br>${btnFid}</td>
+        <td class="td-small col-email-conf">${renderNotifBadge(emailEnviado)}<br>${btnEmail}</td>
+        <td class="td-small col-wa">${renderNotifBadge(waEnviado)}<br>${btnWA}</td>
+        <td class="td-small col-fidel">${renderNotifBadge(fidEnviada)}<br>${btnFid}</td>
         <td>
           ${r.estado === 'pendiente' ? `<button class="adm-action" data-action="confirmar" data-id="${r.id}">Confirmar</button>` : ''}
           ${r.estado !== 'cancelada' && r.estado !== 'no-show' ? `<button class="adm-action danger" data-action="cancelar" data-id="${r.id}">Cancelar</button>` : ''}
@@ -330,17 +330,17 @@
     let html = `<p style="color:var(--color-gold);font-size:0.8rem;margin-bottom:12px">${visitas.length} visita(s) · Total gastado: ${totalGastado.toFixed(2)} €</p>`;
     if (!visitas.length) { html = '<p style="color:var(--color-gray)">Sin visitas registradas.</p>'; }
     else {
-      html += '<table class="adm-table" style="font-size:0.82rem"><thead><tr><th>Fecha</th><th>Hora</th><th>Servicio</th><th>Precio</th><th>Barbero</th><th>Estado</th></tr></thead><tbody>';
+      html += '<div class="adm-table-wrap"><table class="adm-table" style="font-size:0.82rem"><thead><tr><th>Fecha</th><th>Hora</th><th>Servicio</th><th>Precio</th><th>Barbero</th><th>Estado</th></tr></thead><tbody>';
       visitas.forEach(r => {
         html += `<tr>
           <td>${formatFecha(r.fecha)}</td><td>${r.hora}</td>
           <td>${escHtml(r.servicio)}</td>
-          <td>${r.precio ? r.precio + ' €' : '—'}</td>
+          <td style="color:var(--color-gold);font-weight:600">${r.precio ? r.precio + ' €' : '—'}</td>
           <td>${getBarberoName(r.barbero)}</td>
           <td><span class="badge badge-${r.estado}">${r.estado}</span></td>
         </tr>`;
       });
-      html += '</tbody></table>';
+      html += '</tbody></table></div>';
     }
     document.getElementById('hist-titulo').textContent = `Historial — ${nombre}`;
     document.getElementById('hist-content').innerHTML = html;
