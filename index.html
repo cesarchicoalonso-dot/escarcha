@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Escarcha Grooming Club — Más que una barbería | Madrid</title>
-  <meta name="description" content="Escarcha Grooming Club, barbería exclusiva para hombres en Madrid. Corte, barba, afeitado clásico y tratamientos capilares premium. C/ Rosario Pino, 18." />
+  <title>Barbería masculina en Tetuán Madrid | Escarcha Grooming Club</title>
+  <meta name="description" content="Escarcha Grooming Club, barbería premium para hombres en Tetuán, Madrid. Cerca de Plaza Castilla y Paseo de la Castellana. Corte de pelo, corte degradado, arreglo de barba y afeitado clásico. Reserva online." />
 
   <!-- =====================================================================
        META OG — Actualizar og:image con URL real de la imagen de portada
   ====================================================================== -->
   <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="Escarcha Grooming Club — Más que una barbería" />
-  <meta property="og:description" content="Barbería exclusiva para hombres en Madrid. El arte del caballero moderno." />
+  <meta property="og:title"       content="Barbería masculina en Tetuán Madrid | Escarcha Grooming Club" />
+  <meta property="og:description" content="Barbería premium cerca de Plaza Castilla y Paseo de la Castellana. Corte, degradado, barba y afeitado clásico. Reserva online." />
   <meta property="og:url"         content="https://escarchagroomingclub.com" />
   <meta property="og:image"       content="https://escarchagroomingclub.com/og-image.jpg" /><!-- CAMBIAR: poner URL real -->
   <meta property="og:locale"      content="es_ES" />
@@ -28,13 +28,18 @@
     "@context": "https://schema.org",
     "@type": "HairSalon",
     "name": "Escarcha Grooming Club",
-    "description": "Barbería exclusiva para hombres en Madrid. El arte del caballero moderno.",
-    "url": "https://escarchagroomingclub.com",
+    "description": "Barbería premium para hombres en Tetuán, Madrid. Corte de pelo, corte degradado, arreglo de barba y afeitado clásico. Cerca de Plaza Castilla y Paseo de la Castellana.",
+    "url": "https://escarcha.onrender.com",
     "telephone": "+34611714523",
+    "priceRange": "€€",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Cash, Credit Card",
+    "hasMap": "https://maps.google.com/?q=C/+Rosario+Pino+18+Madrid",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "C/ Rosario Pino, 18",
       "addressLocality": "Madrid",
+      "addressRegion": "Madrid",
       "postalCode": "28020",
       "addressCountry": "ES"
     },
@@ -57,7 +62,45 @@
         "closes": "15:00"
       }
     ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de barbería",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Corte de pelo para hombre Madrid" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Corte degradado fade Tetuán" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Arreglo de barba Madrid" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Afeitado clásico Madrid" } }
+      ]
+    },
     "sameAs": ["https://www.instagram.com/escarchasalonformen"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta un corte de pelo en Tetuán?",
+        "acceptedAnswer": { "@type": "Answer", "text": "En Escarcha Grooming Club los precios arrancan desde €15-€20 para cortes básicos y pueden llegar a €30-€40 para servicios premium personalizados con tratamientos incluidos." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Ofrecéis corte degradado en Madrid?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, el corte degradado (fade) es uno de nuestros servicios estrella. Realizamos todos los estilos de fade: bajo, medio, alto y skin fade, siempre con acabado de precisión." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Dónde está vuestra barbería cerca de Plaza Castilla?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Estamos en C/ Rosario Pino, 18, Madrid (CP 28020), a pocos minutos de Plaza Castilla y Paseo de la Castellana, con fácil acceso en metro y autobús." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Se puede reservar cita online?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, puedes reservar tu cita directamente desde nuestra web en la sección de Reservas. Elijes barbero, servicio, día y hora en menos de 2 minutos." }
+      }
+    ]
   }
   </script>
 
@@ -97,6 +140,28 @@
     =================================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
+
+    /* ACCESIBILIDAD: visually hidden para SEO semántico */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* FAQ ACORDEON */
+    .faq-list { max-width: 720px; margin: 48px auto 0; }
+    .faq-item { border-bottom: 1px solid var(--color-border); }
+    .faq-q {
+      list-style: none; cursor: pointer;
+      padding: 18px 4px; font-size: 0.95rem; font-weight: 500;
+      color: var(--color-white); display: flex; justify-content: space-between; align-items: center;
+      transition: color var(--transition);
+    }
+    .faq-q::after { content: '+'; color: var(--color-gold); font-size: 1.4rem; line-height: 1; transition: transform 0.3s; }
+    details[open] > .faq-q::after { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--color-gold); }
+    .faq-a { padding: 0 4px 18px; font-size: 0.88rem; color: var(--color-gray); line-height: 1.8; }
+
     body {
       background: var(--color-bg);
       color: var(--color-white);
@@ -1249,12 +1314,17 @@
         <div>
           <div class="sec-head reveal">
             <span class="section-label">Quiénes somos</span>
+            <!-- H1 semántico para SEO local: invisible visualmente, relevante para Google -->
+            <h1 class="sr-only">Barbería masculina en Tetuán Madrid — Escarcha Grooming Club</h1>
             <h2 class="section-title" id="nos-title">Sobre<br>nosotros</h2>
             <span class="gold-divider"></span>
           </div>
 
           <p class="nosotros-intro reveal">
-            En lo más profundo de Madrid, donde el ritmo imparable de la ciudad se encuentra con la necesidad de detener el tiempo, existe un lugar diseñado para hombres que buscan más que un simple corte de cabello.
+            En una ciudad que nunca se detiene, encontrar un momento para uno mismo se ha convertido en un lujo. Escarcha Grooming Club nace precisamente con esa idea: crear un espacio donde el cuidado personal masculino vuelva a ser un ritual y no una tarea más del día.
+          </p>
+          <p class="nosotros-intro reveal" style="margin-top:16px">
+            Aquí el tiempo se desacelera. Cada corte, cada arreglo de barba y cada detalle del servicio está pensado para ofrecer algo más que un resultado estético. Es una pausa, un momento de desconexión y una experiencia diseñada para quienes valoran la calidad, la precisión y el trato personalizado.
           </p>
 
           <div class="nosotros-body">
@@ -1325,6 +1395,17 @@
         </p>
       </div>
 
+      <!-- H3 semánticos para SEO — visually-hidden, no afectan al diseño -->
+      <div class="sr-only" aria-hidden="true">
+        <h3>Corte de pelo para hombre en Madrid</h3>
+        <p>Cortes clásicos y modernos adaptados a cada tipo de cabello. Precisión milimétrica en cada sesión.</p>
+        <h3>Corte degradado (fade) en Tetuán Madrid</h3>
+        <p>Especialistas en técnica fade: low fade, mid fade, high fade y skin fade. El acabado más demandado en Madrid.</p>
+        <h3>Arreglo de barba en Madrid</h3>
+        <p>Perfilado, relleno y tratamiento de barba con productos premium. Definición perfecta para cada fisonomía.</p>
+        <h3>Afeitado clásico en barbería Castellana</h3>
+        <p>Afeitado tradicional con navaja, toalla caliente y bálsamo. Una experiencia de grooming completa.</p>
+      </div>
       <!-- Tabs y paneles renderizados por JS desde SERVICIOS_CATS -->
       <div class="srv-tabs reveal" id="srv-tabs"></div>
       <div id="srv-panels"></div>
@@ -1673,6 +1754,45 @@
           </div>
         </article>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       FAQS SEO — Preguntas frecuentes
+  ================================================================= -->
+  <section id="faq" class="sec" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="sec-head center reveal">
+        <span class="section-label">Te resolvemos las dudas</span>
+        <h2 class="section-title" id="faq-title">Preguntas<br>frecuentes</h2>
+        <span class="gold-divider"></span>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary class="faq-q">¿Cuánto cuesta un corte de pelo en Tetuán?</summary>
+          <div class="faq-a">
+            <p>En Escarcha Grooming Club los precios arrancan desde <strong>15€–20€</strong> para cortes clásicos y pueden llegar a <strong>30€–40€</strong> para servicios premium personalizados con tratamientos capilares incluidos.</p>
+          </div>
+        </details>
+        <details class="faq-item reveal reveal-d1">
+          <summary class="faq-q">¿Ofrecéis corte degradado en Madrid?</summary>
+          <div class="faq-a">
+            <p>Sí, el <strong>corte degradado (fade)</strong> es uno de nuestros servicios estrella. Realizamos todos los estilos — low fade, mid fade, high fade y skin fade — siempre con acabado de precisión milimétrica.</p>
+          </div>
+        </details>
+        <details class="faq-item reveal reveal-d2">
+          <summary class="faq-q">¿Dónde está vuestra barbería cerca de Plaza Castilla?</summary>
+          <div class="faq-a">
+            <p>Estamos en <strong>C/ Rosario Pino, 18, Madrid (CP 28020)</strong>, a escasos minutos de Plaza Castilla y Paseo de la Castellana. Con acceso directo en metro (líneas 1 y 10, estación Tetuán) y varias líneas de autobús.</p>
+          </div>
+        </details>
+        <details class="faq-item reveal reveal-d3">
+          <summary class="faq-q">¿Se puede reservar cita online?</summary>
+          <div class="faq-a">
+            <p>Sí, puedes reservar tu cita directamente desde el <a href="#reservas" style="color:var(--color-gold);text-decoration:underline">widget de Reservas</a> de esta misma página. Elige tu barbero, servicio, día y hora en menos de 2 minutos.</p>
+          </div>
+        </details>
       </div>
     </div>
   </section>
