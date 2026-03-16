@@ -466,7 +466,7 @@
     "barbero": "BARB02",
     "fecha": "2026-03-17",
     "hora": "10:45",
-    "ocupado": true
+    "ocupado": false
   },
   {
     "id": "EDF1061C",
@@ -501,7 +501,7 @@
     "barbero": "BARB02",
     "fecha": "2026-03-17",
     "hora": "11:30",
-    "ocupado": true
+    "ocupado": false
   },
   {
     "id": "86C4D58E",
@@ -1460,14 +1460,14 @@
     "barbero": "BARB02",
     "fecha": "2026-03-19",
     "hora": "16:45",
-    "ocupado": true
+    "ocupado": false
   },
   {
     "id": "53BDCA87",
     "barbero": "BARB02",
     "fecha": "2026-03-26",
     "hora": "19:45",
-    "ocupado": true
+    "ocupado": false
   },
   {
     "id": "D103F53A",

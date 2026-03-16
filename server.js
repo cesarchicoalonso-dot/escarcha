@@ -357,7 +357,12 @@ async function handleAPI(method, pathname, query, req, res) {
 
   if (method === 'GET' && pathname === '/api/disponibilidad') {
     const disp = await readDB(DB_DISPONIBILIDAD);
-    let result = disp.filter(s => !s.ocupado);
+    const reservas = await readDB(DB_RESERVAS);
+    // Cruzar disponibilidad con reservas reales para evitar bloqueos huérfanos
+    let result = disp.filter(s => {
+      const ocupadoReal = reservas.some(r => r.barbero === s.barbero && r.fecha === s.fecha && r.hora === s.hora && r.estado !== 'cancelada');
+      return !ocupadoReal;
+    });
     if (query.fecha)   result = result.filter(s => s.fecha   === query.fecha);
     if (query.barbero) result = result.filter(s => s.barbero === query.barbero);
     return json(res, 200, result);
@@ -365,20 +370,17 @@ async function handleAPI(method, pathname, query, req, res) {
 
   if (method === 'GET' && pathname === '/api/disponibilidad/all') {
     if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    let result = await readDB(DB_DISPONIBILIDAD);
-    // Agregar nombre del cliente a los slots ocupados
-    if (result.some(s => s.ocupado)) {
-      const reservas = await readDB(DB_RESERVAS);
-      result = result.map(s => {
-        if (s.ocupado) {
-          const reserva = reservas.find(r => r.barbero === s.barbero && r.fecha === s.fecha && r.hora === s.hora);
-          if (reserva) {
-            return { ...s, clienteNombre: reserva.nombre, servicio: reserva.servicio };
-          }
-        }
-        return s;
-      });
-    }
+    const disp = await readDB(DB_DISPONIBILIDAD);
+    const reservas = await readDB(DB_RESERVAS);
+    
+    let result = disp.map(s => {
+      const r = reservas.find(res => res.barbero === s.barbero && res.fecha === s.fecha && res.hora === s.hora && res.estado !== 'cancelada');
+      if (r) {
+        return { ...s, ocupado: true, clienteNombre: r.nombre, servicio: r.servicio };
+      }
+      return { ...s, ocupado: false };
+    });
+
     if (query.fecha)   result = result.filter(s => s.fecha   === query.fecha);
     if (query.barbero) result = result.filter(s => s.barbero === query.barbero);
     return json(res, 200, result);
