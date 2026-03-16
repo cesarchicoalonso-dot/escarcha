@@ -789,6 +789,32 @@
       line-height: 1.5;
       margin: 0 0 10px;
     }
+    /* Estilos para el botón Siguiente Sticky en Móvil */
+    .bk-next-sticky {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 9996;
+      display: none;
+      animation: slideUp 0.3s ease-out;
+    }
+    .bk-next-sticky .btn-gold {
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(201, 168, 76, 0.4);
+      border-radius: 4px;
+      padding: 16px;
+      font-size: 0.85rem;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .bk-next-sticky.visible { display: block; }
+      .mobile-cta-btn.active { display: none; } /* Ocultar el botón general si estamos en el widget */
+    }
+
     .bk-card-price {
       font-size: 0.8rem;
       color: var(--color-gold);
@@ -2225,6 +2251,12 @@
       state.step = n;
       updateProgress(n);
       if (n === 2) loadAndRenderBarberos();
+      
+      // Auto-scroll al inicio del widget en cada paso
+      const widget = $('reservas');
+      const offset = (document.getElementById('header')?.offsetHeight || 60) + 12;
+      window.scrollTo({ top: widget.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      updateStickyButton();
     }
 
     // ── Paso 1: Servicio (renderizado desde SERVICIOS_CATS) ──────────────────
@@ -2248,9 +2280,41 @@
           card.classList.add('selected');
           state.servicio = { id: card.dataset.id, name: card.dataset.name, price: card.dataset.price };
           clearErr('bk-err-1');
+          updateStickyButton();
+          // Scroll suave al botón de siguiente en móvil si la lista es larga
+          if (window.innerWidth < 768) {
+             const btnNext = $('bk-next-1');
+             btnNext.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
         });
       });
     }
+
+    function updateStickyButton() {
+       const sticky = $('bk-sticky-container');
+       if (!sticky) return;
+       const isMobile = window.innerWidth < 768;
+       if (!isMobile) { sticky.classList.remove('visible'); return; }
+
+       const widget = $('reservas');
+       const rect = widget.getBoundingClientRect();
+       const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+       if (isInView && state.step < 5) {
+          if ((state.step === 1 && state.servicio) || (state.step === 2 && state.barbero) || (state.step === 3 && state.fecha && state.hora) || state.step === 4) {
+             sticky.classList.add('visible');
+             const btn = sticky.querySelector('button');
+             btn.textContent = state.step === 4 ? 'Resumen de cita →' : 'Siguiente paso →';
+          } else {
+             sticky.classList.remove('visible');
+          }
+       } else {
+          sticky.classList.remove('visible');
+       }
+    }
+
+    window.addEventListener('scroll', updateStickyButton);
+
 
     function renderCatTabs() {
       const tabsEl = $('bk-cat-tabs');
@@ -2263,6 +2327,10 @@
           tabsEl.querySelectorAll('.bk-cat-tab').forEach(t => t.classList.remove('active'));
           btn.classList.add('active');
           renderServicioCards();
+          // Foco en la lista de servicios
+          if (window.innerWidth < 768) {
+            $('bk-services').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         });
       });
     }
@@ -2318,7 +2386,19 @@
       if (!state.barbero) { setErr('bk-err-2', 'Por favor selecciona un barbero.'); return; }
       showStep(3);
       renderCalendar();
+      updateStickyButton();
     });
+
+    // Delegación para el botón sticky
+    document.addEventListener('click', e => {
+       if (e.target.closest('#bk-sticky-next')) {
+          if (state.step === 1) $('bk-next-1').click();
+          else if (state.step === 2) $('bk-next-2').click();
+          else if (state.step === 3) $('bk-next-3').click();
+          else if (state.step === 4) $('bk-next-4').click();
+       }
+    });
+
 
     // ── Paso 3: Calendario ────────────────────────────────────────────────────
     const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
