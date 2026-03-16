@@ -1,0 +1,29 @@
+[
+  {
+    "id": "BARB01",
+    "nombre": "Jose",
+    "apellido": "",
+    "rol": "Fundador & Master Barber",
+    "descripcion": "Apasionado del grooming clásico con más de 10 años de experiencia en el sector.",
+    "foto": "/uploads/barbero_68CF594B.webp",
+    "activo": true
+  },
+  {
+    "id": "BARB02",
+    "nombre": "María",
+    "apellido": "",
+    "rol": "Senior Barber",
+    "descripcion": "Especialista en fades y barbas de precisión.",
+    "foto": "/uploads/barbero_432B8AFA.png",
+    "activo": true
+  },
+  {
+    "id": "BARB03",
+    "nombre": "Ernesto",
+    "apellido": "",
+    "rol": "Barber & Estilista",
+    "descripcion": "Fusiona técnicas clásicas con tendencias modernas.",
+    "foto": "",
+    "activo": false
+  }
+]

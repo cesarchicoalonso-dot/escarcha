@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Escarcha Grooming Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin.css?v=5">
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <p class="login-logo">Escarcha Grooming</p>
+    <p class="login-sub">Panel de administración</p>
+    <label class="login-label" for="adm-pass">Contraseña</label>
+    <input class="login-input" id="adm-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+    <button class="btn-gold" id="adm-login-btn">Entrar</button>
+    <p class="login-err" id="login-err"></p>
+  </div>
+</div>
+
+<!-- ── ADMIN ──────────────────────────────────────────────────────────────── -->
+<div id="admin-screen">
+
+  <header class="adm-header">
+    <div class="adm-logo">Escarcha Grooming <span>Admin</span></div>
+    <button class="adm-logout" id="adm-logout">Cerrar sesión</button>
+  </header>
+
+  <nav class="adm-tabs">
+    <button class="adm-tab active" data-tab="reservas">Reservas</button>
+    <button class="adm-tab" data-tab="disponibilidad">Disponibilidad</button>
+    <button class="adm-tab" data-tab="barberos">Barberos</button>
+  </nav>
+
+  <main class="adm-content">
+
+    <!-- PANEL: Reservas -->
+    <div class="adm-panel active" id="panel-reservas">
+      <div class="adm-stats" id="adm-stats">
+        <div class="adm-stat"><div class="adm-stat-val" id="stat-hoy">—</div><div class="adm-stat-label">Hoy</div></div>
+        <div class="adm-stat"><div class="adm-stat-val" id="stat-pendientes">—</div><div class="adm-stat-label">Pendientes</div></div>
+        <div class="adm-stat"><div class="adm-stat-val" id="stat-confirmadas">—</div><div class="adm-stat-label">Confirmadas</div></div>
+        <div class="adm-stat"><div class="adm-stat-val" id="stat-total">—</div><div class="adm-stat-label">Total</div></div>
+      </div>
+
+      <div class="adm-filters">
+        <select class="adm-select" id="flt-barbero">
+          <option value="">Todos los barberos</option>
+          <option value="andrea">Andrea Escarcha</option>
+          <option value="carlos">Carlos</option>
+          <option value="lucas">Lucas</option>
+        </select>
+        <select class="adm-select" id="flt-estado">
+          <option value="">Todos los estados</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="confirmada">Confirmada</option>
+          <option value="cancelada">Cancelada</option>
+          <option value="pagada">Pagada</option>
+        </select>
+        <input class="adm-date-input" id="flt-fecha" type="date">
+        <button class="btn-outline" id="flt-clear" style="padding:8px 14px;font-size:0.7rem;">Limpiar</button>
+        <button class="btn-sm-gold" id="flt-refresh" style="margin-left:auto;">↺ Actualizar</button>
+      </div>
+
+      <div class="adm-table-wrap">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th>Ref.</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Servicio</th>
+              <th>Precio</th>
+              <th>Barbero</th>
+              <th>Cliente</th>
+              <th>Teléfono</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="res-tbody"></tbody>
+        </table>
+        <div class="adm-empty" id="res-empty" style="display:none;">No hay reservas con estos filtros.</div>
+      </div>
+    </div>
+
+    <!-- PANEL: Disponibilidad -->
+    <div class="adm-panel" id="panel-disponibilidad">
+
+      <div class="disp-controls">
+        <div class="disp-field">
+          <label class="disp-label">Barbero</label>
+          <select class="disp-input" id="disp-barbero">
+            <option value="andrea">Andrea Escarcha</option>
+            <option value="carlos">Carlos</option>
+            <option value="lucas">Lucas</option>
+          </select>
+        </div>
+        <button class="btn-outline" id="disp-add-week">+ Añadir semana completa</button>
+        <button class="btn-sm-gold" id="disp-refresh">↺ Actualizar</button>
+      </div>
+
+      <div class="week-nav">
+        <button class="week-nav-btn" id="week-prev">&#8249;</button>
+        <span class="week-label" id="week-label"></span>
+        <button class="week-nav-btn" id="week-next">&#8250;</button>
+      </div>
+
+      <div class="week-grid-wrap">
+        <div class="week-grid" id="week-grid"></div>
+      </div>
+
+      <div class="week-legend">
+        <span class="wl-libre"><span class="wl-dot"></span>Disponible (click para quitar)</span>
+        <span class="wl-ocupado"><span class="wl-dot"></span>Reservado</span>
+        <span class="wl-vacio"><span class="wl-dot"></span>Sin slot (click para añadir)</span>
+      </div>
+    </div>
+
+    <!-- PANEL: Barberos -->
+    <div class="adm-panel" id="panel-barberos">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <h2 style="font-family:var(--font-display);font-size:1.05rem;color:var(--color-white)">Equipo de barberos</h2>
+        <button class="btn-sm-gold" id="barb-add-btn">+ Añadir barbero</button>
+      </div>
+      <div class="barb-grid" id="barb-grid">
+        <p class="adm-empty">Cargando…</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Modal barbero -->
+<div class="modal-overlay hidden" id="barb-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <p class="modal-title" id="modal-title">Añadir Barbero</p>
+    <input type="hidden" id="modal-barb-id">
+    <div class="modal-grid">
+      <div class="modal-field">
+        <label class="modal-label" for="modal-nombre">Nombre *</label>
+        <input class="modal-input" id="modal-nombre" type="text" placeholder="Andrea">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="modal-apellido">Apellido</label>
+        <input class="modal-input" id="modal-apellido" type="text" placeholder="Escarcha">
+      </div>
+      <div class="modal-field full">
+        <label class="modal-label" for="modal-rol">Rol / Especialidad *</label>
+        <input class="modal-input" id="modal-rol" type="text" placeholder="Fundadora & Master Barber">
+      </div>
+      <div class="modal-field full">
+        <label class="modal-label" for="modal-desc">Descripción</label>
+        <textarea class="modal-textarea" id="modal-desc" placeholder="Breve descripción del barbero…"></textarea>
+      </div>
+      <div class="modal-field full">
+        <label class="modal-label">Foto de perfil</label>
+        <input type="file" id="modal-foto" accept="image/*" style="color:var(--color-gray);font-size:0.8rem;margin-top:2px">
+        <img class="modal-foto-preview" id="modal-foto-preview" alt="Vista previa foto">
+        <p style="font-size:0.68rem;color:var(--color-gray);margin-top:6px">JPG, PNG o WebP · máx. 2 MB</p>
+      </div>
+    </div>
+    <p class="login-err" id="modal-err" style="margin-top:8px"></p>
+    <div class="modal-actions">
+      <button class="btn-outline" id="modal-cancel">Cancelar</button>
+      <button class="btn-sm-gold" id="modal-save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="/admin.js?v=5"></script>
+</body>
+</html>

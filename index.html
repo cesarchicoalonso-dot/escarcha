@@ -1,0 +1,2634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escarcha Grooming Club — Más que una barbería | Madrid</title>
+  <meta name="description" content="Escarcha Grooming Club, barbería exclusiva para hombres en Madrid. Corte, barba, afeitado clásico y tratamientos capilares premium. C/ Rosario Pino, 18." />
+
+  <!-- =====================================================================
+       META OG — Actualizar og:image con URL real de la imagen de portada
+  ====================================================================== -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="Escarcha Grooming Club — Más que una barbería" />
+  <meta property="og:description" content="Barbería exclusiva para hombres en Madrid. El arte del caballero moderno." />
+  <meta property="og:url"         content="https://escarchagroomingclub.com" />
+  <meta property="og:image"       content="https://escarchagroomingclub.com/og-image.jpg" /><!-- CAMBIAR: poner URL real -->
+  <meta property="og:locale"      content="es_ES" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Escarcha Grooming Club" />
+  <meta name="twitter:description" content="Barbería exclusiva para hombres en Madrid." />
+  <meta name="twitter:image"       content="https://escarchagroomingclub.com/og-image.jpg" /><!-- CAMBIAR: poner URL real -->
+
+  <!-- =====================================================================
+       SCHEMA.ORG — LocalBusiness (HairSalon)
+  ====================================================================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "name": "Escarcha Grooming Club",
+    "description": "Barbería exclusiva para hombres en Madrid. El arte del caballero moderno.",
+    "url": "https://escarchagroomingclub.com",
+    "telephone": "+34611714523",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "C/ Rosario Pino, 18",
+      "addressLocality": "Madrid",
+      "postalCode": "28020",
+      "addressCountry": "ES"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.4469,
+      "longitude": -3.7038
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "10:00",
+        "closes": "21:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "10:00",
+        "closes": "15:00"
+      }
+    ],
+    "sameAs": ["https://www.instagram.com/escarchasalonformen"]
+  }
+  </script>
+
+  <!-- Google Fonts: Playfair Display + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===================================================================
+       CSS CUSTOM PROPERTIES — Editar aquí para cambiar el tema completo
+    =================================================================== */
+    :root {
+      --color-bg:       #0a0a0a;
+      --color-bg-card:  #111111;
+      --color-bg-hover: #161616;
+      --color-gold:     #c9a84c;
+      --color-gold-dim: rgba(201,168,76,0.15);
+      --color-white:    #f5f0e8;
+      --color-gray:     #888888;
+      --color-border:   rgba(201,168,76,0.22);
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+
+      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+      /* ================================================================
+         IMAGEN FONDO HERO — Cambiar por URL real o ruta local
+         Ejemplo local: url('img/hero.jpg')
+      ================================================================ */
+      --hero-bg-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1920&q=80');
+    }
+
+    /* ===================================================================
+       RESET & BASE
+    =================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--color-bg);
+      color: var(--color-white);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+    ul  { list-style: none; }
+
+    /* ===================================================================
+       UTILIDADES
+    =================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+    .section-label {
+      display: block;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.12;
+      color: var(--color-white);
+    }
+    .gold-divider {
+      display: block;
+      width: 48px;
+      height: 1px;
+      background: var(--color-gold);
+      margin: 22px 0;
+    }
+    .center { text-align: center; }
+    .center .gold-divider { margin-left: auto; margin-right: auto; }
+
+    /* Botón primario dorado */
+    .btn-gold {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--color-gold);
+      border: 1px solid var(--color-gold);
+      color: var(--color-bg);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background var(--transition), color var(--transition);
+      cursor: pointer;
+    }
+    .btn-gold:hover { background: transparent; color: var(--color-gold); }
+
+    /* Botón outline dorado */
+    .btn-outline {
+      display: inline-block;
+      padding: 13px 32px;
+      border: 1px solid var(--color-gold);
+      background: transparent;
+      color: var(--color-gold);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background var(--transition), color var(--transition);
+      cursor: pointer;
+    }
+    .btn-outline:hover { background: var(--color-gold); color: var(--color-bg); }
+
+    /* ===================================================================
+       ANIMACIONES SCROLL — Intersection Observer (sin librerías)
+    =================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.40s; }
+
+    /* ===================================================================
+       SECCIONES — Espaciado
+    =================================================================== */
+    .sec { padding: 108px 0; }
+    .sec-sm { padding: 80px 0; }
+    .sec-head { margin-bottom: 60px; }
+
+    /* ===================================================================
+       1. HEADER FIJO
+    =================================================================== */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 22px 0;
+      transition: padding var(--transition), background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+      border-bottom: 1px solid transparent;
+    }
+    #header.scrolled {
+      padding: 13px 0;
+      background: rgba(10,10,10,0.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom-color: var(--color-border);
+    }
+    .hd-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .hd-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .hd-nav {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+    .hd-nav a {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.72);
+      transition: color var(--transition), opacity var(--transition);
+    }
+    .hd-nav a:hover { color: var(--color-gold); opacity: 1; }
+
+    /* Hamburger */
+    .hbg {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .hbg span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--color-white);
+      transition: var(--transition);
+    }
+    .hbg.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hbg.open span:nth-child(2) { opacity: 0; }
+    .hbg.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile nav overlay */
+    .mob-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.97);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+    .mob-nav.open { display: flex; }
+    .mob-nav a {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--color-white);
+      transition: color var(--transition);
+    }
+    .mob-nav a:hover { color: var(--color-gold); }
+
+    @media (max-width: 900px) {
+      .hd-nav, .hd-cta { display: none; }
+      .hbg { display: flex; }
+    }
+
+    /* ===================================================================
+       2. HERO — Fullscreen
+    =================================================================== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      /* IMAGEN HERO — Cambia --hero-bg-image en :root */
+      background-image: var(--hero-bg-image);
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25);
+      transform: scale(1.04);
+      transition: transform 9s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-ov {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.05) 50%, rgba(10,10,10,0.65) 100%);
+    }
+    .hero-cnt {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 28px;
+    }
+    .hero-eyebrow {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      color: var(--color-white);
+      margin-bottom: 26px;
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1rem, 2.4vw, 1.3rem);
+      color: rgba(245,240,232,0.65);
+      margin-bottom: 48px;
+      letter-spacing: 0.03em;
+    }
+    .hero-scroll-ind {
+      position: absolute;
+      bottom: 38px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(245,240,232,0.35);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--color-gold), transparent);
+      animation: pulse-line 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.35; }
+      50%       { opacity: 1; }
+    }
+
+    /* ===================================================================
+       3. SERVICIOS + PRECIOS
+    =================================================================== */
+    #servicios { background: var(--color-bg); }
+
+    /* Tabs de categoría */
+    .srv-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .srv-tab {
+      background: none;
+      border: 1px solid var(--color-border);
+      color: var(--color-gray);
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+    .srv-tab:hover { border-color: var(--color-gold); color: var(--color-white); }
+    .srv-tab.active { background: var(--color-gold-dim); border-color: var(--color-gold); color: var(--color-gold); }
+
+    /* Panel de servicios */
+    .srv-panel { display: none; }
+    .srv-panel.active { display: block; }
+    .srv-list { border: 1px solid var(--color-border); border-radius: 2px; overflow: hidden; }
+
+    .srv-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 20px 28px;
+      background: var(--color-bg-card);
+      border-bottom: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition);
+    }
+    .srv-row::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 2px; height: 0;
+      background: var(--color-gold);
+      transition: height 0.4s ease;
+    }
+    .srv-row:hover::before { height: 100%; }
+    .srv-row:hover { background: var(--color-bg-hover); }
+    .srv-row:last-child { border-bottom: none; }
+
+    .srv-row-subtitle {
+      font-size: 0.68rem;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin: 0 0 4px;
+    }
+    .srv-row-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--color-white);
+      margin: 0 0 5px;
+    }
+    .srv-row-desc {
+      font-size: 0.78rem;
+      color: var(--color-gray);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .srv-row-right { text-align: right; flex-shrink: 0; }
+    .srv-row-price {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--color-gold);
+      display: block;
+      white-space: nowrap;
+    }
+    .srv-row-dur {
+      font-size: 0.68rem;
+      color: var(--color-gray);
+      display: block;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) {
+      .srv-row { grid-template-columns: 1fr; }
+      .srv-row-right { text-align: left; display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+    }
+
+    /* Tabs categoría en el widget de reservas */
+    .bk-cat-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .bk-cat-tab {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-gray);
+      font-family: var(--font-body);
+      font-size: 0.63rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .bk-cat-tab:hover { border-color: var(--color-gold); color: var(--color-white); }
+    .bk-cat-tab.active { background: var(--color-gold-dim); border-color: var(--color-gold); color: var(--color-gold); }
+
+    /* ===================================================================
+       4. EQUIPO
+    =================================================================== */
+    #equipo { background: #0d0d0d; }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .team-card {
+      flex: 0 1 320px;
+      min-width: 220px;
+      text-align: center;
+    }
+    @media (max-width: 480px) { .team-card { flex: 1 1 100%; } }
+    .team-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #1a1a1a;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* ================================================================
+       FOTOS EQUIPO — Reemplazar .ph-avatar con:
+       <img src="img/andrea.jpg" alt="Andrea Escarcha, Fundadora">
+       dentro de .team-photo
+    ================================================================ */
+    .ph-avatar {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ph-avatar svg { width: 68px; height: 68px; opacity: 0.1; color: var(--color-gold); }
+    .team-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-gold);
+      margin-bottom: 5px;
+    }
+    .team-role {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-gray);
+    }
+    .team-desc {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--color-gray);
+      line-height: 1.7;
+    }
+
+    /* ===================================================================
+       5. GALERÍA — Masonry CSS puro (sin JS)
+    =================================================================== */
+    #galeria { background: var(--color-bg); }
+
+    .gallery {
+      columns: 4;
+      column-gap: 10px;
+    }
+    @media (max-width: 1024px) { .gallery { columns: 3; } }
+    @media (max-width: 640px)  { .gallery { columns: 2; } }
+    @media (max-width: 380px)  { .gallery { columns: 1; } }
+
+    .g-item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    /* ================================================================
+       IMÁGENES GALERÍA — Reemplazar .g-ph con <img> reales:
+       <img src="img/galeria/foto1.jpg" alt="Corte clásico Madrid">
+       El CSS de alturas escalonadas seguirá aplicando
+    ================================================================ */
+    .g-ph { width: 100%; background: #1a1a1a; display: block; }
+    .g-item:nth-child(1) .g-ph { height: 270px; }
+    .g-item:nth-child(2) .g-ph { height: 195px; }
+    .g-item:nth-child(3) .g-ph { height: 320px; }
+    .g-item:nth-child(4) .g-ph { height: 215px; }
+    .g-item:nth-child(5) .g-ph { height: 255px; }
+    .g-item:nth-child(6) .g-ph { height: 175px; }
+    .g-item:nth-child(7) .g-ph { height: 305px; }
+    .g-item:nth-child(8) .g-ph { height: 235px; }
+
+    .g-ov {
+      position: absolute;
+      inset: 0;
+      background: rgba(201,168,76,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition);
+    }
+    .g-ov svg {
+      width: 34px;
+      height: 34px;
+      color: #fff;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .g-item:hover .g-ov { background: rgba(201,168,76,0.55); }
+    .g-item:hover .g-ov svg { opacity: 1; transform: scale(1); }
+
+    /* ===================================================================
+       6. RESERVAS — Cal.com embed
+    =================================================================== */
+    #reservas {
+      background: var(--color-bg-card);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .booking-wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .booking-frame {
+      margin-top: 50px;
+    }
+    /* ── Widget de reservas propio ───────────────────────────────────────── */
+    .bk-widget {
+      margin-top: 50px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* Barra de progreso */
+    .bk-progress {
+      display: flex;
+      align-items: stretch;
+      background: var(--color-bg-card);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .bk-progress-step {
+      flex: 1;
+      padding: 14px 8px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.67rem;
+      letter-spacing: 0.06em;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      border-right: 1px solid var(--color-border);
+      transition: color var(--transition), background var(--transition);
+      cursor: default;
+    }
+    .bk-progress-step:last-child { border-right: none; }
+    .bk-progress-step.active {
+      color: var(--color-gold);
+      background: var(--color-gold-dim);
+    }
+    .bk-progress-step.done { color: var(--color-gold); opacity: 0.55; }
+    .bk-progress-num {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+      margin-bottom: 2px;
+    }
+    @media (max-width: 600px) {
+      .bk-progress-label { display: none; }
+    }
+
+    /* Contenido del paso */
+    .bk-body { padding: 40px 36px; }
+    @media (max-width: 600px) { .bk-body { padding: 28px 18px; } }
+
+    .bk-step { display: none; }
+    .bk-step.active { display: block; }
+
+    .bk-step-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--color-white);
+      margin: 0 0 28px;
+    }
+
+    /* Cards de servicio y barbero */
+    .bk-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .bk-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 20px 18px;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      text-align: left;
+    }
+    .bk-card:hover { border-color: var(--color-gold); background: var(--color-bg-hover); }
+    .bk-card.selected {
+      border-color: var(--color-gold);
+      background: var(--color-gold-dim);
+    }
+    .bk-card-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--color-white);
+      margin: 0 0 6px;
+    }
+    .bk-card-desc {
+      font-size: 0.75rem;
+      color: var(--color-gray);
+      line-height: 1.5;
+      margin: 0 0 10px;
+    }
+    .bk-card-price {
+      font-size: 0.8rem;
+      color: var(--color-gold);
+      font-weight: 600;
+    }
+    .bk-card-role {
+      font-size: 0.72rem;
+      color: var(--color-gray);
+      margin: 0;
+    }
+
+    /* Calendario */
+    .bk-cal-wrap { display: flex; gap: 32px; flex-wrap: wrap; }
+    .bk-calendar { flex: 0 0 auto; }
+    .bk-cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .bk-cal-nav {
+      background: none;
+      border: 1px solid var(--color-border);
+      color: var(--color-gold);
+      width: 30px; height: 30px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      transition: background var(--transition);
+    }
+    .bk-cal-nav:hover { background: var(--color-gold-dim); }
+    .bk-cal-month {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--color-white);
+    }
+    .bk-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 36px);
+      gap: 4px;
+    }
+    .bk-cal-dow {
+      text-align: center;
+      font-size: 0.62rem;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 0;
+    }
+    .bk-cal-day {
+      width: 36px; height: 36px;
+      border-radius: 3px;
+      border: 1px solid transparent;
+      background: none;
+      color: var(--color-gray);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .bk-cal-day:disabled { opacity: 0.2; cursor: default; }
+    .bk-cal-day.has-slots { color: var(--color-white); border-color: var(--color-border); }
+    .bk-cal-day.has-slots:hover { background: var(--color-bg-hover); border-color: var(--color-gold); }
+    .bk-cal-day.selected { background: var(--color-gold-dim); border-color: var(--color-gold); color: var(--color-gold); }
+    .bk-cal-day.today { border-color: rgba(201,168,76,0.5); }
+
+    /* Slots de hora */
+    .bk-slots-wrap { flex: 1; min-width: 180px; }
+    .bk-slots-title {
+      font-size: 0.72rem;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 14px;
+    }
+    .bk-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .bk-slot {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-white);
+      font-size: 0.78rem;
+      padding: 7px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .bk-slot:hover { border-color: var(--color-gold); background: var(--color-bg-hover); }
+    .bk-slot.selected { background: var(--color-gold-dim); border-color: var(--color-gold); color: var(--color-gold); }
+    .bk-slots-empty {
+      font-size: 0.8rem;
+      color: var(--color-gray);
+      font-style: italic;
+    }
+
+    /* Formulario de datos */
+    .bk-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 560px) { .bk-form-grid { grid-template-columns: 1fr; } }
+    .bk-field { display: flex; flex-direction: column; gap: 7px; }
+    .bk-field.full { grid-column: 1 / -1; }
+    .bk-label {
+      font-size: 0.7rem;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .bk-input {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-white);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 11px 14px;
+      border-radius: 3px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .bk-input:focus { border-color: var(--color-gold); }
+    .bk-input::placeholder { color: var(--color-gray); opacity: 0.6; }
+
+    /* Resumen */
+    .bk-summary {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .bk-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      font-size: 0.85rem;
+    }
+    .bk-summary-row:last-child { border-bottom: none; }
+    .bk-summary-label { color: var(--color-gray); }
+    .bk-summary-value { color: var(--color-white); font-weight: 500; text-align: right; }
+    .bk-summary-total .bk-summary-value { color: var(--color-gold); font-size: 1.05rem; font-weight: 600; }
+
+    /* Navegación del widget */
+    .bk-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      gap: 12px;
+    }
+    .bk-nav-right { margin-left: auto; display: flex; gap: 12px; }
+    .bk-error {
+      font-size: 0.78rem;
+      color: #e05252;
+      margin-top: 10px;
+      min-height: 1.2em;
+    }
+
+    /* Pantalla de éxito */
+    .bk-success {
+      display: none;
+      text-align: center;
+      padding: 60px 36px;
+    }
+    .bk-success.active { display: block; }
+    .bk-success-icon {
+      width: 64px; height: 64px;
+      border: 2px solid var(--color-gold);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .bk-success-icon svg { width: 30px; height: 30px; color: var(--color-gold); }
+    .bk-success-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--color-white);
+      margin: 0 0 10px;
+    }
+    .bk-success-sub {
+      font-size: 0.88rem;
+      color: var(--color-gray);
+      line-height: 1.7;
+      margin: 0 0 8px;
+    }
+    .bk-success-id {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: var(--color-gold);
+      border: 1px solid var(--color-border);
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-top: 14px;
+      letter-spacing: 0.1em;
+    }
+
+    /* Nota de contacto */
+    .booking-note {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px 6px;
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--color-gray);
+      text-align: center;
+    }
+    .booking-note svg { width: 14px; height: 14px; color: var(--color-gold); flex-shrink: 0; }
+
+    /* ===================================================================
+       SOBRE NOSOTROS
+    =================================================================== */
+    #nosotros {
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nosotros-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .nosotros-wrap { grid-template-columns: 1fr; gap: 48px; }
+    }
+    .nosotros-intro {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      color: var(--color-white);
+      line-height: 1.65;
+      margin: 0 0 32px;
+    }
+    .nosotros-body { display: flex; flex-direction: column; gap: 36px; }
+    .nosotros-block-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--color-gold);
+      margin: 0 0 10px;
+    }
+    .nosotros-block-text {
+      font-size: 0.88rem;
+      color: var(--color-gray);
+      line-height: 1.85;
+      margin: 0;
+    }
+    .nosotros-deco {
+      position: sticky;
+      top: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nosotros-deco-line {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nosotros-deco-line:first-child { border-top: 1px solid var(--color-border); }
+    .nosotros-deco-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--color-gold);
+      opacity: 0.35;
+      min-width: 56px;
+      line-height: 1;
+    }
+    .nosotros-deco-label {
+      font-size: 0.78rem;
+      color: var(--color-gray);
+      line-height: 1.5;
+    }
+    .nosotros-deco-label strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--color-white);
+      font-family: var(--font-display);
+      margin-bottom: 2px;
+    }
+
+    /* ===================================================================
+       7. BLOG
+    =================================================================== */
+    #blog { background: var(--color-bg); }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    @media (max-width: 860px)  { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px)  { .blog-grid { grid-template-columns: 1fr; } }
+
+    .blog-card {
+      background: var(--color-bg-card);
+      border: 1px solid transparent;
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .blog-card:hover {
+      border-color: var(--color-border);
+      transform: translateY(-5px);
+    }
+    /* ================================================================
+       IMÁGENES BLOG — Reemplazar .b-img con <img> reales:
+       <img src="img/blog/articulo1.jpg" alt="título del artículo">
+    ================================================================ */
+    .b-img {
+      width: 100%;
+      height: 210px;
+      background: #1a1a1a;
+      position: relative;
+    }
+    .b-badge {
+      position: absolute;
+      bottom: 14px; left: 14px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--color-gold);
+      color: var(--color-bg);
+      padding: 4px 10px;
+    }
+    .b-body { padding: 26px; }
+    .b-cat {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: 10px;
+    }
+    .b-title {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--color-white);
+      margin-bottom: 10px;
+    }
+    .b-excerpt {
+      font-size: 0.82rem;
+      color: var(--color-gray);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .b-link {
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--color-gold);
+      transition: letter-spacing var(--transition);
+    }
+    .b-link:hover { letter-spacing: 0.22em; }
+
+    /* ===================================================================
+       8. FOOTER
+    =================================================================== */
+    #footer {
+      background: #050505;
+      border-top: 1px solid var(--color-gold);
+      padding: 70px 0 36px;
+    }
+    .ft-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 28px;
+    }
+    @media (max-width: 900px)  { .ft-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px)  { .ft-top { grid-template-columns: 1fr; gap: 32px; } }
+
+    .ft-logo {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .ft-claim {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--color-gray);
+      margin-bottom: 20px;
+    }
+    .ft-social { display: flex; gap: 12px; }
+    .ft-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--color-border);
+      color: var(--color-gray);
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .ft-social a:hover { border-color: var(--color-gold); color: var(--color-gold); }
+    .ft-col-title {
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: 18px;
+    }
+    .ft-nav li { margin-bottom: 10px; }
+    .ft-nav a {
+      font-size: 0.84rem;
+      color: var(--color-gray);
+      transition: color var(--transition);
+    }
+    .ft-nav a:hover { color: var(--color-white); }
+    .ft-info p, .ft-hours p {
+      font-size: 0.84rem;
+      color: var(--color-gray);
+      line-height: 1.85;
+    }
+    .ft-info strong, .ft-hours strong { color: var(--color-white); font-weight: 500; }
+    .ft-info a { color: var(--color-gray); transition: color var(--transition); }
+    .ft-info a:hover { color: var(--color-gold); }
+    .ft-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .ft-copy {
+      font-size: 0.73rem;
+      color: rgba(136,136,136,0.55);
+    }
+    .ft-legal { display: flex; gap: 18px; }
+    .ft-legal a {
+      font-size: 0.7rem;
+      color: rgba(136,136,136,0.45);
+      transition: color var(--transition);
+    }
+    .ft-legal a:hover { color: var(--color-gray); }
+  </style>
+</head>
+<body>
+
+  <!-- =================================================================
+       MOBILE NAV OVERLAY
+  ================================================================= -->
+  <nav class="mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Menú principal">
+    <a href="#nosotros"  onclick="closeNav()">Nosotros</a>
+    <a href="#servicios" onclick="closeNav()">Servicios</a>
+    <a href="#equipo"    onclick="closeNav()">Equipo</a>
+    <a href="#galeria"   onclick="closeNav()">Galería</a>
+    <a href="#blog"      onclick="closeNav()">Blog</a>
+    <a href="#reservas"  onclick="closeNav()" class="btn-gold" style="margin-top:8px;">Reservar Cita</a>
+  </nav>
+
+  <!-- =================================================================
+       1. HEADER FIJO
+  ================================================================= -->
+  <header id="header" role="banner">
+    <div class="container hd-inner">
+      <a href="#hero" class="hd-logo" aria-label="Escarcha Grooming Club">ESCARCHA</a>
+
+      <nav class="hd-nav" aria-label="Navegación principal">
+        <a href="#nosotros">Nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#galeria">Galería</a>
+        <a href="#blog">Blog</a>
+      </nav>
+
+      <a href="#reservas" class="btn-gold hd-cta" style="padding:11px 26px;font-size:0.66rem;">Reservar Cita</a>
+
+      <button class="hbg" id="hbg" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =================================================================
+       2. HERO — Fullscreen
+       IMAGEN FONDO — Cambiar --hero-bg-image en :root (arriba en CSS)
+  ================================================================= -->
+  <section id="hero" aria-label="Portada">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-ov"></div>
+
+    <div class="hero-cnt">
+      <p class="hero-eyebrow reveal">Madrid &nbsp;·&nbsp; Grooming &nbsp;·&nbsp; Exclusivo</p>
+      <h1 class="hero-title reveal reveal-d1">GROOMING<br>CLUB</h1>
+      <p class="hero-sub reveal reveal-d2">El arte del caballero moderno. Madrid.</p>
+      <a href="#reservas" class="btn-gold reveal reveal-d3">Reserva tu Cita</a>
+    </div>
+
+    <div class="hero-scroll-ind" aria-hidden="true">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       2B. SOBRE NOSOTROS
+  ================================================================= -->
+  <section id="nosotros" class="sec" aria-labelledby="nos-title">
+    <div class="container">
+      <div class="nosotros-wrap">
+
+        <!-- Columna izquierda: texto -->
+        <div>
+          <div class="sec-head reveal">
+            <span class="section-label">Quiénes somos</span>
+            <h2 class="section-title" id="nos-title">Sobre<br>nosotros</h2>
+            <span class="gold-divider"></span>
+          </div>
+
+          <p class="nosotros-intro reveal">
+            En lo más profundo de Madrid, donde el ritmo imparable de la ciudad se encuentra con la necesidad de detener el tiempo, existe un lugar diseñado para hombres que buscan más que un simple corte de cabello.
+          </p>
+
+          <div class="nosotros-body">
+            <div class="reveal reveal-d1">
+              <h3 class="nosotros-block-title">Estilo y confianza al más alto nivel</h3>
+              <p class="nosotros-block-text">Madrid es un epicentro de estilo y moda, y queremos asegurarnos de que tu imagen esté a la altura. En nuestra barbería, no solo cuidamos tu apariencia; te ayudamos a proyectar confianza y elegancia en cada rincón de la ciudad.</p>
+            </div>
+            <div class="reveal reveal-d2">
+              <h3 class="nosotros-block-title">La experiencia y el arte del grooming en Madrid</h3>
+              <p class="nosotros-block-text">En Escarcha Grooming Club, sabemos que un buen estilo comienza con un cabello sano y un cuero cabelludo bien cuidado. Nuestra fundadora, Andrea Escarcha, comenzó en el mundo de la peluquería femenina, lo que le aportó valores y conocimientos que rara vez se encuentran en las barberías clásicas: la importancia del cuero cabelludo, el entendimiento profundo de la cosmetología y el vínculo directo entre un cuero cabelludo sano y un cabello fuerte.</p>
+            </div>
+            <div class="reveal reveal-d3">
+              <h3 class="nosotros-block-title">Más que una barbería: Un club exclusivo</h3>
+              <p class="nosotros-block-text">En Escarcha Grooming Club, no se trata de entrar y salir. Aquí, formar parte del club es una experiencia. Cada cliente es un miembro valioso de nuestra comunidad, donde el estilo se entiende como un reflejo de éxito, confianza y distinción. Porque en Escarcha Grooming Club, no solo se trata de cómo te ves, sino de cómo te sientes. Aquí, el grooming es un arte, y tú eres nuestra obra maestra.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: datos destacados -->
+        <div class="nosotros-deco reveal reveal-d1">
+          <div class="nosotros-deco-line">
+            <span class="nosotros-deco-num">10+</span>
+            <div class="nosotros-deco-label">
+              <strong>Años de experiencia</strong>
+              Fundada por Andrea Escarcha, con raíces en la peluquería de alta gama
+            </div>
+          </div>
+          <div class="nosotros-deco-line">
+            <span class="nosotros-deco-num">100%</span>
+            <div class="nosotros-deco-label">
+              <strong>Productos premium</strong>
+              Solo trabajamos con marcas de primera línea para cuidar tu cabello
+            </div>
+          </div>
+          <div class="nosotros-deco-line">
+            <span class="nosotros-deco-num">6</span>
+            <div class="nosotros-deco-label">
+              <strong>Servicios exclusivos</strong>
+              Desde el corte hasta la experiencia completa de grooming
+            </div>
+          </div>
+          <div class="nosotros-deco-line">
+            <span class="nosotros-deco-num">Lun<br>—Sáb</span>
+            <div class="nosotros-deco-label">
+              <strong>Abierto toda la semana</strong>
+              Lunes a viernes 10:00–21:00 · Sábado 10:00–15:00
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       3. SERVICIOS + PRECIOS
+       PRECIOS — Actualizar con tarifas reales del negocio
+  ================================================================= -->
+  <section id="servicios" class="sec" aria-labelledby="srv-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="section-label">Nuestros servicios</span>
+        <h2 class="section-title" id="srv-title">Una experiencia<br>a tu medida</h2>
+        <span class="gold-divider"></span>
+        <p style="color:var(--color-gray);max-width:500px;font-size:0.88rem;line-height:1.8">
+          Cada servicio es un ritual. Productos de primera línea, técnicas refinadas y un equipo
+          comprometido con la excelencia.
+        </p>
+      </div>
+
+      <!-- Tabs y paneles renderizados por JS desde SERVICIOS_CATS -->
+      <div class="srv-tabs reveal" id="srv-tabs"></div>
+      <div id="srv-panels"></div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       4. EQUIPO
+       FOTOS — Reemplazar .ph-avatar con <img src="..."> reales
+       NOMBRES — Actualizar nombre y especialidad de cada barbero
+  ================================================================= -->
+  <section id="equipo" class="sec" aria-labelledby="team-title">
+    <div class="container">
+      <div class="sec-head center reveal">
+        <span class="section-label">Quiénes somos</span>
+        <h2 class="section-title" id="team-title">El equipo Escarcha</h2>
+        <span class="gold-divider"></span>
+        <p style="color:var(--color-gray);max-width:460px;margin:0 auto;font-size:0.88rem;line-height:1.8">
+          Maestros del grooming con años de experiencia. Cada barbero es un artista
+          comprometido con el detalle y la excelencia.
+        </p>
+      </div>
+
+      <!-- Equipo cargado dinámicamente desde /api/barberos -->
+      <div class="team-grid" id="team-grid">
+        <!-- placeholder mientras carga -->
+        <article class="team-card reveal"><div class="team-photo"><div class="ph-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div></div><h3 class="team-name" style="opacity:.3">—</h3><p class="team-role" style="opacity:.3">Cargando…</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       5. GALERÍA — Masonry CSS puro (0 JS)
+       IMÁGENES — Reemplazar .g-ph con <img src="..." alt="...">
+       Ejemplo: <img src="img/galeria/foto1.jpg" alt="Fade clásico Madrid">
+  ================================================================= -->
+  <section id="galeria" class="sec" aria-labelledby="gal-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="section-label">Galería</span>
+        <h2 class="section-title" id="gal-title">El trabajo<br>habla solo</h2>
+        <span class="gold-divider"></span>
+      </div>
+
+      <div class="gallery">
+
+        <div class="g-item reveal">
+          <!-- FOTO — src="img/galeria/foto1.jpg" alt="descripción" -->
+          <div class="g-ph" role="img" aria-label="Imagen galería 1"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal reveal-d1">
+          <div class="g-ph" role="img" aria-label="Imagen galería 2"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal reveal-d2">
+          <div class="g-ph" role="img" aria-label="Imagen galería 3"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal">
+          <div class="g-ph" role="img" aria-label="Imagen galería 4"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal reveal-d1">
+          <div class="g-ph" role="img" aria-label="Imagen galería 5"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal reveal-d2">
+          <div class="g-ph" role="img" aria-label="Imagen galería 6"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal">
+          <div class="g-ph" role="img" aria-label="Imagen galería 7"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+        <div class="g-item reveal reveal-d1">
+          <div class="g-ph" role="img" aria-label="Imagen galería 8"></div>
+          <div class="g-ov" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+
+      </div><!-- /gallery -->
+
+      <div style="text-align:center;margin-top:48px;" class="reveal">
+        <a href="https://www.instagram.com/escarchasalonformen" target="_blank" rel="noopener noreferrer" class="btn-outline">
+          Ver más en Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       6. RESERVAS — Cal.com embed
+       CAL.COM — Cambiar el src del iframe por la URL real:
+       Ejemplo: https://cal.com/escarcha-grooming
+       O con servicio específico: https://cal.com/escarcha-grooming/corte
+       Añade ?theme=dark para usar el tema oscuro nativo de Cal
+  ================================================================= -->
+  <section id="reservas" class="sec" aria-labelledby="res-title">
+    <div class="container">
+      <div class="booking-wrap">
+
+        <div class="sec-head center reveal">
+          <span class="section-label">Agenda online</span>
+          <h2 class="section-title" id="res-title">Reserva tu Cita</h2>
+          <span class="gold-divider"></span>
+          <p style="color:var(--color-gray);max-width:440px;margin:0 auto;font-size:0.88rem;line-height:1.8">
+            Elige el servicio, el barbero y el horario. Confirmación inmediata por email.
+          </p>
+        </div>
+
+        <!-- ── Widget de Reservas ───────────────────────────────────── -->
+        <div class="bk-widget reveal" id="bk-widget">
+
+          <!-- Barra de progreso -->
+          <div class="bk-progress" id="bk-progress" role="list">
+            <div class="bk-progress-step active" data-step="1" role="listitem">
+              <span class="bk-progress-num">1</span>
+              <span class="bk-progress-label">Servicio</span>
+            </div>
+            <div class="bk-progress-step" data-step="2" role="listitem">
+              <span class="bk-progress-num">2</span>
+              <span class="bk-progress-label">Barbero</span>
+            </div>
+            <div class="bk-progress-step" data-step="3" role="listitem">
+              <span class="bk-progress-num">3</span>
+              <span class="bk-progress-label">Fecha &amp; Hora</span>
+            </div>
+            <div class="bk-progress-step" data-step="4" role="listitem">
+              <span class="bk-progress-num">4</span>
+              <span class="bk-progress-label">Tus datos</span>
+            </div>
+            <div class="bk-progress-step" data-step="5" role="listitem">
+              <span class="bk-progress-num">5</span>
+              <span class="bk-progress-label">Confirmación</span>
+            </div>
+          </div>
+
+          <div class="bk-body">
+
+            <!-- PASO 1: Servicio -->
+            <div class="bk-step active" id="bk-step-1">
+              <p class="bk-step-title">¿Qué servicio deseas?</p>
+              <div class="bk-cat-tabs" id="bk-cat-tabs"></div>
+              <div class="bk-cards" id="bk-services"></div>
+              <p class="bk-error" id="bk-err-1"></p>
+              <div class="bk-nav"><div class="bk-nav-right"><button class="btn-gold" id="bk-next-1">Siguiente</button></div></div>
+            </div>
+
+            <!-- PASO 2: Barbero -->
+            <div class="bk-step" id="bk-step-2">
+              <p class="bk-step-title">Elige tu barbero</p>
+              <!-- Barberos cargados dinámicamente desde /api/barberos -->
+              <div class="bk-cards" id="bk-barbers">
+                <span style="color:var(--color-gray);font-size:0.82rem">Cargando barberos…</span>
+              </div>
+              <p class="bk-error" id="bk-err-2"></p>
+              <div class="bk-nav">
+                <button class="btn-outline" id="bk-prev-2">Atrás</button>
+                <div class="bk-nav-right"><button class="btn-gold" id="bk-next-2">Siguiente</button></div>
+              </div>
+            </div>
+
+            <!-- PASO 3: Fecha y hora -->
+            <div class="bk-step" id="bk-step-3">
+              <p class="bk-step-title">Selecciona fecha y hora</p>
+              <div class="bk-cal-wrap">
+                <div class="bk-calendar">
+                  <div class="bk-cal-header">
+                    <button class="bk-cal-nav" id="bk-cal-prev" aria-label="Mes anterior">&#8249;</button>
+                    <span class="bk-cal-month" id="bk-cal-month"></span>
+                    <button class="bk-cal-nav" id="bk-cal-next" aria-label="Mes siguiente">&#8250;</button>
+                  </div>
+                  <div class="bk-cal-grid" id="bk-cal-grid"></div>
+                </div>
+                <div class="bk-slots-wrap">
+                  <p class="bk-slots-title" id="bk-slots-title">Selecciona un día</p>
+                  <div class="bk-slots" id="bk-slots"></div>
+                </div>
+              </div>
+              <p class="bk-error" id="bk-err-3"></p>
+              <div class="bk-nav">
+                <button class="btn-outline" id="bk-prev-3">Atrás</button>
+                <div class="bk-nav-right"><button class="btn-gold" id="bk-next-3">Siguiente</button></div>
+              </div>
+            </div>
+
+            <!-- PASO 4: Datos personales -->
+            <div class="bk-step" id="bk-step-4">
+              <p class="bk-step-title">Tus datos de contacto</p>
+              <div class="bk-form-grid">
+                <div class="bk-field">
+                  <label class="bk-label" for="bk-nombre">Nombre completo *</label>
+                  <input class="bk-input" id="bk-nombre" type="text" placeholder="Tu nombre" autocomplete="name" required>
+                </div>
+                <div class="bk-field">
+                  <label class="bk-label" for="bk-telefono">Teléfono *</label>
+                  <input class="bk-input" id="bk-telefono" type="tel" placeholder="+34 600 000 000" autocomplete="tel" required>
+                </div>
+                <div class="bk-field full">
+                  <label class="bk-label" for="bk-email">Email *</label>
+                  <input class="bk-input" id="bk-email" type="email" placeholder="tu@email.com" autocomplete="email" required>
+                </div>
+                <div class="bk-field full" style="margin-top:8px; display:flex; align-items:flex-start; gap:10px;">
+                  <input type="checkbox" id="bk-gdpr" style="margin-top:4px;cursor:pointer" required>
+                  <label for="bk-gdpr" style="font-size:0.75rem; color:var(--color-gray); line-height:1.4;cursor:pointer">
+                    He leído y acepto la <a href="#privacidad" onclick="document.getElementById('modal-privacidad').classList.add('active');return false;" style="color:var(--color-gold);text-decoration:underline;">Política de Privacidad</a> y el tratamiento de mis datos personales para la gestión de la cita.
+                  </label>
+                </div>
+              </div>
+              <p class="bk-error" id="bk-err-4"></p>
+              <div class="bk-nav">
+                <button class="btn-outline" id="bk-prev-4">Atrás</button>
+                <div class="bk-nav-right"><button class="btn-gold" id="bk-next-4">Revisar reserva</button></div>
+              </div>
+            </div>
+
+            <!-- PASO 5: Confirmación -->
+            <div class="bk-step" id="bk-step-5">
+              <p class="bk-step-title">Resumen de tu reserva</p>
+              <div class="bk-summary" id="bk-summary"></div>
+              <p class="bk-error" id="bk-err-5"></p>
+              <div class="bk-nav">
+                <button class="btn-outline" id="bk-prev-5">Atrás</button>
+                <div class="bk-nav-right"><button class="btn-gold" id="bk-confirm">Confirmar Cita</button></div>
+              </div>
+            </div>
+
+          </div><!-- /.bk-body -->
+
+          <!-- Pantalla de éxito -->
+          <div class="bk-success" id="bk-success">
+            <div class="bk-success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h3 class="bk-success-title">¡Reserva confirmada!</h3>
+            <p class="bk-success-sub">Te esperamos en Escarcha Grooming Club.<br>Recibirás un recordatorio próximamente.</p>
+            <p class="bk-success-sub" id="bk-success-detail"></p>
+            <span class="bk-success-id" id="bk-success-id"></span>
+            <div style="margin-top:32px">
+              <button class="btn-outline" id="bk-reset">Hacer otra reserva</button>
+            </div>
+          </div>
+
+        </div><!-- /.bk-widget -->
+
+        <p class="booking-note reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/>
+          </svg>
+          También puedes llamarnos directamente al
+          <a href="tel:+34611714523" style="color:var(--color-gold);white-space:nowrap;">+34 611 714 523</a>
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       7. BLOG
+       ARTÍCULOS — Reemplazar textos e imágenes por contenido real
+       ENLACES — Cambiar href="#" por URL real de cada artículo
+  ================================================================= -->
+  <section id="blog" class="sec" aria-labelledby="blog-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="section-label">Consejos &amp; tendencias</span>
+        <h2 class="section-title" id="blog-title">El diario<br>del caballero</h2>
+        <span class="gold-divider"></span>
+      </div>
+
+      <div class="blog-grid">
+
+        <!-- ARTÍCULO 1 — Cambiar imagen, categoría, título, extracto y href -->
+        <article class="blog-card reveal">
+          <div class="b-img">
+            <!-- FOTO — Cambiar por: <img src="img/blog/art1.jpg" alt="titulo"> -->
+            <span class="b-badge">Tendencias</span>
+          </div>
+          <div class="b-body">
+            <p class="b-cat">Tendencias 2025</p>
+            <!-- TÍTULO — Cambiar por título real del artículo -->
+            <h3 class="b-title">Los cortes masculinos que marcarán el año en Madrid</h3>
+            <!-- EXTRACTO — Cambiar por extracto real -->
+            <p class="b-excerpt">Desde el undercut clásico hasta las texturas naturales, exploramos los estilos que los mejores barberos llevan a otro nivel este año.</p>
+            <!-- ENLACE — Cambiar href por URL real del artículo -->
+            <a href="#" class="b-link">Leer más →</a>
+          </div>
+        </article>
+
+        <!-- ARTÍCULO 2 — Cambiar imagen, categoría, título, extracto y href -->
+        <article class="blog-card reveal reveal-d1">
+          <div class="b-img">
+            <!-- FOTO — Cambiar por: <img src="img/blog/art2.jpg" alt="titulo"> -->
+            <span class="b-badge">Cuidado</span>
+          </div>
+          <div class="b-body">
+            <p class="b-cat">Cuidado &amp; Grooming</p>
+            <!-- TÍTULO — Cambiar por título real del artículo -->
+            <h3 class="b-title">Guía definitiva para el cuidado de la barba en casa</h3>
+            <!-- EXTRACTO — Cambiar por extracto real -->
+            <p class="b-excerpt">El mantenimiento entre visitas marca la diferencia. Productos esenciales y rutina diaria para una barba siempre impecable.</p>
+            <!-- ENLACE — Cambiar href por URL real del artículo -->
+            <a href="#" class="b-link">Leer más →</a>
+          </div>
+        </article>
+
+        <!-- ARTÍCULO 3 — Cambiar imagen, categoría, título, extracto y href -->
+        <article class="blog-card reveal reveal-d2">
+          <div class="b-img">
+            <!-- FOTO — Cambiar por: <img src="img/blog/art3.jpg" alt="titulo"> -->
+            <span class="b-badge">Ritual</span>
+          </div>
+          <div class="b-body">
+            <p class="b-cat">Ritual &amp; Experiencia</p>
+            <!-- TÍTULO — Cambiar por título real del artículo -->
+            <h3 class="b-title">Por qué el afeitado clásico con navaja es el mayor lujo masculino</h3>
+            <!-- EXTRACTO — Cambiar por extracto real -->
+            <p class="b-excerpt">Una tradición centenaria que va más allá de la higiene. El ritual, los ingredientes y la experiencia que solo una barbería premium puede ofrecer.</p>
+            <!-- ENLACE — Cambiar href por URL real del artículo -->
+            <a href="#" class="b-link">Leer más →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       8. FOOTER
+  ================================================================= -->
+  <footer id="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="ft-top">
+
+        <!-- Marca -->
+        <div>
+          <div class="ft-logo">ESCARCHA</div>
+          <p class="ft-claim">"Más que una barbería"</p>
+          <div class="ft-social">
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/escarchasalonformen" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a href="https://wa.me/34611714523" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </a>
+            <!-- Teléfono -->
+            <a href="tel:+34611714523" aria-label="Llamar">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l1.27-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <div>
+          <p class="ft-col-title">Navegación</p>
+          <ul class="ft-nav">
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#equipo">Equipo</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#reservas">Reservar</a></li>
+          </ul>
+        </div>
+
+        <!-- Horario -->
+        <div>
+          <p class="ft-col-title">Horario</p>
+          <div class="ft-hours">
+            <p><strong>Lun — Vie</strong></p>
+            <p>10:00 — 21:00</p>
+            <br>
+            <p><strong>Sábados</strong></p>
+            <p>10:00 — 15:00</p>
+            <br>
+            <p>Domingos: cerrado</p>
+          </div>
+        </div>
+
+        <!-- Contacto -->
+        <div>
+          <p class="ft-col-title">Contacto</p>
+          <div class="ft-info">
+            <p>
+              <strong>Dirección</strong><br>
+              C/ Rosario Pino, 18<br>
+              28020 Madrid
+            </p>
+            <br>
+            <p>
+              <strong>Teléfono</strong><br>
+              <a href="tel:+34611714523">+34 611 714 523</a>
+            </p>
+            <br>
+            <p>
+              <strong>Instagram</strong><br>
+              <a href="https://www.instagram.com/escarchasalonformen" target="_blank" rel="noopener noreferrer">
+                @escarchasalonformen
+              </a>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /ft-top -->
+
+      <div class="ft-bottom">
+        <p class="ft-copy">&copy; 2025 Escarcha Grooming Club. Todos los derechos reservados.</p>
+        <div class="ft-legal">
+          <!-- CAMBIAR — Añadir URLs reales de aviso legal y privacidad -->
+          <a href="#aviso-legal" onclick="document.getElementById('modal-aviso').classList.add('active');return false;">Aviso legal</a>
+          <a href="#privacidad" onclick="document.getElementById('modal-privacidad').classList.add('active');return false;">Privacidad</a>
+          <a href="#cookies" onclick="document.getElementById('modal-cookies').classList.add('active');return false;">Cookies</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =================================================================
+       JAVASCRIPT — Puro, sin dependencias externas
+  ================================================================= -->
+  <script>
+    // ===================================================================
+    // HEADER — Fondo blur al hacer scroll
+    // ===================================================================
+    const hd = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      hd.classList.toggle('scrolled', window.scrollY > 55);
+    }, { passive: true });
+
+    // ===================================================================
+    // HERO BG — Zoom suave al cargar
+    // ===================================================================
+    window.addEventListener('load', () => {
+      const bg = document.getElementById('heroBg');
+      if (bg) bg.classList.add('loaded');
+    });
+
+    // ===================================================================
+    // HAMBURGER — Menú móvil
+    // ===================================================================
+    const hbg    = document.getElementById('hbg');
+    const mobNav = document.getElementById('mobNav');
+
+    hbg.addEventListener('click', () => {
+      const open = mobNav.classList.toggle('open');
+      hbg.classList.toggle('open', open);
+      hbg.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    function closeNav() {
+      mobNav.classList.remove('open');
+      hbg.classList.remove('open');
+      hbg.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobNav.classList.contains('open')) closeNav();
+    });
+
+    // ===================================================================
+    // INTERSECTION OBSERVER — Fade-in al hacer scroll
+    // ===================================================================
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -36px 0px' }
+    );
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Hero ya visible al cargar
+    document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+
+    // ===================================================================
+    // SMOOTH SCROLL — Con offset por el header fijo
+    // ===================================================================
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id === '#') return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        const offset = hd.offsetHeight + 12;
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+  <!-- ── Catálogo de servicios ─────────────────────────────────────────────── -->
+  <script>
+  const SERVICIOS_CATS = [
+    { id:'rituales', label:'Rituales', servicios:[
+      { id:'blue-label',     name:'Blue Label',                  sub:'Corte + Ritual Detox + Barba Spa',       desc:'La experiencia más completa: corte con asesoramiento, limpieza profunda del cuero cabelludo y cuidado premium de la barba.', precio:60,   dur:'70 min' },
+      { id:'gold-label',     name:'Gold Label',                  sub:'Corte + Ritual Relax + Barba Spa',       desc:'Relajación en estado puro: corte con asesoramiento, lavado con masaje relajante y cuidado de la barba premium.',            precio:50,   dur:'60 min' },
+      { id:'green-label',    name:'Green Label',                 sub:'Corte + Ritual Detox + Higiene Facial',  desc:'Renovación total: corte con asesoramiento, limpieza detox del cuero cabelludo e higiene facial relajante.',                 precio:40,   dur:'45 min' },
+      { id:'black-label',    name:'Black Label',                 sub:'Barba / Afeitado Spa',                   desc:'Barba o afeitado premium con toalla caliente, navaja y limpieza con masaje facial y productos orgánicos.',                 precio:30,   dur:'30 min' },
+      { id:'red-label',      name:'Red Label',                   sub:'Corte + Ritual Relax',                   desc:'Básico elevado: corte con asesoramiento y lavado con masaje para desconectar y renovar tu estilo.',                       precio:23,   dur:'30 min' },
+      { id:'corte-barba',    name:'Corte + Arreglo de barba',    sub:'',                                       desc:'Diseño de corte a medida con asesoramiento personalizado y definición y perfilado de barba con técnicas de precisión.',    precio:40,   dur:'60 min' },
+      { id:'rapado-barba',   name:'Rapado cabeza + Arreglo barba', sub:'Mismo nº',                             desc:'Máquina por toda la cabeza al mismo número, con estilo y definición y perfilado de barba.',                              precio:35,   dur:'45 min' },
+    ]},
+    { id:'cortes', label:'Cortes', servicios:[
+      { id:'corte-relax',    name:'Corte + Ritual Relax',        sub:'',                                       desc:'Básico elevado: corte con asesoramiento y lavado con masaje para desconectar y renovar tu estilo.',                       precio:23,   dur:'30 min' },
+      { id:'corte-caballero',name:'Corte Caballero',             sub:'',                                       desc:'Diseño a medida para cualquier ocasión, con asesoramiento personalizado para resaltar tu mejor versión.',                 precio:20,   dur:'30 min' },
+      { id:'skin-fade',      name:'Corte Skin Fade',             sub:'Degradado con shaver',                   desc:'Corte degradado con shaver (afeitado). Siempre con previo asesoramiento.',                                               precio:22,   dur:'40 min' },
+      { id:'corte-detox',    name:'Corte + Ritual Detox',        sub:'',                                       desc:'Diseño a medida, con asesoramiento y limpieza profunda del cuero cabelludo.',                                            precio:31.9, dur:'40 min' },
+      { id:'rapado',         name:'Rapado de cabeza',            sub:'Mismo número',                           desc:'Corte con máquina por toda la cabeza a un mismo número, pero con estilo.',                                               precio:15,   dur:'15 min' },
+      { id:'afeitado-cabeza',name:'Afeitado Cabeza a navaja',    sub:'',                                       desc:'Afeitado clásico con toalla caliente, navaja y masaje con productos exclusivos.',                                        precio:21,   dur:'30 min' },
+      { id:'cambio-look',    name:'Cambio de look + Análisis facial', sub:'',                                  desc:'Asesoría de imagen completa según tus facciones y corte nuevo y adaptado a ti.',                                          precio:38,   dur:'60 min' },
+      { id:'corte-nino',     name:'Corte niño',                  sub:'',                                       desc:'',                                                                                                                       precio:20,   dur:'30 min' },
+      { id:'peinado',        name:'Peinado',                     sub:'',                                       desc:'Con forma y a tu medida. Ideal para salir con el look perfecto.',                                                        precio:8,    dur:'15 min' },
+    ]},
+    { id:'barba', label:'Barba', servicios:[
+      { id:'arreglo-barba',  name:'Arreglo de Barba',            sub:'',                                       desc:'Definición y perfilado con técnicas que combinan precisión y relajación.',                                               precio:20,   dur:'30 min' },
+      { id:'barba-spa',      name:'Barba / Afeitado Spa',        sub:'',                                       desc:'',                                                                                                                       precio:30,   dur:'30 min' },
+      { id:'barba-sin-afeit',name:'Arreglo de Barba sin Afeitado', sub:'',                                     desc:'Definición y forma con tijera y máquina, sin rasurado. Barba limpia, alineada y con estilo.',                            precio:17,   dur:'15 min' },
+      { id:'bigote',         name:'Arreglo Bigote',              sub:'',                                       desc:'Definición y forma. Precisión en cada detalle para un bigote impecable.',                                                precio:9,    dur:'15 min' },
+      { id:'ritual-afeitado',name:'Ritual de Afeitado',          sub:'',                                       desc:'Un Clásico de Lujo: Ritual con toalla caliente, navaja y masaje con productos exclusivos.',                              precio:21,   dur:'30 min' },
+    ]},
+    { id:'extras', label:'Extras', servicios:[
+      { id:'analisis-facial',name:'Análisis facial',             sub:'',                                       desc:'Estudio de proporciones y estructura facial. Te proponemos los estilos que más te favorecen.',                            precio:20,   dur:'30 min' },
+      { id:'active-caida',   name:'ACTIVE: Prevención Caída',   sub:'',                                       desc:'Tratamiento específico con Baicapil, Procapil y Tricorexina para frenar la caída y fortalecer el cabello.',               precio:5,    dur:'5 min'  },
+      { id:'energizing',     name:'Energizing Lotion',          sub:'Energiza y equilibra el pH',              desc:'Loción que energiza el cuero cabelludo, regula el pH y mejora la oxigenación.',                                           precio:3,    dur:'1 min'  },
+      { id:'ritual-relax-x', name:'Ritual Relax',               sub:'Más que un lavado',                       desc:'Lavado con champú orgánico, blend personalizado y masaje craneal. Un momento de desconexión total.',                      precio:3,    dur:'1 min'  },
+    ]},
+    { id:'color', label:'Color', servicios:[
+      { id:'cam-cejas',      name:'Camuflaje Canas Cejas',       sub:'',                                       desc:'Disimula las canas con un acabado natural.',                                                                              precio:8,    dur:'10 min' },
+      { id:'cam-canas',      name:'Camuflaje de canas',          sub:'Orgánico',                               desc:'Acabado natural, rápido y sin efecto raíz. Descuento 10% en línea de lavado el día del servicio.',                        precio:25,   dur:'45 min' },
+      { id:'cam-barba',      name:'Camuflaje de canas en Barba', sub:'Orgánico',                               desc:'Acabado natural, rápido y sin efecto raíz. Descuento 10% en línea de lavado el día del servicio.',                        precio:15,   dur:'15 min' },
+      { id:'decoloracion',   name:'Decoloración',                sub:'',                                       desc:'Aclara, matiza o dale luz a tu estilo. Cada caso es único, te asesoramos sin compromiso.',                                precio:80,   dur:'60 min' },
+      { id:'mechas',         name:'Mechas / Reflejos',           sub:'',                                       desc:'Aclara, matiza o dale luz a tu estilo. Cada caso es único, te asesoramos sin compromiso.',                                precio:31.5, dur:'75 min' },
+    ]},
+    { id:'faciales', label:'Faciales', servicios:[
+      { id:'higiene-facial', name:'Higiene Facial',              sub:'',                                       desc:'Limpieza profunda con exfoliación, toalla caliente y masaje. Piel libre de impurezas, suave y revitalizada.',              precio:20,   dur:'15 min' },
+    ]},
+    { id:'depilacion', label:'Depilación Cera', servicios:[
+      { id:'dep-cejas',      name:'Depilación Cera Cejas',       sub:'',  desc:'', precio:9,  dur:'15 min' },
+      { id:'dep-entrecejo',  name:'Depilación Cera Entrecejo',   sub:'',  desc:'', precio:4,  dur:'5 min'  },
+      { id:'dep-nariz',      name:'Depilación Cera Nariz',       sub:'',  desc:'', precio:6,  dur:'5 min'  },
+      { id:'dep-orejas',     name:'Depilación Cera Orejas',      sub:'',  desc:'', precio:6,  dur:'5 min'  },
+      { id:'dep-pomulos',    name:'Depilación Cera Pómulos',     sub:'',  desc:'', precio:6,  dur:'5 min'  },
+    ]},
+    { id:'tratamientos', label:'Tratamientos', servicios:[
+      { id:'microcamara',    name:'Ciencia y Naturaleza',        sub:'Análisis Microcámara + Tratamiento',     desc:'Soluciones a medida para picor, caspa, irritaciones o dermatitis/psoriasis con líneas orgánicas de alta calidad.',          precio:40,   dur:'45 min' },
+      { id:'ritual-detox',   name:'Ritual Detox',               sub:'Limpieza profunda cuero cabelludo',       desc:'Limpieza profunda del cuero cabelludo con productos orgánicos. El ritual perfecto antes de cualquier tratamiento.',         precio:20,   dur:'15 min' },
+    ]},
+    { id:'alisados', label:'Alisados', servicios:[
+      { id:'smooth-control', name:'Smooth Control',             sub:'Alisado Orgánico',                        desc:'Cabello liso, suave y sin encrespamiento durante meses, con fórmula natural que respeta tu cuero cabelludo.',               precio:80,   dur:'120 min'},
+      { id:'straight-pro',   name:'Straight Pro',               sub:'Alisado permanente (no orgánico)',         desc:'Alisado duradero y de alto control para cabellos rebeldes. Efecto liso intenso con acabado pulido.',                        precio:45,   dur:'60 min' },
+    ]},
+  ];
+
+  // ── Renderiza la sección de servicios de la página ────────────────────────
+  (function renderSrvSection() {
+    const tabsEl   = document.getElementById('srv-tabs');
+    const panelsEl = document.getElementById('srv-panels');
+    if (!tabsEl || !panelsEl) return;
+
+    function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function fmtPrecio(p) { return Number.isInteger(p) ? p + ' €' : p.toFixed(2).replace('.',',') + ' €'; }
+
+    SERVICIOS_CATS.forEach((cat, i) => {
+      // Tab
+      const btn = document.createElement('button');
+      btn.className = 'srv-tab' + (i === 0 ? ' active' : '');
+      btn.textContent = cat.label;
+      btn.dataset.cat = cat.id;
+      tabsEl.appendChild(btn);
+
+      // Panel
+      const panel = document.createElement('div');
+      panel.className = 'srv-panel' + (i === 0 ? ' active' : '');
+      panel.id = 'srv-panel-' + cat.id;
+      panel.innerHTML = '<div class="srv-list">' + cat.servicios.map(s => `
+        <div class="srv-row">
+          <div>
+            ${s.sub ? `<p class="srv-row-subtitle">${esc(s.sub)}</p>` : ''}
+            <h3 class="srv-row-name">${esc(s.name)}</h3>
+            ${s.desc ? `<p class="srv-row-desc">${esc(s.desc)}</p>` : ''}
+          </div>
+          <div class="srv-row-right" style="display: flex; align-items: center; gap: 16px; justify-content: flex-end;">
+            <div style="text-align: right;">
+              <span class="srv-row-price">${fmtPrecio(s.precio)}</span>
+              <span class="srv-row-dur">${esc(s.dur)}</span>
+            </div>
+            <button class="btn-outline btn-reserva-directa" data-cat="${cat.id}" data-id="${s.id}" style="padding: 8px 16px; font-size: 0.6rem;">Reservar</button>
+          </div>
+        </div>`).join('') + '</div>';
+      panelsEl.appendChild(panel);
+    });
+
+    tabsEl.addEventListener('click', e => {
+      const btn = e.target.closest('.srv-tab');
+      if (!btn) return;
+      tabsEl.querySelectorAll('.srv-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      panelsEl.querySelectorAll('.srv-panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('srv-panel-' + btn.dataset.cat);
+      if (panel) panel.classList.add('active');
+    });
+
+    panelsEl.addEventListener('click', e => {
+      const btn = e.target.closest('.btn-reserva-directa');
+      if (btn) {
+        const catId = btn.dataset.cat;
+        const srvId = btn.dataset.id;
+        window.dispatchEvent(new CustomEvent('reserva-directa', { detail: { catId, srvId } }));
+      }
+    });
+
+  })();
+  </script>
+
+  <!-- ── Widget de Reservas — lógica ──────────────────────────────────────── -->
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Estado ────────────────────────────────────────────────────────────────
+    const state = {
+      step: 1,
+      servicio: null,   // { id, name, price }
+      barbero:  null,   // { id, name }
+      fecha:    null,   // 'YYYY-MM-DD'
+      hora:     null,   // 'HH:MM'
+      nombre:   '',
+      email:    '',
+      telefono: '',
+      // calendario
+      calYear:  new Date().getFullYear(),
+      calMonth: new Date().getMonth(),
+      // slots disponibles cargados del servidor (por fecha)
+      slotsCache: {},
+    };
+
+    // ── Helpers DOM ───────────────────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+    const setErr = (id, msg) => { const el = $(id); if (el) el.textContent = msg; };
+    const clearErr = id => setErr(id, '');
+
+    // ── Progreso ──────────────────────────────────────────────────────────────
+    function updateProgress(step) {
+      document.querySelectorAll('.bk-progress-step').forEach(el => {
+        const s = +el.dataset.step;
+        el.classList.toggle('active', s === step);
+        el.classList.toggle('done',   s < step);
+      });
+    }
+
+    function escHtml(s) {
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function showStep(n) {
+      document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
+      const s = $('bk-step-' + n);
+      if (s) s.classList.add('active');
+      $('bk-progress').style.display = 'flex';
+      $('bk-success').classList.remove('active');
+      state.step = n;
+      updateProgress(n);
+      if (n === 2) loadAndRenderBarberos();
+    }
+
+    // ── Paso 1: Servicio (renderizado desde SERVICIOS_CATS) ──────────────────
+    let _activeCat = SERVICIOS_CATS[0].id;
+
+    function renderServicioCards() {
+      const cat = SERVICIOS_CATS.find(c => c.id === _activeCat) || SERVICIOS_CATS[0];
+      const container = $('bk-services');
+      container.innerHTML = cat.servicios.map(s => `
+        <button class="bk-card${state.servicio && state.servicio.id === s.id ? ' selected' : ''}"
+                data-id="${escHtml(s.id)}" data-name="${escHtml(s.name)}" data-price="${s.precio}">
+          <p class="bk-card-name">${escHtml(s.name)}</p>
+          ${s.sub ? `<p class="bk-card-desc" style="font-size:0.7rem;color:var(--color-gold);opacity:.8;margin-bottom:4px">${escHtml(s.sub)}</p>` : ''}
+          ${s.desc ? `<p class="bk-card-desc">${escHtml(s.desc)}</p>` : ''}
+          <span class="bk-card-price">${Number.isInteger(s.precio) ? s.precio : s.precio.toFixed(2).replace('.',',')} € · ${escHtml(s.dur)}</span>
+        </button>`).join('');
+
+      container.querySelectorAll('.bk-card').forEach(card => {
+        card.addEventListener('click', () => {
+          container.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          state.servicio = { id: card.dataset.id, name: card.dataset.name, price: card.dataset.price };
+          clearErr('bk-err-1');
+        });
+      });
+    }
+
+    function renderCatTabs() {
+      const tabsEl = $('bk-cat-tabs');
+      tabsEl.innerHTML = SERVICIOS_CATS.map(c =>
+        `<button class="bk-cat-tab${c.id === _activeCat ? ' active' : ''}" data-cat="${c.id}">${escHtml(c.label)}</button>`
+      ).join('');
+      tabsEl.querySelectorAll('.bk-cat-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          _activeCat = btn.dataset.cat;
+          tabsEl.querySelectorAll('.bk-cat-tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          renderServicioCards();
+        });
+      });
+    }
+
+    renderCatTabs();
+    renderServicioCards();
+
+    $('bk-next-1').addEventListener('click', () => {
+      if (!state.servicio) { setErr('bk-err-1', 'Por favor selecciona un servicio.'); return; }
+      showStep(2);
+    });
+
+    // ── Paso 2: Barbero (dinámico desde API) ──────────────────────────────────
+    let _barberosCache = null;
+
+    async function loadAndRenderBarberos() {
+      const container = $('bk-barbers');
+      if (_barberosCache) { renderBarberoCards(_barberosCache); return; }
+      container.innerHTML = '<span style="color:var(--color-gray);font-size:0.82rem">Cargando barberos…</span>';
+      try {
+        const r = await fetch('/api/barberos');
+        _barberosCache = await r.json();
+        renderBarberoCards(_barberosCache);
+      } catch {
+        container.innerHTML = '<span style="color:#e05252;font-size:0.82rem">No se pudieron cargar los barberos. Recarga la página.</span>';
+      }
+    }
+
+    function renderBarberoCards(barberos) {
+      const container = $('bk-barbers');
+      container.innerHTML = '';
+      barberos.forEach(b => {
+        const fullName = `${b.nombre} ${b.apellido || ''}`.trim();
+        const btn = document.createElement('button');
+        btn.className = 'bk-card' + (state.barbero && state.barbero.id === b.id ? ' selected' : '');
+        btn.type = 'button';
+        const fotoHTML = b.foto
+          ? `<img src="${escHtml(b.foto)}" alt="${escHtml(fullName)}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;margin-bottom:10px;border:1px solid var(--color-border);display:block">`
+          : '';
+        btn.innerHTML = `${fotoHTML}<p class="bk-card-name">${escHtml(fullName)}</p><p class="bk-card-role">${escHtml(b.rol)}</p>`;
+        btn.addEventListener('click', () => {
+          container.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
+          btn.classList.add('selected');
+          state.barbero = { id: b.id, name: fullName };
+          clearErr('bk-err-2');
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    $('bk-prev-2').addEventListener('click', () => showStep(1));
+    $('bk-next-2').addEventListener('click', () => {
+      if (!state.barbero) { setErr('bk-err-2', 'Por favor selecciona un barbero.'); return; }
+      showStep(3);
+      renderCalendar();
+    });
+
+    // ── Paso 3: Calendario ────────────────────────────────────────────────────
+    const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const DAYS   = ['L','M','X','J','V','S','D'];
+    // Horario por defecto cuando el admin no ha configurado slots
+    const DEFAULT_HORAS = ['10:00','10:45','11:30','12:15','13:00','16:00','16:45','17:30','18:15','19:00','19:45'];
+
+    function isoDate(y, m, d) {
+      return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+
+    async function fetchSlots(fecha) {
+      if (state.slotsCache[fecha] !== undefined) return state.slotsCache[fecha];
+      try {
+        const r = await fetch(`/api/disponibilidad?fecha=${fecha}&barbero=${state.barbero.id}`);
+        const data = await r.json();
+        // Solo mostramos los slots generados y libres del backend
+        state.slotsCache[fecha] = data;
+        return state.slotsCache[fecha];
+      } catch {
+        state.slotsCache[fecha] = [];
+        return state.slotsCache[fecha];
+      }
+    }
+
+    async function renderCalendar() {
+      const { calYear: y, calMonth: m } = state;
+      $('bk-cal-month').textContent = `${MONTHS[m]} ${y}`;
+
+      const grid = $('bk-cal-grid');
+      grid.innerHTML = '';
+      // Cabecera días de semana
+      DAYS.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'bk-cal-dow';
+        el.textContent = d;
+        grid.appendChild(el);
+      });
+
+      const firstDay = new Date(y, m, 1).getDay(); // 0=Dom
+      const start = (firstDay === 0) ? 6 : firstDay - 1; // convertir a lunes=0
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      const today = new Date(); today.setHours(0,0,0,0);
+
+      // Espacios vacíos al principio
+      for (let i = 0; i < start; i++) {
+        const blank = document.createElement('div');
+        grid.appendChild(blank);
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dt = new Date(y, m, d);
+        const iso = isoDate(y, m, d);
+        const dow = dt.getDay(); // 0=Dom, 6=Sáb
+        const btn = document.createElement('button');
+        btn.className = 'bk-cal-day';
+        btn.textContent = d;
+        btn.type = 'button';
+
+        const isPast   = dt < today;
+        const isSunday = dow === 0;
+
+        if (isPast || isSunday) {
+          btn.disabled = true;
+        } else {
+          btn.classList.add('has-slots');
+          if (dt.toDateString() === today.toDateString()) btn.classList.add('today');
+          if (state.fecha === iso) btn.classList.add('selected');
+          btn.addEventListener('click', () => {
+            state.fecha = iso;
+            state.hora = null;
+            // Limpiar selected en otros días
+            grid.querySelectorAll('.bk-cal-day').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            renderSlots(iso);
+            clearErr('bk-err-3');
+          });
+        }
+        grid.appendChild(btn);
+      }
+
+      if (state.fecha) renderSlots(state.fecha);
+    }
+
+    async function renderSlots(fecha) {
+      const wrap  = $('bk-slots');
+      const title = $('bk-slots-title');
+      wrap.innerHTML = '<span class="bk-slots-empty" style="opacity:0.5">Cargando horas…</span>';
+
+      const d = new Date(fecha + 'T00:00:00');
+      title.textContent = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+
+      const slots = await fetchSlots(fecha);
+      wrap.innerHTML = '';
+
+      if (!slots.length) {
+        wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles este día.</span>';
+        return;
+      }
+      slots.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'bk-slot' + (state.hora === s.hora ? ' selected' : '');
+        btn.textContent = s.hora;
+        btn.type = 'button';
+        btn.addEventListener('click', () => {
+          state.hora = s.hora;
+          wrap.querySelectorAll('.bk-slot').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          clearErr('bk-err-3');
+        });
+        wrap.appendChild(btn);
+      });
+    }
+
+    $('bk-cal-prev').addEventListener('click', () => {
+      if (state.calMonth === 0) { state.calYear--; state.calMonth = 11; }
+      else state.calMonth--;
+      renderCalendar();
+    });
+    $('bk-cal-next').addEventListener('click', () => {
+      if (state.calMonth === 11) { state.calYear++; state.calMonth = 0; }
+      else state.calMonth++;
+      renderCalendar();
+    });
+
+    $('bk-prev-3').addEventListener('click', () => showStep(2));
+    $('bk-next-3').addEventListener('click', () => {
+      if (!state.fecha) { setErr('bk-err-3', 'Por favor selecciona un día.'); return; }
+      if (!state.hora)  { setErr('bk-err-3', 'Por favor selecciona una hora.'); return; }
+      showStep(4);
+    });
+
+    // ── Paso 4: Datos personales ──────────────────────────────────────────────
+    $('bk-prev-4').addEventListener('click', () => showStep(3));
+    $('bk-next-4').addEventListener('click', () => {
+      const nombre   = $('bk-nombre').value.trim();
+      const email    = $('bk-email').value.trim();
+      const telefono = $('bk-telefono').value.trim();
+      const gdpr     = $('bk-gdpr').checked;
+      if (!nombre)                         { setErr('bk-err-4', 'El nombre es obligatorio.'); return; }
+      if (!email || !/\S+@\S+\.\S+/.test(email)) { setErr('bk-err-4', 'Introduce un email válido.'); return; }
+      if (!telefono)                       { setErr('bk-err-4', 'El teléfono es obligatorio.'); return; }
+      if (!gdpr)                           { setErr('bk-err-4', 'Debes aceptar la política de privacidad.'); return; }
+      state.nombre   = nombre;
+      state.email    = email;
+      state.telefono = telefono;
+      clearErr('bk-err-4');
+      renderSummary();
+      showStep(5);
+    });
+
+    // ── Paso 5: Resumen ───────────────────────────────────────────────────────
+    function renderSummary() {
+      const fecha = new Date(state.fecha + 'T00:00:00');
+      const fechaFmt = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      $('bk-summary').innerHTML = `
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Servicio</span>
+          <span class="bk-summary-value">${state.servicio.name}</span>
+        </div>
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Barbero</span>
+          <span class="bk-summary-value">${state.barbero.name}</span>
+        </div>
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Fecha</span>
+          <span class="bk-summary-value">${fechaFmt}</span>
+        </div>
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Hora</span>
+          <span class="bk-summary-value">${state.hora}</span>
+        </div>
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Nombre</span>
+          <span class="bk-summary-value">${state.nombre}</span>
+        </div>
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Email</span>
+          <span class="bk-summary-value">${state.email}</span>
+        </div>
+        <div class="bk-summary-row">
+          <span class="bk-summary-label">Teléfono</span>
+          <span class="bk-summary-value">${state.telefono}</span>
+        </div>
+        <div class="bk-summary-row bk-summary-total">
+          <span class="bk-summary-label">Total</span>
+          <span class="bk-summary-value">${state.servicio.price} €</span>
+        </div>
+      `;
+    }
+
+    $('bk-prev-5').addEventListener('click', () => showStep(4));
+    $('bk-confirm').addEventListener('click', async () => {
+      const btn = $('bk-confirm');
+      btn.disabled = true;
+      btn.textContent = 'Confirmando…';
+      clearErr('bk-err-5');
+      try {
+        const r = await fetch('/api/reservas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            servicio:  state.servicio.name,
+            precio:    state.servicio.price,
+            barbero:   state.barbero.id,
+            fecha:     state.fecha,
+            hora:      state.hora,
+            nombre:    state.nombre,
+            email:     state.email,
+            telefono:  state.telefono,
+            gdpr_aceptado: true
+          }),
+        });
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || 'Error al confirmar');
+        // Éxito
+        const fecha = new Date(state.fecha + 'T00:00:00');
+        const fechaFmt = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        $('bk-success-detail').textContent = `${state.servicio.name} · ${state.barbero.name} · ${fechaFmt} a las ${state.hora}`;
+        $('bk-success-id').textContent = `Referencia: ${data.id}`;
+        // Limpiar cache del slot reservado
+        delete state.slotsCache[state.fecha];
+        // Mostrar éxito
+        document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
+        $('bk-progress').style.display = 'none';
+        $('bk-success').classList.add('active');
+      } catch (err) {
+        setErr('bk-err-5', err.message || 'Error de conexión. Inténtalo de nuevo.');
+        btn.disabled = false;
+        btn.textContent = 'Confirmar Cita';
+      }
+    });
+
+    // ── Reset ─────────────────────────────────────────────────────────────────
+    $('bk-reset').addEventListener('click', () => {
+      Object.assign(state, {
+        step: 1, servicio: null, barbero: null, fecha: null, hora: null,
+        nombre: '', email: '', telefono: '',
+        calYear: new Date().getFullYear(), calMonth: new Date().getMonth(),
+        slotsCache: {},
+      });
+      document.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
+      ['bk-nombre','bk-email','bk-telefono'].forEach(id => { const el = $(id); if(el) el.value = ''; });
+      showStep(1);
+    });
+
+    // ── Conexión con Catálogo directo (Propuesta 1) ───────────────────────────
+    window.addEventListener('reserva-directa', e => {
+      const { catId, srvId } = e.detail;
+      
+      // 1. Scroll al widget
+      const widget = document.getElementById('reservas');
+      const offset = document.getElementById('header').offsetHeight + 12;
+      window.scrollTo({ top: widget.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+
+      // 2. Pre-seleccionar la categoría en el widget
+      _activeCat = catId;
+      renderCatTabs();
+      renderServicioCards();
+
+      // 3. Simular clic en la tarjeta de servicio correcta y avanzar
+      const card = document.querySelector(`.bk-card[data-id="${srvId}"]`);
+      if (card) {
+        card.click();
+        showStep(2);
+      }
+    });
+
+  })();
+  </script>
+
+  <!-- ── Equipo dinámico desde /api/barberos ───────────────────────────────── -->
+  <script>
+  (async function () {
+    const PLACEHOLDER_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>';
+    const DELAYS = ['', ' reveal-d1', ' reveal-d2', ' reveal-d3', ' reveal-d4'];
+    function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    const grid = document.getElementById('team-grid');
+    if (!grid) return;
+
+    try {
+      const barberos = await fetch('/api/barberos').then(r => r.json());
+      grid.innerHTML = barberos.map((b, i) => {
+        const fullName = `${b.nombre} ${b.apellido || ''}`.trim();
+        const fotoHTML = b.foto
+          ? `<img src="${esc(b.foto)}" alt="${esc(fullName)}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`
+          : `<div class="ph-avatar" aria-hidden="true">${PLACEHOLDER_SVG}</div>`;
+        return `
+          <article class="team-card reveal${DELAYS[i % DELAYS.length]}">
+            <div class="team-photo">${fotoHTML}</div>
+            <h3 class="team-name">${esc(fullName)}</h3>
+            <p class="team-role">${esc(b.rol)}</p>
+            ${b.descripcion ? `<p class="team-desc">${esc(b.descripcion)}</p>` : ''}
+          </article>`;
+      }).join('');
+    } catch {
+      grid.innerHTML = `<article class="team-card reveal"><div class="team-photo"><div class="ph-avatar" aria-hidden="true">${PLACEHOLDER_SVG}</div></div><h3 class="team-name">Nuestro Equipo</h3><p class="team-role">—</p></article>`;
+    }
+
+    // Activar animaciones reveal en los nuevos elementos
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }),
+      { threshold: 0.1, rootMargin: '0px 0px -36px 0px' }
+    );
+    grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  })();
+  </script>
+
+  <!-- Modal Política Privacidad GDPR -->
+  <style>
+    .modal-privacidad {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85); z-index: 9999;
+      display: none; align-items: center; justify-content: center;
+      padding: 20px; backdrop-filter: blur(4px);
+    }
+    .modal-privacidad.active { display: flex; }
+    .modal-content {
+      background: var(--color-bg); max-width: 600px; width: 100%;
+      border: 1px solid var(--color-border); padding: 30px 20px 20px;
+      max-height: 80vh; overflow-y: auto; color: var(--color-body);
+      position: relative; line-height: 1.6; font-size: 0.85rem;
+    }
+    .modal-content p { margin-bottom: 15px; }
+    .modal-close {
+      position: absolute; top: 15px; right: 15px; background: none; border: none;
+      color: var(--color-gold); font-size: 2rem; cursor: pointer; line-height: 1;
+    }
+    .modal-close:hover { opacity: 0.7; }
+  </style>
+  <div class="modal-privacidad" id="modal-privacidad">
+    <div class="modal-content">
+      <button class="modal-close" onclick="document.getElementById('modal-privacidad').classList.remove('active')">&times;</button>
+      <h2 style="font-family:var(--font-display);color:var(--color-gold);margin-bottom:20px;font-size:1.4rem;text-transform:uppercase;">Política de Privacidad y Tratamiento de Datos (RGPD)</h2>
+      <p><strong style="color:var(--color-gold)">Responsable del Tratamiento:</strong><br> [NOMBRE COMPLETO / RAZÓN SOCIAL DE LA EMPRESA], con NIF/CIF [TÚ_NIF/CIF].</p>
+      <p><strong style="color:var(--color-gold)">Finalidad:</strong><br> Gestión y administración de las citas de peluquería/barbería solicitadas a través de este portal, y el envío de comunicaciones estrictamente relacionadas con dicha cita (confirmaciones transaccionales y recordatorios por Email/WhatsApp).</p>
+      <p><strong style="color:var(--color-gold)">Legitimación:</strong><br> Consentimiento expreso e inequívoco del interesado al marcar la casilla de aceptación habilitada y formalizar la reserva.</p>
+      <p><strong style="color:var(--color-gold)">Conservación:</strong><br> Los datos se conservarán en nuestros sistemas mientras exista un interés mutuo para mantener el fin del tratamiento, y durante el plazo que marque la ley para fines fiscales o de salud (agenda).</p>
+      <p><strong style="color:var(--color-gold)">Destinatarios:</strong><br> El encargado de este portal informa que sus datos NO se cederán a terceros, ni se utilizarán para boletines comerciales sin consentimiento explícito adicional, a excepción del proveedor del motor de mensajería (pasarela de emails SMS/WhatsApp) empleado únicamente para enviarle los recordatorios.</p>
+      <p><strong style="color:var(--color-gold)">Tus Derechos:</strong><br> Tienes pleno derecho a acceder, rectificar, limitar y suprimir tus datos en cualquier momento. Puedes ejercer estos derechos, retirar el consentimiento o solicitar información enviándonos un correo a <a href="mailto:hola@ejemplo.com" style="color:var(--color-gold);text-decoration:underline;">[EMAIL_DE_LA_EMPRESA]</a>.</p>
+    </div>
+  </div>
+
+  <div class="modal-privacidad" id="modal-aviso">
+    <div class="modal-content">
+      <button class="modal-close" onclick="document.getElementById('modal-aviso').classList.remove('active')">&times;</button>
+      <h2 style="font-family:var(--font-display);color:var(--color-gold);margin-bottom:20px;font-size:1.4rem;text-transform:uppercase;">Aviso Legal</h2>
+      <p><strong style="color:var(--color-gold)">Información General:</strong><br> En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información, informamos que este sitio web pertenece a [NOMBRE COMPLETO], con CIF [TÚ_NIF], domicilio en [CALLE COMPLETA] y email de contacto <a href="mailto:hola@ejemplo.com" style="color:var(--color-gold);text-decoration:underline;">[EMAIL]</a>.</p>
+      <p><strong style="color:var(--color-gold)">Propiedad Intelectual:</strong><br> Todos los contenidos de este sitio (textos, imágenes, logotipos, etc.) son propiedad exclusiva del titular o de terceros que han autorizado su uso, estando protegidos por la ley de Propiedad Intelectual.</p>
+      <p><strong style="color:var(--color-gold)">Exclusión de Responsabilidad:</strong><br> El titular no se hace responsable de daños causados por un mal uso del portal o de sus componentes interactivos por parte del usuario, ni de caídas temporales del servicio de reservas.</p>
+    </div>
+  </div>
+
+  <div class="modal-privacidad" id="modal-cookies">
+    <div class="modal-content">
+      <button class="modal-close" onclick="document.getElementById('modal-cookies').classList.remove('active')">&times;</button>
+      <h2 style="font-family:var(--font-display);color:var(--color-gold);margin-bottom:20px;font-size:1.4rem;text-transform:uppercase;">Política de Cookies</h2>
+      <p><strong style="color:var(--color-gold)">¿Qué son las cookies?:</strong><br> Una cookie es un fichero que se descarga en su dispositivo al acceder a determinadas páginas web. Permiten almacenar y recuperar información sobre los hábitos de navegación.</p>
+      <p><strong style="color:var(--color-gold)">Cookies Utilizadas:</strong><br>
+        - <strong>Técnicas (Necesarias):</strong> Permiten al usuario la navegación a través de la web y la utilización de opciones como controlar la sesión de las reservas.<br>
+        - <strong>Analíticas:</strong> Permiten el seguimiento y análisis del comportamiento de los usuarios (ej. Google Analytics).<br>
+        - <strong>Marketing / Publicidad:</strong> Almacenan información del comportamiento observando sus hábitos para desarrollar un perfil publicitario (ej. Meta Pixel).</p>
+      <p><strong style="color:var(--color-gold)">Revocación:</strong><br> Puede configurar sus preferencias en cualquier momento clicando en el botón correspondiente o eliminando su caché desde las opciones de su navegador.</p>
+    </div>
+  </div>
+
+  <div class="modal-privacidad" id="modal-config-cookies">
+    <div class="modal-content">
+      <h2 style="font-family:var(--font-display);color:var(--color-gold);margin-bottom:10px;font-size:1.4rem;text-transform:uppercase;">Configurar Cookies</h2>
+      <p style="font-size:0.85rem;color:var(--color-gray);margin-bottom:20px">Seleccione qué tipos de cookies consiente instalar en su navegador para personalizar su experiencia.</p>
+      
+      <div style="border-bottom:1px solid var(--color-border);padding-bottom:15px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <strong style="color:white;display:block;margin-bottom:4px">Cookies Técnicas (Estrictamente necesarias)</strong>
+          <span style="font-size:0.75rem;color:var(--color-gray)">Necesarias para que la web (y las reservas) funcionen. No se pueden desactivar.</span>
+        </div>
+        <span style="color:var(--color-gold);font-weight:bold;font-size:0.8rem">Siempre Activas</span>
+      </div>
+
+      <div style="border-bottom:1px solid var(--color-border);padding-bottom:15px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <strong style="color:white;display:block;margin-bottom:4px">Cookies Analíticas</strong>
+          <span style="font-size:0.75rem;color:var(--color-gray)">Nos ayudan a entender cómo los visitantes interactúan con la web (ej. Google Analytics).</span>
+        </div>
+        <label style="position:relative;display:inline-block;width:40px;height:24px;">
+          <input type="checkbox" id="chk-analytics" style="opacity:0;width:0;height:0;">
+          <span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#333;border-radius:24px;transition:.4s;"><span style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;background-color:white;border-radius:50%;transition:.4s;" class="slider-dot"></span></span>
+        </label>
+      </div>
+
+      <div style="border-bottom:1px solid var(--color-border);padding-bottom:20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <strong style="color:white;display:block;margin-bottom:4px">Cookies de Marketing / Ads</strong>
+          <span style="font-size:0.75rem;color:var(--color-gray)">Usadas para mostrar anuncios relevantes en otras plataformas (ej. Meta, TikTok Pixel).</span>
+        </div>
+        <label style="position:relative;display:inline-block;width:40px;height:24px;">
+          <input type="checkbox" id="chk-marketing" style="opacity:0;width:0;height:0;">
+          <span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#333;border-radius:24px;transition:.4s;"><span style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;background-color:white;border-radius:50%;transition:.4s;" class="slider-dot"></span></span>
+        </label>
+      </div>
+      
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button class="btn-outline" style="font-size:0.8rem;padding:8px 16px;" onclick="document.getElementById('modal-config-cookies').classList.remove('active')">Cancelar</button>
+        <button class="btn-gold" style="font-size:0.8rem;padding:8px 16px;" onclick="guardarConfigCookies()">Guardar Preferencias</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    input:checked + span { background-color: var(--color-gold); }
+    input:checked + span .slider-dot { transform: translateX(16px); }
+    
+    /* Botón Flotante para gestionar cookies en cualquier momento */
+    .cookie-float-btn {
+      position: fixed; bottom: 20px; left: 20px; z-index: 9997;
+      background-color: var(--color-bg); border: 1px solid var(--color-border);
+      border-radius: 50%; width: 45px; height: 45px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      color: var(--color-gold); transition: all 0.3s;
+    }
+    .cookie-float-btn:hover { background-color: var(--color-gold); color: #000; transform: translateY(-3px); }
+  </style>
+
+  <button class="cookie-float-btn" aria-label="Gestionar Cookies" onclick="abrirConfigCookies()" title="Configurar Privacidad">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
+      <path d="M8.5 8.5v.01"/><path d="M16 12.5v.01"/><path d="M12 17v.01"/><path d="M11 12.5v.01"/>
+    </svg>
+  </button>
+
+  <!-- Banner de Cookies RGPD -->
+  <style>
+    .cookie-banner {
+      position: fixed; bottom: -100%; left: 0; right: 0;
+      background: var(--color-bg); border-top: 1px solid var(--color-border);
+      padding: 20px; z-index: 9998; box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+      display: flex; flex-direction: column; gap: 15px; align-items: center; justify-content: space-between;
+      transition: bottom 0.4s ease;
+    }
+    .cookie-banner.show { bottom: 0; }
+    .cookie-text { font-size: 0.85rem; color: var(--color-gray); line-height: 1.5; text-align: center; }
+    .cookie-text a { color: var(--color-gold); text-decoration: underline; }
+    .cookie-btns { display: flex; gap: 10px; width: 100%; justify-content: center; }
+    .cookie-btns button { padding: 10px 20px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; border: 1px solid var(--color-gold); transition: all 0.2s; white-space: nowrap; flex: 1; max-width: 150px; }
+    .btn-accept { background: var(--color-gold); color: #000; font-weight: bold; }
+    .btn-accept:hover { background: #d4a754; }
+    .btn-reject { background: transparent; color: var(--color-gold); }
+    .btn-reject:hover { background: rgba(212, 167, 84, 0.1); }
+    @media (min-width: 768px) {
+      .cookie-banner { flex-direction: row; padding: 20px 40px; }
+      .cookie-text { text-align: left; max-width: 70%; }
+      .cookie-btns { width: auto; flex: none; }
+    }
+  </style>
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-text">
+      Utilizamos cookies propias y de terceros para fines analíticos y para mostrarle publicidad personalizada en base a un perfil elaborado a partir de sus hábitos de navegación. Puede aceptar todas las cookies pulsando el botón "Aceptar todas", configurarlas o rechazarlas. Más información en nuestra <a href="#cookies" onclick="document.getElementById('modal-cookies').classList.add('active');return false;">Política de Cookies</a>.
+    </div>
+    <div class="cookie-btns">
+      <button class="btn-reject" onclick="document.getElementById('modal-config-cookies').classList.add('active');" style="border:none;text-decoration:underline;color:var(--color-gray)">Configurar</button>
+      <button class="btn-reject" onclick="handleCookies({analytics:false,marketing:false})">Rechazar</button>
+      <button class="btn-accept" onclick="handleCookies({analytics:true,marketing:true})">Aceptar todas</button>
+    </div>
+  </div>
+  <script>
+    function handleCookies(config) {
+      localStorage.setItem('cookies_accepted', JSON.stringify(config));
+      document.getElementById('cookie-banner').classList.remove('show');
+      aplicarCookies(config);
+    }
+    function guardarConfigCookies() {
+      const config = {
+        analytics: document.getElementById('chk-analytics').checked,
+        marketing: document.getElementById('chk-marketing').checked
+      };
+      document.getElementById('modal-config-cookies').classList.remove('active');
+      handleCookies(config);
+    }
+    function aplicarCookies(config) {
+      // Aquí se inyectarían en el futuro los tags (Google Analytics si config.analytics es true, Meta si marketing es true)
+      if (config.analytics) console.log("Analytics activado");
+      if (config.marketing) console.log("Marketing activado");
+    }
+    function abrirConfigCookies() {
+      // Cargar el estado actual en los toggles al abrir el modal
+      const stored = localStorage.getItem('cookies_accepted');
+      if (stored) {
+        try {
+          const config = JSON.parse(stored);
+          document.getElementById('chk-analytics').checked = !!config.analytics;
+          document.getElementById('chk-marketing').checked = !!config.marketing;
+        } catch(e) {}
+      }
+      document.getElementById('modal-config-cookies').classList.add('active');
+    }
+
+    window.addEventListener('load', () => {
+      const stored = localStorage.getItem('cookies_accepted');
+      if (!stored) {
+        setTimeout(() => document.getElementById('cookie-banner').classList.add('show'), 1000);
+      } else {
+        try { aplicarCookies(JSON.parse(stored)); } catch(e){}
+      }
+    });
+  </script>
+</body>
+</html>
