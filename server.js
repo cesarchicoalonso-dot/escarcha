@@ -221,6 +221,105 @@ async function handleAPI(method, pathname, query, req, res) {
     return json(res, 201, { ok: true, id: reserva.id });
   }
 
+  // POST /api/admin/reservas — crear reserva manual desde el panel admin (sin GDPR)
+  if (method === 'POST' && pathname === '/api/admin/reservas') {
+    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
+    const body = await readBody(req);
+    const { servicio, precio, barbero, fecha, hora, nombre, email, telefono, notas } = body;
+    if (!servicio || !barbero || !fecha || !hora || !nombre) {
+      return json(res, 400, { ok: false, error: 'Faltan campos obligatorios (servicio, barbero, fecha, hora, nombre)' });
+    }
+    const reservas = await readDB(DB_RESERVAS);
+    const ocupada = reservas.find(r => r.barbero === barbero && r.fecha === fecha && r.hora === hora && r.estado !== 'cancelada');
+    if (ocupada) return json(res, 409, { ok: false, error: 'Esa franja ya está ocupada.' });
+    const reserva = {
+      id: genId(), servicio, precio: precio || null, barbero, fecha, hora,
+      nombre, email: email || '', telefono: telefono || '',
+      estado: 'confirmada', // las manuales se crean directamente confirmadas
+      notas: notas || '',
+      origenManual: true,
+      creadoEn: new Date().toISOString(),
+      gdpr_aceptado: false,
+    };
+    reservas.push(reserva);
+    await writeDB(DB_RESERVAS, reservas);
+    const disp = await readDB(DB_DISPONIBILIDAD);
+    const slot = disp.find(s => s.barbero === barbero && s.fecha === fecha && s.hora === hora);
+    if (slot) { slot.ocupado = true; } else { disp.push({ id: genId(), barbero, fecha, hora, ocupado: true }); }
+    await writeDB(DB_DISPONIBILIDAD, disp);
+    return json(res, 201, { ok: true, id: reserva.id });
+  }
+
+  // POST /api/admin/reenviar/:id/:tipo — forzar reenvío de notificación
+  if (method === 'POST' && pathname.startsWith('/api/admin/reenviar/')) {
+    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
+    const parts = pathname.split('/');
+    const id = parts[4]; const tipo = parts[5]; // email | whatsapp | fidelizacion
+    const reservas = await readDB(DB_RESERVAS);
+    const r = reservas.find(x => x.id === id);
+    if (!r) return json(res, 404, { error: 'Reserva no encontrada' });
+    if (tipo === 'email') {
+      await enviarEmailConfirmacion(r);
+      r.email_confirmacion_enviado = true;
+    } else if (tipo === 'whatsapp') {
+      await enviarRecordatorioWhatsApp(r);
+      r.notificado_24h = true;
+    } else if (tipo === 'fidelizacion') {
+      r.fidelizacion_enviada = true;
+      if (RESEND_API_KEY.includes('placeholder')) {
+        console.log(`⭐ [SIMULACRO FIDELIZACIÓN MANUAL] Enviando a ${r.email}`);
+      } else {
+        // mismo email que en cronJobFidelizacion
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: `Escarcha Grooming Club <${EMAIL_FROM}>`,
+            to: [r.email],
+            subject: `¿Qué tal tu experiencia en Escarcha Grooming Club?`,
+            html: `<div style="background:#0a0a0a;padding:32px;font-family:sans-serif;color:#fff"><h1 style="color:#C9A96E">¡Hola ${r.nombre}!</h1><p>Esperamos que tu experiencia haya sido excelente. <a href="${GOOGLE_REVIEWS_URL}" style="color:#C9A96E">Dejar reseña en Google ⭐</a></p></div>`
+          })
+        }).catch(console.error);
+      }
+    } else {
+      return json(res, 400, { error: 'Tipo debe ser: email, whatsapp o fidelizacion' });
+    }
+    await writeDB(DB_RESERVAS, reservas);
+    return json(res, 200, { ok: true });
+  }
+
+  // GET /api/admin/facturacion — datos de facturación con filtros
+  if (method === 'GET' && pathname === '/api/admin/facturacion') {
+    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
+    let reservas = await readDB(DB_RESERVAS);
+    // Filtrar solo las que aportan ingresos
+    const estadosFacturables = ['confirmada', 'pagada', 'pendiente'];
+    reservas = reservas.filter(r => estadosFacturables.includes(r.estado));
+    if (query.desde) reservas = reservas.filter(r => r.fecha >= query.desde);
+    if (query.hasta) reservas = reservas.filter(r => r.fecha <= query.hasta);
+    if (query.barbero) reservas = reservas.filter(r => r.barbero === query.barbero);
+    const totalIngresos = reservas.reduce((s, r) => s + (parseFloat(r.precio) || 0), 0);
+    // Agrupar por servicio
+    const porServicio = {};
+    reservas.forEach(r => {
+      const key = r.servicio || 'Sin especificar';
+      if (!porServicio[key]) porServicio[key] = { servicio: key, count: 0, total: 0 };
+      porServicio[key].count++;
+      porServicio[key].total += (parseFloat(r.precio) || 0);
+    });
+    const topServicios = Object.values(porServicio).sort((a,b) => b.total - a.total);
+    // Agrupar por barbero
+    const porBarbero = {};
+    reservas.forEach(r => {
+      const key = r.barbero || 'Sin asignar';
+      if (!porBarbero[key]) porBarbero[key] = { barbero: key, count: 0, total: 0 };
+      porBarbero[key].count++;
+      porBarbero[key].total += (parseFloat(r.precio) || 0);
+    });
+    const porBarberoList = Object.values(porBarbero).sort((a,b) => b.total - a.total);
+    return json(res, 200, { totalReservas: reservas.length, totalIngresos: Math.round(totalIngresos * 100) / 100, topServicios, porBarbero: porBarberoList, reservas });
+  }
+
   if (method === 'GET' && pathname === '/api/reservas') {
     if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
     return json(res, 200, await readDB(DB_RESERVAS));

@@ -249,6 +249,8 @@
     .badge-confirmada { background: rgba(82,196,120,0.15); color: var(--color-success); }
     .badge-cancelada  { background: rgba(224,82,82,0.15);  color: var(--color-danger); }
     .badge-pagada     { background: rgba(82,196,120,0.25); color: var(--color-success); }
+    .badge-no-show    { background: rgba(128,128,128,0.2); color: #aaa; }
+    .stat-filter:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(201,168,76,0.15); }
 
     .adm-action {
       background: none;

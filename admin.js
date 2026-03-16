@@ -5,12 +5,10 @@
   let ADMIN_KEY = '';
   const HORAS_DEFAULT = ['10:00','10:45','11:30','12:15','13:00','16:00','16:45','17:30','18:15','19:00','19:45'];
 
-  // Barberos dinámicos — se puebla al cargar
   let barberosData = [];
   function getBarberoName(id) {
     const b = barberosData.find(x => x.id === id);
     if (b) return `${b.nombre} ${b.apellido||''}`.trim();
-    // fallback ids legacy
     const leg = { andrea:'Andrea Escarcha', carlos:'Carlos', lucas:'Lucas' };
     return leg[id] || id;
   }
@@ -80,11 +78,10 @@
   function showAdmin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-screen').style.display = 'block';
-    loadBarberos(); // primero barberos para que los selects estén poblados
+    loadBarberos();
     loadReservas();
   }
 
-  // Revalidar sesión guardada
   const stored = sessionStorage.getItem('esc_admin_key');
   if (stored) { ADMIN_KEY = stored; showAdmin(); }
 
@@ -97,6 +94,7 @@
       document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
       if (tab.dataset.tab === 'disponibilidad') renderWeek();
       if (tab.dataset.tab === 'barberos') loadBarberos();
+      if (tab.dataset.tab === 'facturacion') cargarFacturacion();
     });
   });
 
@@ -104,6 +102,7 @@
   // PANEL: RESERVAS
   // ─────────────────────────────────────────────────────────────────────────
   let allReservas = [];
+  let _activeFiltroHoy = false;
 
   async function loadReservas() {
     try {
@@ -118,11 +117,28 @@
 
   function updateStats() {
     const today = new Date().toISOString().slice(0, 10);
-    document.getElementById('stat-hoy').textContent       = allReservas.filter(r => r.fecha === today).length;
-    document.getElementById('stat-pendientes').textContent = allReservas.filter(r => r.estado === 'pendiente').length;
-    document.getElementById('stat-confirmadas').textContent= allReservas.filter(r => r.estado === 'confirmada').length;
-    document.getElementById('stat-total').textContent      = allReservas.length;
+    document.getElementById('stat-hoy').textContent        = allReservas.filter(r => r.fecha === today).length;
+    document.getElementById('stat-pendientes').textContent  = allReservas.filter(r => r.estado === 'pendiente').length;
+    document.getElementById('stat-confirmadas').textContent = allReservas.filter(r => r.estado === 'confirmada').length;
+    document.getElementById('stat-canceladas').textContent  = allReservas.filter(r => r.estado === 'cancelada').length;
+    document.getElementById('stat-total').textContent       = allReservas.length;
   }
+
+  // Stats clicables como filtros
+  document.querySelectorAll('.stat-filter').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const estado = card.dataset.filterEstado;
+      const esHoy = card.dataset.filterHoy === '1';
+      document.getElementById('flt-estado').value = estado || '';
+      if (esHoy) {
+        document.getElementById('flt-fecha').value = new Date().toISOString().slice(0, 10);
+      } else {
+        document.getElementById('flt-fecha').value = '';
+      }
+      renderReservas();
+    });
+  });
 
   function applyFilters() {
     const barbero = document.getElementById('flt-barbero').value;
@@ -136,6 +152,11 @@
     });
   }
 
+  function renderNotifBadge(enviado, label) {
+    if (enviado) return `<span style="color:#4caf50;font-size:0.75rem;font-weight:600;">Sí</span>`;
+    return `<span style="color:var(--color-danger,#e05252);font-size:0.75rem;">No</span>`;
+  }
+
   function renderReservas() {
     const list = applyFilters();
     const tbody = document.getElementById('res-tbody');
@@ -144,27 +165,45 @@
     if (!list.length) { empty.style.display = 'block'; return; }
     empty.style.display = 'none';
 
-    // Ordenar: más reciente primero (por fecha+hora)
     list.sort((a, b) => (a.fecha + a.hora) > (b.fecha + b.hora) ? -1 : 1);
 
     list.forEach(r => {
+      const emailEnviado = r.email_confirmacion_enviado === true;
+      const waEnviado    = r.notificado_24h === true;
+      const fidEnviada   = r.fidelizacion_enviada === true;
+
+      // Botones de reenvío solo si NO se ha enviado y tiene email/teléfono
+      const btnEmail = !emailEnviado && r.email
+        ? `<button class="adm-action" data-reenviar="${r.id}" data-tipo="email" title="Reenviar confirmación" style="font-size:0.64rem;padding:3px 8px;">↻ Email</button>` : '';
+      const btnWA = !waEnviado && r.telefono
+        ? `<button class="adm-action" data-reenviar="${r.id}" data-tipo="whatsapp" title="Reenviar WA" style="font-size:0.64rem;padding:3px 8px;">↻ WA</button>` : '';
+      const btnFid = !fidEnviada && r.email
+        ? `<button class="adm-action" data-reenviar="${r.id}" data-tipo="fidelizacion" title="Enviar email satisfacción" style="font-size:0.64rem;padding:3px 8px;">↻ Reseña</button>` : '';
+
+      const manualBadge = r.origenManual ? ' <span style="font-size:0.58rem;color:var(--color-gold);vertical-align:middle">[M]</span>' : '';
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td class="td-small" style="font-family:monospace;letter-spacing:0.05em;color:var(--color-gold)">${r.id}</td>
         <td>${formatFecha(r.fecha)}</td>
         <td>${r.hora}</td>
-        <td>${r.servicio}</td>
+        <td>${escHtml(r.servicio)}</td>
         <td style="color:var(--color-gold);font-weight:600;white-space:nowrap">${r.precio ? r.precio + ' €' : '—'}</td>
         <td>${getBarberoName(r.barbero)}</td>
         <td>
-          ${escHtml(r.nombre)}<br>
+          <span style="cursor:pointer;text-decoration:underline dotted;color:var(--color-white)" data-ver-historial="${escHtml(r.nombre)}">${escHtml(r.nombre)}</span>${manualBadge}<br>
           <span class="td-small">${escHtml(r.email)}</span>
         </td>
         <td class="td-small">${escHtml(r.telefono)}</td>
         <td><span class="badge badge-${r.estado}">${r.estado}</span></td>
+        <td class="td-small">${renderNotifBadge(emailEnviado)}<br>${btnEmail}</td>
+        <td class="td-small">${renderNotifBadge(waEnviado)}<br>${btnWA}</td>
+        <td class="td-small">${renderNotifBadge(fidEnviada)}<br>${btnFid}</td>
         <td>
           ${r.estado === 'pendiente' ? `<button class="adm-action" data-action="confirmar" data-id="${r.id}">Confirmar</button>` : ''}
-          ${r.estado !== 'cancelada' ? `<button class="adm-action danger" data-action="cancelar" data-id="${r.id}">Cancelar</button>` : ''}
+          ${r.estado !== 'cancelada' && r.estado !== 'no-show' ? `<button class="adm-action danger" data-action="cancelar" data-id="${r.id}">Cancelar</button>` : ''}
+          ${r.estado !== 'no-show' && r.estado !== 'cancelada' ? `<button class="adm-action danger" data-action="noshow" data-id="${r.id}" style="font-size:0.64rem">No-Show</button>` : ''}
+          ${r.estado !== 'pagada' ? `<button class="adm-action" data-action="pagada" data-id="${r.id}" style="font-size:0.64rem">Cobrada</button>` : ''}
         </td>
       `;
       tbody.appendChild(tr);
@@ -172,18 +211,46 @@
   }
 
   document.getElementById('res-tbody').addEventListener('click', async e => {
-    const btn = e.target.closest('[data-action]');
-    if (!btn) return;
-    const { action, id } = btn.dataset;
-    if (action === 'confirmar') {
-      await api('PATCH', `/api/reservas/${id}`, { estado: 'confirmada' });
-      toast('Reserva confirmada');
-    } else if (action === 'cancelar') {
-      if (!confirm('¿Cancelar esta reserva?')) return;
-      await api('PATCH', `/api/reservas/${id}`, { estado: 'cancelada' });
-      toast('Reserva cancelada', 'err');
+    // Acciones de estado
+    const actionBtn = e.target.closest('[data-action]');
+    if (actionBtn) {
+      const { action, id } = actionBtn.dataset;
+      if (action === 'confirmar') {
+        await api('PATCH', `/api/reservas/${id}`, { estado: 'confirmada' });
+        toast('Reserva confirmada');
+      } else if (action === 'cancelar') {
+        if (!confirm('¿Cancelar esta reserva?')) return;
+        await api('PATCH', `/api/reservas/${id}`, { estado: 'cancelada' });
+        toast('Reserva cancelada', 'err');
+      } else if (action === 'noshow') {
+        if (!confirm('¿Marcar como No-Show?')) return;
+        await api('PATCH', `/api/reservas/${id}`, { estado: 'no-show' });
+        toast('Marcada como No-Show', 'err');
+      } else if (action === 'pagada') {
+        await api('PATCH', `/api/reservas/${id}`, { estado: 'pagada' });
+        toast('Marcada como Cobrada ✓');
+      }
+      await loadReservas();
+      return;
     }
-    await loadReservas();
+
+    // Reenvío de notificaciones
+    const reenviarBtn = e.target.closest('[data-reenviar]');
+    if (reenviarBtn) {
+      const { reenviar: id, tipo } = reenviarBtn.dataset;
+      try {
+        await api('POST', `/api/admin/reenviar/${id}/${tipo}`);
+        toast(`Reenvío de ${tipo} completado ✓`);
+        await loadReservas();
+      } catch (err) { toast(err.message, 'err'); }
+      return;
+    }
+
+    // Ver historial de cliente
+    const histBtn = e.target.closest('[data-ver-historial]');
+    if (histBtn) {
+      abrirHistorial(histBtn.dataset.verHistorial);
+    }
   });
 
   ['flt-barbero','flt-estado','flt-fecha'].forEach(id => {
@@ -197,25 +264,196 @@
   });
   document.getElementById('flt-refresh').addEventListener('click', loadReservas);
 
+  // ── Nueva Reserva Manual ─────────────────────────────────────────────────
+  document.getElementById('res-nueva-btn').addEventListener('click', () => {
+    // Prerellenar con la fecha de hoy
+    document.getElementById('rm-fecha').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('rm-err').textContent = '';
+    document.getElementById('rm-nombre').value = '';
+    document.getElementById('rm-email').value = '';
+    document.getElementById('rm-telefono').value = '';
+    document.getElementById('rm-servicio').value = '';
+    document.getElementById('rm-precio').value = '';
+    document.getElementById('rm-notas').value = '';
+    // Poblar select de barberos
+    const sel = document.getElementById('rm-barbero');
+    sel.innerHTML = '';
+    barberosData.filter(b => b.activo !== false).forEach(b => {
+      const o = document.createElement('option');
+      o.value = b.id;
+      o.textContent = `${b.nombre} ${b.apellido||''}`.trim();
+      sel.appendChild(o);
+    });
+    document.getElementById('res-modal').classList.remove('hidden');
+  });
+
+  document.getElementById('rm-cancel').addEventListener('click', () => {
+    document.getElementById('res-modal').classList.add('hidden');
+  });
+  document.getElementById('res-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('res-modal'))
+      document.getElementById('res-modal').classList.add('hidden');
+  });
+
+  document.getElementById('rm-save').addEventListener('click', async () => {
+    const errEl = document.getElementById('rm-err');
+    errEl.textContent = '';
+    const payload = {
+      barbero:   document.getElementById('rm-barbero').value,
+      fecha:     document.getElementById('rm-fecha').value,
+      hora:      document.getElementById('rm-hora').value,
+      servicio:  document.getElementById('rm-servicio').value.trim(),
+      precio:    parseFloat(document.getElementById('rm-precio').value) || null,
+      nombre:    document.getElementById('rm-nombre').value.trim(),
+      telefono:  document.getElementById('rm-telefono').value.trim(),
+      email:     document.getElementById('rm-email').value.trim(),
+      notas:     document.getElementById('rm-notas').value.trim(),
+    };
+    if (!payload.servicio) { errEl.textContent = 'El servicio es obligatorio.'; return; }
+    if (!payload.nombre)   { errEl.textContent = 'El nombre del cliente es obligatorio.'; return; }
+    try {
+      await api('POST', '/api/admin/reservas', payload);
+      toast('Cita creada correctamente ✓');
+      document.getElementById('res-modal').classList.add('hidden');
+      await loadReservas();
+    } catch (err) { errEl.textContent = err.message || 'Error al crear la cita.'; }
+  });
+
+  // ── Historial de Cliente ─────────────────────────────────────────────────
+  function abrirHistorial(nombre) {
+    const visitas = allReservas
+      .filter(r => r.nombre === nombre)
+      .sort((a, b) => b.fecha + b.hora > a.fecha + a.hora ? 1 : -1);
+
+    const totalGastado = visitas.reduce((s, r) => s + (parseFloat(r.precio) || 0), 0);
+
+    let html = `<p style="color:var(--color-gold);font-size:0.8rem;margin-bottom:12px">${visitas.length} visita(s) · Total gastado: ${totalGastado.toFixed(2)} €</p>`;
+    if (!visitas.length) { html = '<p style="color:var(--color-gray)">Sin visitas registradas.</p>'; }
+    else {
+      html += '<table class="adm-table" style="font-size:0.82rem"><thead><tr><th>Fecha</th><th>Hora</th><th>Servicio</th><th>Precio</th><th>Barbero</th><th>Estado</th></tr></thead><tbody>';
+      visitas.forEach(r => {
+        html += `<tr>
+          <td>${formatFecha(r.fecha)}</td><td>${r.hora}</td>
+          <td>${escHtml(r.servicio)}</td>
+          <td>${r.precio ? r.precio + ' €' : '—'}</td>
+          <td>${getBarberoName(r.barbero)}</td>
+          <td><span class="badge badge-${r.estado}">${r.estado}</span></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+    }
+    document.getElementById('hist-titulo').textContent = `Historial — ${nombre}`;
+    document.getElementById('hist-content').innerHTML = html;
+    document.getElementById('hist-modal').classList.remove('hidden');
+  }
+
+  document.getElementById('hist-close').addEventListener('click', () => {
+    document.getElementById('hist-modal').classList.add('hidden');
+  });
+  document.getElementById('hist-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('hist-modal'))
+      document.getElementById('hist-modal').classList.add('hidden');
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // PANEL: FACTURACIÓN
+  // ─────────────────────────────────────────────────────────────────────────
+  let _lastFacData = null;
+
+  async function cargarFacturacion() {
+    const desde   = document.getElementById('fac-desde').value;
+    const hasta   = document.getElementById('fac-hasta').value;
+    const barbero = document.getElementById('fac-barbero').value;
+    let url = '/api/admin/facturacion';
+    const params = [];
+    if (desde)   params.push(`desde=${desde}`);
+    if (hasta)   params.push(`hasta=${hasta}`);
+    if (barbero) params.push(`barbero=${barbero}`);
+    if (params.length) url += '?' + params.join('&');
+    try {
+      _lastFacData = await api('GET', url);
+      renderFacturacion(_lastFacData);
+    } catch (err) { toast(err.message, 'err'); }
+  }
+
+  function renderFacturacion(d) {
+    document.getElementById('fac-total-ingresos').textContent = d.totalIngresos.toFixed(2) + ' €';
+    document.getElementById('fac-total-reservas').textContent = d.totalReservas;
+    const ticket = d.totalReservas > 0 ? (d.totalIngresos / d.totalReservas).toFixed(2) : '0.00';
+    document.getElementById('fac-ticket-medio').textContent   = ticket + ' €';
+
+    // Top Servicios (barras)
+    const maxSrv = d.topServicios.length > 0 ? d.topServicios[0].total : 1;
+    document.getElementById('fac-servicios').innerHTML = d.topServicios.length
+      ? d.topServicios.map(s => `
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:4px">
+            <span>${escHtml(s.servicio)}</span>
+            <span style="color:var(--color-gold);font-weight:600">${s.total.toFixed(2)} € (${s.count} citas)</span>
+          </div>
+          <div style="background:var(--color-bg-card);height:6px;border-radius:3px;overflow:hidden">
+            <div style="background:var(--color-gold);height:100%;width:${Math.round((s.total/maxSrv)*100)}%;transition:width 0.5s"></div>
+          </div>
+        </div>`).join('')
+      : '<p style="color:var(--color-gray);font-size:0.85rem">Sin datos en el periodo seleccionado.</p>';
+
+    // Por Barbero
+    const maxBarb = d.porBarbero.length > 0 ? d.porBarbero[0].total : 1;
+    document.getElementById('fac-barberos').innerHTML = d.porBarbero.length
+      ? d.porBarbero.map(b => `
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:4px">
+            <span>${getBarberoName(b.barbero)}</span>
+            <span style="color:var(--color-gold);font-weight:600">${b.total.toFixed(2)} € (${b.count} citas)</span>
+          </div>
+          <div style="background:var(--color-bg-card);height:6px;border-radius:3px;overflow:hidden">
+            <div style="background:#7c6f3b;height:100%;width:${Math.round((b.total/maxBarb)*100)}%;transition:width 0.5s"></div>
+          </div>
+        </div>`).join('')
+      : '<p style="color:var(--color-gray);font-size:0.85rem">Sin datos.</p>';
+  }
+
+  document.getElementById('fac-buscar').addEventListener('click', cargarFacturacion);
+
+  // Exportar CSV
+  document.getElementById('fac-csv').addEventListener('click', () => {
+    if (!_lastFacData || !_lastFacData.reservas.length) {
+      toast('Carga primero el informe', 'err'); return;
+    }
+    const filas = [
+      ['Ref', 'Fecha', 'Hora', 'Servicio', 'Precio (€)', 'Barbero', 'Cliente', 'Teléfono', 'Email', 'Estado'],
+      ..._lastFacData.reservas.map(r => [
+        r.id, r.fecha, r.hora, r.servicio, r.precio || '', getBarberoName(r.barbero),
+        r.nombre, r.telefono, r.email, r.estado,
+      ])
+    ];
+    const csv = filas.map(f => f.map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `escarcha_facturacion_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  });
+
   // ─────────────────────────────────────────────────────────────────────────
   // PANEL: DISPONIBILIDAD
   // ─────────────────────────────────────────────────────────────────────────
-  let viewOffset = 0; // desplazamiento (semanas o días) desde hoy
+  let viewOffset = 0;
   let isMobileView = window.innerWidth <= 768;
   window.addEventListener('resize', () => {
     const mobile = window.innerWidth <= 768;
     if (mobile !== isMobileView) {
       isMobileView = mobile;
-      viewOffset = 0; // reset al cambiar vista
+      viewOffset = 0;
       if (document.getElementById('disp-barbero').value) renderWeek();
     }
   });
 
-  let dispData   = []; // todos los slots (libres + ocupados) del servidor
-  let pendingSlots = [];     // slots pendientes por añadir (drag)
-  let pendingDeletions = []; // slots pendientes por eliminar (drag)
-  let isDragging = false;   // estado de arrastre
-  let dragTarget = null;    // objetivo actual del arrastre
+  let dispData   = [];
+  let pendingSlots = [];
+  let pendingDeletions = [];
+  let isDragging = false;
+  let dragTarget = null;
 
   function getStartDate(offset) {
     const now = new Date();
@@ -236,10 +474,8 @@
   }
 
   async function loadDisp(barbero, fechaInicio, fechaFin) {
-    // Cargar todos los slots de la semana
     const url = `/api/disponibilidad/all?barbero=${barbero}`;
     dispData = await api('GET', url);
-    // Filtrar por rango de fechas
     return dispData.filter(s => s.fecha >= fechaInicio && s.fecha <= fechaFin);
   }
 
@@ -262,11 +498,11 @@
     const fechaFin    = isoDate(days[days.length - 1]);
 
     if (isMobileView) {
-      document.getElementById('week-label').textContent = 
+      document.getElementById('week-label').textContent =
         days[0].toLocaleDateString('es-ES', {weekday: 'long', day: 'numeric', month: 'short'});
       document.getElementById('week-grid').classList.add('mobile-grid');
     } else {
-      document.getElementById('week-label').textContent = 
+      document.getElementById('week-label').textContent =
         `${days[0].toLocaleDateString('es-ES',{day:'numeric',month:'short'})} – ${days[6].toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'})}`;
       document.getElementById('week-grid').classList.remove('mobile-grid');
     }
@@ -279,11 +515,9 @@
     grid.innerHTML = '';
     const today = new Date(); today.setHours(0,0,0,0);
 
-    // Cabecera vacía (esquina)
     const corner = document.createElement('div');
     grid.appendChild(corner);
 
-    // Cabeceras de días dinámicas (1 o 7)
     const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
     days.forEach((d) => {
       const el = document.createElement('div');
@@ -295,7 +529,6 @@
       grid.appendChild(el);
     });
 
-    // Filas de horas
     HORAS_DEFAULT.forEach(hora => {
       const timeEl = document.createElement('div');
       timeEl.className = 'wg-time';
@@ -307,10 +540,9 @@
         const key    = fecha + '_' + hora;
         const slot   = slotMap[key];
         const cell   = document.createElement('div');
-        const isPast = d < today; // definido localmente en cada iteración
+        const isPast = d < today;
         cell.className = 'wg-cell';
         if (d.getDay() === 0) {
-          // Domingo — día cerrado
           cell.classList.add('domingo');
           cell.title = 'Cerrado (domingo)';
         } else if (isPast) {
@@ -319,56 +551,47 @@
           cell.classList.add(slot.ocupado ? 'ocupado' : 'libre');
           if (slot.ocupado) {
             cell.title = slot.clienteNombre ? `Reservado: ${slot.clienteNombre}${slot.servicio ? ' — ' + slot.servicio : ''}` : 'Reservado';
-            // Mostrar nombre del cliente y servicio debajo
             cell.innerHTML = `
               <span class="slot-cliente">${slot.clienteNombre || 'Reservado'}</span>
               ${slot.servicio ? `<span class="slot-servicio">${slot.servicio}</span>` : ''}
             `;
           } else {
-            // Slot libre - no mostrar nada
-            // Click para eliminar (solo si no hubo arrastre)
             cell.addEventListener('click', () => {
               if (pendingSlots.length === 0 && pendingDeletions.length === 0) {
                 deleteSlot(slot.id);
               }
             });
-            // Iniciar arrastre para eliminar (ratón y táctil)
-            const startDeleteDrag = (e) => {
+            const startDeleteDrag = () => {
               isDragging = true;
               dragTarget = { action: 'delete', id: slot.id };
               cell.classList.add('drag-select');
-              pendingDeletions.push(slot.id); // Registrar de inmediato el origen
+              pendingDeletions.push(slot.id);
             };
             cell.addEventListener('mousedown', (e) => { startDeleteDrag(); e.preventDefault(); });
             cell.addEventListener('touchstart', (e) => { startDeleteDrag(); e.preventDefault(); }, {passive: false});
           }
         } else {
-          // Sin slot - vacío
-          // Click para añadir (solo si no hubo arrastre)
           cell.addEventListener('click', () => {
             if (pendingSlots.length === 0 && pendingDeletions.length === 0) {
               addSlot(barbero, fecha, hora);
             }
           });
-          // Iniciar arrastre para añadir (ratón y táctil)
-          const startAddDrag = (e) => {
+          const startAddDrag = () => {
             isDragging = true;
             dragTarget = { action: 'add', barbero, fecha, hora };
             cell.classList.add('drag-select');
-            pendingSlots.push(dragTarget); // Registrar de inmediato el origen
+            pendingSlots.push(dragTarget);
           };
           cell.addEventListener('mousedown', (e) => { startAddDrag(); e.preventDefault(); });
           cell.addEventListener('touchstart', (e) => { startAddDrag(); e.preventDefault(); }, {passive: false});
         }
 
-        // Eventos de arrastre encima de otras celdas (mouse)
         cell.addEventListener('mouseenter', () => {
           if (isDragging && dragTarget) {
             handleDragOver(cell, slot, barbero, fecha, hora);
           }
         });
 
-        // Guardar referencia para usar fuera
         cell._slotData = { slot, fecha, hora, barbero };
         grid.appendChild(cell);
       });
@@ -387,21 +610,20 @@
     renderWeek();
   }
 
-  // Añadir semana completa
   document.getElementById('disp-add-week').addEventListener('click', async () => {
     const barbero = document.getElementById('disp-barbero').value;
-    const currentRef = getStartDate(viewOffset); // la fecha actualmente mostrada (Lunes o el día específico)
+    const currentRef = getStartDate(viewOffset);
     const day = currentRef.getDay();
     const monday = new Date(currentRef);
-    monday.setDate(currentRef.getDate() - (day === 0 ? 6 : day - 1)); // Siempre el lunes de esta semana
+    monday.setDate(currentRef.getDate() - (day === 0 ? 6 : day - 1));
 
-    const slots   = [];
-    for (let i = 0; i < 6; i++) { // Lun-Sáb
+    const slots = [];
+    for (let i = 0; i < 6; i++) {
       const d = new Date(monday);
       d.setDate(monday.getDate() + i);
       const fecha = isoDate(d);
       const today = new Date(); today.setHours(0,0,0,0);
-      if (d < today || d.getDay() === 0) continue; // Saltar pasados o domingos
+      if (d < today || d.getDay() === 0) continue;
       HORAS_DEFAULT.forEach(hora => slots.push({ barbero, fecha, hora }));
     }
     if (!slots.length) { toast('Todos los días ya son pasados', 'err'); return; }
@@ -415,8 +637,7 @@
   document.getElementById('week-prev').addEventListener('click', () => { viewOffset--; renderWeek(); });
   document.getElementById('week-next').addEventListener('click', () => { viewOffset++; renderWeek(); });
 
-  // Eventos de arrastre para selección múltiple
-  let hasDragged = false; // Track if we actually dragged
+  let hasDragged = false;
 
   document.addEventListener('mouseup', async () => {
     if (!isDragging) return;
@@ -427,31 +648,23 @@
     isDragging = false;
     hasDragged = false;
 
-    // Limpiar clases visuales
     document.querySelectorAll('.drag-select').forEach(el => el.classList.remove('drag-select'));
 
-    // Si no huboarrastre real, salir
     if (slotsToAdd.length === 0 && slotsToDelete.length === 0) {
       pendingSlots = [];
       pendingDeletions = [];
       return;
     }
 
-    // Deduplicar slots a añadir
     const uniqueAdd = [];
     const seenAdd = new Set();
     for (const s of slotsToAdd) {
       const key = `${s.barbero}_${s.fecha}_${s.hora}`;
-      if (!seenAdd.has(key)) {
-        seenAdd.add(key);
-        uniqueAdd.push(s);
-      }
+      if (!seenAdd.has(key)) { seenAdd.add(key); uniqueAdd.push(s); }
     }
 
-    // Deduplicar slots a eliminar
     const uniqueDelete = [...new Set(slotsToDelete)];
 
-    // Procesar
     if (uniqueAdd.length > 0) {
       await api('POST', '/api/disponibilidad', uniqueAdd);
       toast(`${uniqueAdd.length} slots añadidos`);
@@ -469,16 +682,12 @@
     renderWeek();
   });
 
-  // Trackear si se movió el mouse o el dedo mientras estaba presionado
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) hasDragged = true;
-  });
+  document.addEventListener('mousemove', () => { if (isDragging) hasDragged = true; });
 
-  // TÁCTIL: Replicar el mouseenter mediante elementFromPoint
   document.addEventListener('touchmove', (e) => {
     if (!isDragging || !dragTarget) return;
     hasDragged = true;
-    e.preventDefault(); // Evitar scroll de la página al arrastrar
+    e.preventDefault();
     const touch = e.touches[0];
     const el = document.elementFromPoint(touch.clientX, touch.clientY);
     if (!el) return;
@@ -488,17 +697,12 @@
     }
   }, {passive: false});
 
-  // TÁCTIL: Replicar el mouseup al soltar
-  document.addEventListener('touchend', (e) => {
-    if (isDragging) {
-      // Forzar un mouseup event sintético o llamar directo a la lógica
-      document.dispatchEvent(new Event('mouseup'));
-    }
+  document.addEventListener('touchend', () => {
+    if (isDragging) document.dispatchEvent(new Event('mouseup'));
   });
 
   function handleDragOver(cell, slot, barbero, fecha, hora) {
     if (cell.classList.contains('drag-select') || cell.classList.contains('domingo') || cell.classList.contains('pasado') || (slot && slot.ocupado)) return;
-    
     cell.classList.add('drag-select');
     if (dragTarget.action === 'add' && !slot) {
       pendingSlots.push({ action: 'add', barbero, fecha, hora });
@@ -507,7 +711,6 @@
     }
   }
 
-  // Cancelar arrastre si se sale del grid
   document.getElementById('week-grid')?.addEventListener('mouseleave', () => {
     if (isDragging) {
       isDragging = false;
@@ -544,6 +747,18 @@
       });
       flt.value = prev;
     }
+    // Select facturación
+    const fac = document.getElementById('fac-barbero');
+    if (fac) {
+      const prev = fac.value;
+      fac.innerHTML = '<option value="">Todos los barberos</option>';
+      active.forEach(b => {
+        const o = document.createElement('option');
+        o.value = b.id; o.textContent = `${b.nombre} ${b.apellido||''}`.trim();
+        fac.appendChild(o);
+      });
+      fac.value = prev;
+    }
     // Select disponibilidad
     const disp = document.getElementById('disp-barbero');
     if (disp) {
@@ -557,10 +772,8 @@
       if (active.find(b => b.id === prev)) {
         disp.value = prev;
       } else if (active.length > 0) {
-        disp.value = active[0].id; // Forzar selección del primero si no había previo
+        disp.value = active[0].id;
       }
-      
-      // Forzar re-render de la semana si estamos en esa pestaña
       if (document.getElementById('panel-disponibilidad').classList.contains('active')) {
         renderWeek();
       }
@@ -618,7 +831,7 @@
 
   document.getElementById('barb-add-btn').addEventListener('click', () => openModal(null));
 
-  // ── Modal ─────────────────────────────────────────────────────────────────
+  // ── Modal Barbero ─────────────────────────────────────────────────────────
   let _modalFotoBase64 = null;
   let _modalFotoExt    = null;
 
@@ -705,4 +918,3 @@
   }
 
 })();
-

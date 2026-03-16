@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/admin.css?v=5">
+  <link rel="stylesheet" href="/admin.css?v=6">
 </head>
 <body>
 
@@ -33,6 +33,7 @@
 
   <nav class="adm-tabs">
     <button class="adm-tab active" data-tab="reservas">Reservas</button>
+    <button class="adm-tab" data-tab="facturacion">Facturación</button>
     <button class="adm-tab" data-tab="disponibilidad">Disponibilidad</button>
     <button class="adm-tab" data-tab="barberos">Barberos</button>
   </nav>
@@ -41,19 +42,34 @@
 
     <!-- PANEL: Reservas -->
     <div class="adm-panel active" id="panel-reservas">
+
+      <!-- Stats clicables para filtrar -->
       <div class="adm-stats" id="adm-stats">
-        <div class="adm-stat"><div class="adm-stat-val" id="stat-hoy">—</div><div class="adm-stat-label">Hoy</div></div>
-        <div class="adm-stat"><div class="adm-stat-val" id="stat-pendientes">—</div><div class="adm-stat-label">Pendientes</div></div>
-        <div class="adm-stat"><div class="adm-stat-val" id="stat-confirmadas">—</div><div class="adm-stat-label">Confirmadas</div></div>
-        <div class="adm-stat"><div class="adm-stat-val" id="stat-total">—</div><div class="adm-stat-label">Total</div></div>
+        <div class="adm-stat stat-filter" data-filter-estado="" data-filter-hoy="1">
+          <div class="adm-stat-val" id="stat-hoy">—</div>
+          <div class="adm-stat-label">Hoy</div>
+        </div>
+        <div class="adm-stat stat-filter" data-filter-estado="pendiente">
+          <div class="adm-stat-val" id="stat-pendientes">—</div>
+          <div class="adm-stat-label">Pendientes</div>
+        </div>
+        <div class="adm-stat stat-filter" data-filter-estado="confirmada">
+          <div class="adm-stat-val" id="stat-confirmadas">—</div>
+          <div class="adm-stat-label">Confirmadas</div>
+        </div>
+        <div class="adm-stat stat-filter" data-filter-estado="cancelada">
+          <div class="adm-stat-val" id="stat-canceladas">—</div>
+          <div class="adm-stat-label">Canceladas</div>
+        </div>
+        <div class="adm-stat stat-filter" data-filter-estado="">
+          <div class="adm-stat-val" id="stat-total">—</div>
+          <div class="adm-stat-label">Total</div>
+        </div>
       </div>
 
       <div class="adm-filters">
         <select class="adm-select" id="flt-barbero">
           <option value="">Todos los barberos</option>
-          <option value="andrea">Andrea Escarcha</option>
-          <option value="carlos">Carlos</option>
-          <option value="lucas">Lucas</option>
         </select>
         <select class="adm-select" id="flt-estado">
           <option value="">Todos los estados</option>
@@ -61,10 +77,12 @@
           <option value="confirmada">Confirmada</option>
           <option value="cancelada">Cancelada</option>
           <option value="pagada">Pagada</option>
+          <option value="no-show">No-Show</option>
         </select>
         <input class="adm-date-input" id="flt-fecha" type="date">
         <button class="btn-outline" id="flt-clear" style="padding:8px 14px;font-size:0.7rem;">Limpiar</button>
         <button class="btn-sm-gold" id="flt-refresh" style="margin-left:auto;">↺ Actualizar</button>
+        <button class="btn-sm-gold" id="res-nueva-btn" style="margin-left:8px;">+ Nueva Cita</button>
       </div>
 
       <div class="adm-table-wrap">
@@ -80,6 +98,9 @@
               <th>Cliente</th>
               <th>Teléfono</th>
               <th>Estado</th>
+              <th>📧 Conf.</th>
+              <th>📱 WA</th>
+              <th>⭐ Fidel.</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -89,9 +110,50 @@
       </div>
     </div>
 
+    <!-- PANEL: Facturación -->
+    <div class="adm-panel" id="panel-facturacion">
+      <div class="adm-filters">
+        <input class="adm-date-input" id="fac-desde" type="date" placeholder="Desde">
+        <input class="adm-date-input" id="fac-hasta" type="date" placeholder="Hasta">
+        <select class="adm-select" id="fac-barbero">
+          <option value="">Todos los barberos</option>
+        </select>
+        <button class="btn-sm-gold" id="fac-buscar">Ver Informe</button>
+        <button class="btn-outline" id="fac-csv" style="padding:8px 14px;font-size:0.7rem;margin-left:auto;">↓ Exportar CSV</button>
+      </div>
+
+      <!-- KPIs Facturación -->
+      <div class="adm-stats" id="fac-stats" style="margin-bottom:32px">
+        <div class="adm-stat">
+          <div class="adm-stat-val" id="fac-total-ingresos">—</div>
+          <div class="adm-stat-label">Ingresos Totales (€)</div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-val" id="fac-total-reservas">—</div>
+          <div class="adm-stat-label">Citas Facturables</div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-val" id="fac-ticket-medio">—</div>
+          <div class="adm-stat-label">Ticket Medio (€)</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;flex-wrap:wrap;">
+        <!-- Top Servicios -->
+        <div>
+          <h3 style="font-family:var(--font-display);font-size:0.95rem;color:var(--color-gold);margin-bottom:16px;letter-spacing:0.05em;">Top Servicios</h3>
+          <div id="fac-servicios"></div>
+        </div>
+        <!-- Rendimiento por Barbero -->
+        <div>
+          <h3 style="font-family:var(--font-display);font-size:0.95rem;color:var(--color-gold);margin-bottom:16px;letter-spacing:0.05em;">Rendimiento por Barbero</h3>
+          <div id="fac-barberos"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- PANEL: Disponibilidad -->
     <div class="adm-panel" id="panel-disponibilidad">
-
       <div class="disp-controls">
         <div class="disp-field">
           <label class="disp-label">Barbero</label>
@@ -173,9 +235,77 @@
   </div>
 </div>
 
+<!-- Modal Nueva Reserva Manual -->
+<div class="modal-overlay hidden" id="res-modal" role="dialog" aria-modal="true">
+  <div class="modal-card" style="max-width:560px">
+    <p class="modal-title">Nueva Cita (Manual)</p>
+    <div class="modal-grid">
+      <div class="modal-field full">
+        <label class="modal-label" for="rm-barbero">Barbero *</label>
+        <select class="modal-input" id="rm-barbero"></select>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="rm-fecha">Fecha *</label>
+        <input class="modal-input" id="rm-fecha" type="date">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="rm-hora">Hora *</label>
+        <select class="modal-input" id="rm-hora">
+          <option value="10:00">10:00</option><option value="10:45">10:45</option>
+          <option value="11:30">11:30</option><option value="12:15">12:15</option>
+          <option value="13:00">13:00</option><option value="16:00">16:00</option>
+          <option value="16:45">16:45</option><option value="17:30">17:30</option>
+          <option value="18:15">18:15</option><option value="19:00">19:00</option>
+          <option value="19:45">19:45</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="rm-servicio">Servicio *</label>
+        <input class="modal-input" id="rm-servicio" type="text" placeholder="Corte + Barba">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="rm-precio">Precio (€)</label>
+        <input class="modal-input" id="rm-precio" type="number" placeholder="25" min="0" step="0.5">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="rm-nombre">Nombre Cliente *</label>
+        <input class="modal-input" id="rm-nombre" type="text" placeholder="Nombre">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="rm-telefono">Teléfono</label>
+        <input class="modal-input" id="rm-telefono" type="tel" placeholder="+34 600 000 000">
+      </div>
+      <div class="modal-field full">
+        <label class="modal-label" for="rm-email">Email</label>
+        <input class="modal-input" id="rm-email" type="email" placeholder="opcional@email.com">
+      </div>
+      <div class="modal-field full">
+        <label class="modal-label" for="rm-notas">Notas internas</label>
+        <textarea class="modal-textarea" id="rm-notas" placeholder="Preferencias, observaciones…" style="height:60px"></textarea>
+      </div>
+    </div>
+    <p class="login-err" id="rm-err" style="margin-top:8px"></p>
+    <div class="modal-actions">
+      <button class="btn-outline" id="rm-cancel">Cancelar</button>
+      <button class="btn-sm-gold" id="rm-save">Guardar Cita</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Historial Cliente -->
+<div class="modal-overlay hidden" id="hist-modal" role="dialog" aria-modal="true">
+  <div class="modal-card" style="max-width:600px">
+    <p class="modal-title" id="hist-titulo">Historial de Cliente</p>
+    <div id="hist-content" style="margin-top:16px"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" id="hist-close">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script src="/admin.js?v=5"></script>
+<script src="/admin.js?v=6"></script>
 </body>
 </html>
