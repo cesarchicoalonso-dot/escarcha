@@ -351,7 +351,7 @@
     .mob-nav.open { display: flex; }
     .mob-nav a {
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 1.6rem;
       color: var(--color-white);
       transition: color var(--transition);
     }
@@ -1406,9 +1406,11 @@
         <h3>Afeitado clásico en barbería Castellana</h3>
         <p>Afeitado tradicional con navaja, toalla caliente y bálsamo. Una experiencia de grooming completa.</p>
       </div>
-      <!-- Tabs y paneles renderizados por JS desde SERVICIOS_CATS -->
-      <div class="srv-tabs reveal" id="srv-tabs"></div>
-      <div id="srv-panels"></div>
+      <!-- Sección de servicios unificada: redirigimos al widget de reserva -->
+      <div style="text-align:center; margin-top:40px;" class="reveal">
+        <p style="color:var(--color-gold); font-size:0.9rem; margin-bottom:24px; font-weight:500;">Consulta todos nuestros servicios detallados y precios en nuestro motor de reservas.</p>
+        <a href="#reservas" class="btn-gold">Consultar Precios y Reservar</a>
+      </div>
     </div>
   </section>
 
@@ -2758,6 +2760,34 @@
       body.cookie-banner-visible .wa-float-btn { bottom: 90px; }
       body.cookie-banner-visible .cookie-float-btn { bottom: 90px; }
     }
+
+    /* CTA Flotante exclusivo móvil */
+    .mobile-cta-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 9996;
+      background: var(--color-gold);
+      color: var(--color-bg);
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(201,168,76,0.3);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      white-space: nowrap;
+      display: none;
+    }
+    .mobile-cta-btn.active { transform: translateX(-50%) translateY(0); }
+    
+    @media (max-width: 768px) {
+      .mobile-cta-btn { display: block; }
+      /* Subir WhatsApp para que no tape el CTA central si fuera necesario, 
+         pero de momento los dejamos en esquinas/centro */
+    }
   </style>
 
   <button class="cookie-float-btn" aria-label="Gestionar Cookies" onclick="abrirConfigCookies()" title="Configurar Privacidad">
@@ -2850,6 +2880,22 @@
         }, 1000);
       } else {
         try { aplicarCookies(JSON.parse(stored)); } catch(e){}
+      }
+    });
+
+    // Lógica para mostrar/ocultar CTA flotante móvil al hacer scroll
+    const mobCta = document.createElement('a');
+    mobCta.href = '#reservas';
+    mobCta.className = 'mobile-cta-btn';
+    mobCta.id = 'mobile-cta';
+    mobCta.textContent = 'Pedir Cita Ahora';
+    document.body.appendChild(mobCta);
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400 && window.innerWidth < 768) {
+        mobCta.classList.add('active');
+      } else {
+        mobCta.classList.remove('active');
       }
     });
   </script>
