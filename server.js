@@ -28,27 +28,40 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_1234_placeholder';
 const TWILIO_ACCT_SID = process.env.TWILIO_ACCT_SID || 'AC_placeholder';
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || 'AUTH_placeholder';
 const TWILIO_FROM_NUM = process.env.TWILIO_FROM_NUM || '+123456789';
+const GOOGLE_REVIEWS_URL = process.env.GOOGLE_REVIEWS_URL || 'https://g.page/r/XXXXXX/review'; // CAMBIAR: enlace real Google Reviews
+const EMAIL_FROM = process.env.EMAIL_FROM || 'citas@escarchagroomingclub.com'; // CAMBIAR: email de Resend verificado
 
 async function enviarEmailConfirmacion(reserva) {
   try {
     if (RESEND_API_KEY.includes('placeholder')) {
-      console.log('✉️ [SIMULACRO EMAIL] Enviando confirmación a', reserva.email);
+      console.log('✉️ [SIMULACRO EMAIL CONFIRMACIÓN] Enviando a', reserva.email);
+      console.log(`   Hola ${reserva.nombre} | Servicio: ${reserva.servicio} | Fecha: ${reserva.fecha} | Hora: ${reserva.hora}`);
       return;
     }
-    // Implementación Resend genérica vía fetch nativo
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Citas <hola@tudominio.com>',
+        from: `Escarcha Grooming Club <${EMAIL_FROM}>`,
         to: [reserva.email],
-        subject: `Confirmación de cita - Escarcha Grooming`,
-        html: `<h2>¡Cita Confirmada!</h2><p>Hola ${reserva.nombre}, tu cita para ${reserva.servicio} el día ${reserva.fecha} a las ${reserva.hora} está confirmada.</p>`
+        subject: `✅ Cita Confirmada — Escarcha Grooming Club`,
+        html: `
+          <div style="background:#0a0a0a;padding:32px;font-family:sans-serif;color:#fff;max-width:600px;margin:auto">
+            <h1 style="color:#C9A96E;font-size:1.4rem;margin-bottom:8px">✅ ¡Cita confirmada!</h1>
+            <p style="color:#aaa;margin-bottom:24px">Hola <strong style="color:#fff">${reserva.nombre}</strong>, tu reserva está lista.</p>
+            <div style="background:#111;border:1px solid #2a2a2a;padding:20px;border-radius:4px;margin-bottom:24px">
+              <p style="margin:0 0 8px"><strong style="color:#C9A96E">Servicio:</strong> ${reserva.servicio}</p>
+              <p style="margin:0 0 8px"><strong style="color:#C9A96E">Barbero:</strong> ${reserva.barbero}</p>
+              <p style="margin:0 0 8px"><strong style="color:#C9A96E">Fecha:</strong> ${reserva.fecha}</p>
+              <p style="margin:0"><strong style="color:#C9A96E">Hora:</strong> ${reserva.hora}</p>
+            </div>
+            <p style="color:#aaa;font-size:0.85rem">Escarcha Grooming Club — C/ Rosario Pino, 18, Madrid</p>
+          </div>`
       })
     });
-    console.log(`✉️ Email real enviado a ${reserva.email}`);
+    console.log(`✉️ Email de confirmación enviado a ${reserva.email}`);
   } catch (error) {
-    console.error('Error enviando Email:', error);
+    console.error('Error enviando Email de confirmación:', error);
   }
 }
 
@@ -203,6 +216,8 @@ async function handleAPI(method, pathname, query, req, res) {
       disp.push({ id: genId(), barbero, fecha, hora, ocupado: true });
     }
     await writeDB(DB_DISPONIBILIDAD, disp);
+    // Enviar email de confirmación automáticamente al instante
+    enviarEmailConfirmacion(reserva).catch(err => console.error('Email confirmación:', err));
     return json(res, 201, { ok: true, id: reserva.id });
   }
 
@@ -409,6 +424,59 @@ async function cronJobRecordatorios() {
 // Ejecutar cron cada hora (3600000 ms)
 setInterval(cronJobRecordatorios, 60 * 60 * 1000);
 setTimeout(cronJobRecordatorios, 10000); // Primer check al vuelo
+
+// ── Cron de Fidelización (Email post-cita) ────────────────────────────────────────
+async function cronJobFidelizacion() {
+  try {
+    const reservas = await readDB(DB_RESERVAS);
+    const ahora = new Date();
+    // Fecha de ayer en formato YYYY-MM-DD
+    const ayer = new Date(ahora);
+    ayer.setDate(ayer.getDate() - 1);
+    const ayerStr = ayer.toISOString().slice(0, 10);
+    let modificado = false;
+
+    for (const r of reservas) {
+      if (r.fidelizacion_enviada || r.estado === 'cancelada') continue;
+      if (r.fecha !== ayerStr) continue;
+
+      r.fidelizacion_enviada = true;
+      modificado = true;
+
+      // Enviar email solicitar reseña
+      if (RESEND_API_KEY.includes('placeholder')) {
+        console.log(`⭐ [SIMULACRO FIDELIZACIÓN] Enviando email de satisfacción a ${r.email} (cita del ${r.fecha})`);
+      } else {
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: `Escarcha Grooming Club <${EMAIL_FROM}>`,
+            to: [r.email],
+            subject: `¿Qué tal tu experiencia en Escarcha Grooming Club?`,
+            html: `
+              <div style="background:#0a0a0a;padding:32px;font-family:sans-serif;color:#fff;max-width:600px;margin:auto">
+                <h1 style="color:#C9A96E;font-size:1.4rem;margin-bottom:8px">Hola, ${r.nombre} — ¿cómo fue tu visita?</h1>
+                <p style="color:#aaa;margin-bottom:24px">Ayer visitaste Escarcha Grooming Club. Esperamos que tu experiencia haya sido excelente.</p>
+                <p style="color:#aaa;margin-bottom:32px">Si tienes un momento, nos ayudaría mucho que compartieras tu opinión en Google. Solo te llevará un minuto.</p>
+                <a href="${GOOGLE_REVIEWS_URL}" target="_blank" style="display:inline-block;background:#C9A96E;color:#000;text-decoration:none;padding:14px 28px;font-weight:700;font-size:0.95rem;border-radius:4px">
+                  Dejar una reseña en Google ⭐
+                </a>
+                <p style="color:#555;font-size:0.78rem;margin-top:32px">Escarcha Grooming Club — C/ Rosario Pino, 18, Madrid</p>
+              </div>`
+          })
+        }).catch(err => console.error('Error email fidelización:', err));
+      }
+    }
+
+    if (modificado) await writeDB(DB_RESERVAS, reservas);
+  } catch (err) {
+    console.error('Error en el cron de fidelización:', err);
+  }
+}
+// Ejecutar fidelización una vez al día (86400000 ms) y al arrancar con 30s de delay
+setInterval(cronJobFidelizacion, 24 * 60 * 60 * 1000);
+setTimeout(cronJobFidelizacion, 30000);
 
 http.createServer(async (req, res) => {
   const parsed   = new URL(req.url, `http://localhost:${PORT}`);
