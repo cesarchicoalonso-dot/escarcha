@@ -2785,8 +2785,8 @@
     
     @media (max-width: 768px) {
       .mobile-cta-btn { display: block; }
-      /* Subir WhatsApp para que no tape el CTA central si fuera necesario, 
-         pero de momento los dejamos en esquinas/centro */
+      /* Asegurar que el footer no quede tapado por los botones flotantes */
+      #footer .ft-bottom { padding-bottom: 80px; }
     }
   </style>
 
