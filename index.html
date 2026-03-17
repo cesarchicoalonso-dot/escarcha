@@ -1856,6 +1856,16 @@
                       Crear cuenta
                     </button>
                   </div>
+                  <!-- Buscador de email (Oculto por defecto) -->
+                  <div id="bk-email-lookup" style="display: none; width: 100%; margin-top: 10px;">
+                    <div style="position: relative;">
+                      <input type="email" id="bk-lookup-field" class="bk-input" placeholder="Introduce tu email..." style="width: 100%; padding-right: 45px;">
+                      <button type="button" id="bk-btn-do-lookup" style="position: absolute; right: 5px; top: 5px; bottom: 5px; background: var(--color-gold); border: none; border-radius: 3px; width: 35px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #000;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                      </button>
+                    </div>
+                    <p id="bk-lookup-err" style="font-size: 0.75rem; color: #e05252; margin-top: 8px; text-align: left; height: 1.2em;"></p>
+                  </div>
                 </div>
               </div>
               <div class="bk-form-grid">
@@ -2985,26 +2995,58 @@
       state.email = fakeData.email;
     }
 
-    $('bk-btn-login-email').addEventListener('click', async () => {
-      const email = prompt('Introduce tu email para identificarte:');
-      if (!email || !/^.+@.+\.com$/.test(email)) return;
+    $('bk-btn-login-email').addEventListener('click', () => {
+      const lookupWrap = $('bk-email-lookup');
+      const isHidden = lookupWrap.style.display === 'none';
+      lookupWrap.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) $('bk-lookup-field').focus();
+    });
+
+    $('bk-lookup-field').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        doEmailLookup();
+      }
+    });
+
+    $('bk-btn-do-lookup').addEventListener('click', doEmailLookup);
+
+    async function doEmailLookup() {
+      const email = $('bk-lookup-field').value.trim();
+      if (!email || !emailStrictRegex.test(email)) {
+        $('bk-lookup-err').textContent = 'Introduce un email válido.';
+        $('bk-lookup-err').style.color = '#e05252';
+        return;
+      }
+      
+      $('bk-lookup-err').textContent = 'Buscando...';
+      $('bk-lookup-err').style.color = 'var(--color-gold)';
       
       try {
         const r = await fetch(`/api/auth?email=${encodeURIComponent(email)}`);
         if (r.ok) {
           const user = await r.json();
+          // Usamos el email buscado si por algún motivo user.email viene vacío
+          const emailToUse = user.email || email;
+          
           $('bk-nombre').value = user.nombre;
-          $('bk-email').value = user.email;
+          $('bk-email').value = emailToUse;
           $('bk-telefono').value = user.telefono || '';
           $('bk-email').readOnly = true;
           $('bk-login-options').style.display = 'none';
+          
+          state.nombre = user.nombre;
+          state.email = emailToUse;
+          state.telefono = user.telefono || '';
         } else {
-          alert('No hemos encontrado ninguna cuenta con ese email.');
+          $('bk-lookup-err').textContent = 'No encontramos ninguna cuenta con ese email.';
+          $('bk-lookup-err').style.color = '#e05252';
         }
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        $('bk-lookup-err').textContent = 'Error al conectar con el servidor.';
+        $('bk-lookup-err').style.color = '#e05252';
       }
-    });
+    }
 
     $('bk-btn-signup').addEventListener('click', () => {
       alert('Para crear una cuenta, simplemente rellena el formulario y confirma tu reserva. ¡Te guardaremos los datos automáticamente!');
