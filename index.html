@@ -1692,7 +1692,7 @@
                 </div>
                 <div class="bk-field">
                   <label class="bk-label" for="bk-telefono">Teléfono *</label>
-                  <input class="bk-input" id="bk-telefono" type="tel" placeholder="+34 600 000 000" autocomplete="tel" pattern="[0-9]{9}" title="9 dígitos numéricos" required>
+                  <input class="bk-input" id="bk-telefono" type="tel" placeholder="+34 600 000 000" autocomplete="tel" pattern="(\+\d{1,3})?\d{9,}" title="Introduce un número de teléfono válido" required>
                 </div>
                 <div class="bk-field full">
                   <label class="bk-label" for="bk-email">Email *</label>
@@ -2609,11 +2609,10 @@
       const telefono = $('bk-telefono').value.trim();
       const gdpr     = $('bk-gdpr').checked;
       const phoneClean = telefono.replace(/\s/g, '');
-      const phoneRegex = /^\d{9}$/;
-      const emailStrictRegex = /^.+@.+\.com$/;
+      const phoneRegex = /^(\+\d{1,3})?\d{9,11}$/;
 
       if (!nombre)                         { setErr('bk-err-4', 'El nombre es obligatorio.'); return; }
-      if (!phoneRegex.test(phoneClean))    { setErr('bk-err-4', 'El teléfono debe tener exactamente 9 dígitos.'); return; }
+      if (!phoneRegex.test(phoneClean))    { setErr('bk-err-4', 'Introduce un teléfono válido (ej: 600000000 o +34600000000).'); return; }
       if (!email || !emailStrictRegex.test(email)) { setErr('bk-err-4', 'Introduce un email válido (debe contener @ y terminar en .com).'); return; }
       if (!gdpr)                           { setErr('bk-err-4', 'Debes aceptar la política de privacidad.'); return; }
       state.nombre   = nombre;
