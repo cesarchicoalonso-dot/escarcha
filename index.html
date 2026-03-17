@@ -1244,8 +1244,9 @@
       color: rgba(136,136,136,0.45);
       transition: color var(--transition);
     }
-    /* Ocultar botón flotante móvil durante la reserva */
-    body.booking-active .mobile-cta-btn { display: none !important; }
+    /* Ocultar botón flotante móvil durante la reserva o tras confirmarla */
+    body.booking-active .mobile-cta-btn,
+    body.booking-done .mobile-cta-btn { display: none !important; }
   </style>
 </head>
 <body>
@@ -1637,7 +1638,7 @@
                   <input class="bk-input" id="bk-email" type="email" placeholder="tu@email.com" autocomplete="email" required>
                 </div>
                 <div class="bk-field full" style="margin-top:8px; display:flex; align-items:flex-start; gap:10px;">
-                  <input type="checkbox" id="bk-gdpr" style="margin-top:4px;cursor:pointer" required>
+                  <input type="checkbox" id="bk-gdpr" style="flex-shrink:0; margin-top:2px; cursor:pointer" required>
                   <label for="bk-gdpr" style="font-size:0.75rem; color:var(--color-gray); line-height:1.4;cursor:pointer">
                     He leído y acepto la <a href="#privacidad" onclick="document.getElementById('modal-privacidad').classList.add('active');return false;" style="color:var(--color-gold);text-decoration:underline;">Política de Privacidad</a> y el tratamiento de mis datos personales para la gestión de la cita.
                   </label>
@@ -2580,6 +2581,7 @@
         $('bk-progress').style.display = 'none';
         $('bk-success').classList.add('active');
         document.body.classList.remove('booking-active');
+        document.body.classList.add('booking-done');
       } catch (err) {
         setErr('bk-err-5', err.message || 'Error de conexión. Inténtalo de nuevo.');
         btn.disabled = false;
@@ -2596,6 +2598,7 @@
         slotsCache: {},
       });
       document.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
+      document.body.classList.remove('booking-done');
       ['bk-nombre','bk-email','bk-telefono'].forEach(id => { const el = $(id); if(el) el.value = ''; });
       showStep(1);
     });
