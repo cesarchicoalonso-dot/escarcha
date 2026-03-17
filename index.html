@@ -1244,7 +1244,8 @@
       color: rgba(136,136,136,0.45);
       transition: color var(--transition);
     }
-    .ft-legal a:hover { color: var(--color-gray); }
+    /* Ocultar CTAs globales durante la reserva */
+    body.booking-active .global-cta { display: none !important; }
   </style>
 </head>
 <body>
@@ -1258,7 +1259,7 @@
     <a href="#equipo"    onclick="closeNav()">Equipo</a>
     <a href="#galeria"   onclick="closeNav()">Galería</a>
     <a href="#blog"      onclick="closeNav()">Blog</a>
-    <a href="#reservas"  onclick="closeNav()" class="btn-gold" style="margin-top:8px;">Reservar Cita</a>
+    <a href="#reservas"  onclick="closeNav()" class="btn-gold global-cta" style="margin-top:8px;">Reservar Cita</a>
   </nav>
 
   <!-- =================================================================
@@ -1276,7 +1277,7 @@
         <a href="#blog">Blog</a>
       </nav>
 
-      <a href="#reservas" class="btn-gold hd-cta" style="padding:11px 26px;font-size:0.66rem;">Reservar Cita</a>
+      <a href="#reservas" class="btn-gold hd-cta global-cta" style="padding:11px 26px;font-size:0.66rem;">Reservar Cita</a>
 
       <button class="hbg" id="hbg" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobNav">
         <span></span><span></span><span></span>
@@ -1296,7 +1297,7 @@
       <p class="hero-eyebrow reveal">Madrid &nbsp;·&nbsp; Grooming &nbsp;·&nbsp; Exclusivo</p>
       <h1 class="hero-title reveal reveal-d1">GROOMING<br>CLUB</h1>
       <p class="hero-sub reveal reveal-d2">El arte del caballero moderno. Madrid.</p>
-      <a href="#reservas" class="btn-gold reveal reveal-d3">Reserva tu Cita</a>
+      <a href="#reservas" class="btn-gold global-cta reveal reveal-d3">Reserva tu Cita</a>
     </div>
 
     <div class="hero-scroll-ind" aria-hidden="true">
@@ -1917,7 +1918,7 @@
             <li><a href="#equipo">Equipo</a></li>
             <li><a href="#galeria">Galería</a></li>
             <li><a href="#blog">Blog</a></li>
-            <li><a href="#reservas">Reservar</a></li>
+            <li><a href="#reservas" class="global-cta">Reservar</a></li>
           </ul>
         </div>
 
@@ -2228,6 +2229,10 @@
       updateProgress(n);
       if (n === 2) loadAndRenderBarberos();
       
+      // Ocultar botones globales cuando se inicia la reserva
+      const isBookingStarted = (n > 1) || (n === 1 && state.servicio);
+      document.body.classList.toggle('booking-active', isBookingStarted);
+      
       // Centrar el widget en cada paso
       const widget = $('bk-widget');
       if (widget) {
@@ -2256,6 +2261,7 @@
           card.classList.add('selected');
           state.servicio = { id: card.dataset.id, name: card.dataset.name, price: card.dataset.price };
           clearErr('bk-err-1');
+          document.body.classList.add('booking-active');
     
           // Scroll suave al botón de siguiente en móvil si la lista es larga
           if (window.innerWidth < 768) {
@@ -2436,6 +2442,10 @@
       title.textContent = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
 
       const slots = await fetchSlots(fecha);
+      
+      // Ordenar horas de forma correlativa
+      slots.sort((a, b) => a.hora.localeCompare(b.hora));
+
       wrap.innerHTML = '';
 
       if (!slots.length) {
