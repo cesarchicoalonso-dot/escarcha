@@ -438,15 +438,28 @@ async function handleAPI(method, pathname, query, req, res) {
   // ── DISPONIBILIDAD ──────────────────────────────────────────────────────────
 
   if (method === 'GET' && pathname === '/api/disponibilidad') {
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    const reservas = await readDB(DB_RESERVAS);
-    // Cruzar disponibilidad con reservas reales para evitar bloqueos huérfanos
-    let result = disp.filter(s => {
-      const ocupadoReal = reservas.some(r => r.barbero === s.barbero && r.fecha === s.fecha && r.hora === s.hora && r.estado !== 'cancelada');
-      return !ocupadoReal;
+    let disp = await readDB(DB_DISPONIBILIDAD);
+    let reservasArr = await readDB(DB_RESERVAS);
+
+    // Optimización: filtrar por fecha antes de cruzar los datos
+    if (query.fecha) {
+      disp = disp.filter(s => s.fecha === query.fecha);
+      reservasArr = reservasArr.filter(r => r.fecha === query.fecha);
+    }
+    if (query.barbero) {
+      disp = disp.filter(s => s.barbero === query.barbero);
+    }
+
+    // Cruzar disponibilidad con reservas activas
+    const result = disp.filter(s => {
+      const estáOcupado = reservasArr.some(r => 
+        r.barbero === s.barbero && 
+        r.hora === s.hora && 
+        r.estado !== 'cancelada'
+      );
+      return !estáOcupado;
     });
-    if (query.fecha)   result = result.filter(s => s.fecha   === query.fecha);
-    if (query.barbero) result = result.filter(s => s.barbero === query.barbero);
+
     return json(res, 200, result);
   }
 

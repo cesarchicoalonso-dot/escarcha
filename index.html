@@ -767,15 +767,26 @@
       margin: 0 0 6px;
     }
     .bk-card-desc {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--color-gray);
-      line-height: 1.5;
-      margin: 0 0 10px;
+      line-height: 1.4;
+      margin: 0 0 6px;
+    }
+    .bk-card-price-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
     }
     .bk-card-price {
       font-size: 0.8rem;
       color: var(--color-gold);
       font-weight: 600;
+    }
+    .bk-card-dur {
+      font-size: 0.7rem;
+      color: var(--color-gray);
+      font-style: italic;
     }
 
     /* Cards de servicio */
@@ -788,7 +799,7 @@
       background: var(--color-bg-card);
       border: 1px solid var(--color-border);
       border-radius: 4px;
-      padding: 20px 18px;
+      padding: 14px 18px;
       cursor: pointer;
       transition: border-color var(--transition), background var(--transition);
       text-align: left;
@@ -797,6 +808,42 @@
     .bk-card.selected {
       border-color: var(--color-gold);
       background: var(--color-gold-dim);
+      box-shadow: inset 0 0 0 1px var(--color-gold);
+    }
+
+    /* Botón Cargar más - Discreto y elegante */
+    .bk-load-more-container {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .btn-load-more {
+      background: none;
+      border: 1px solid var(--color-border);
+      color: var(--color-gold);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 24px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all var(--transition);
+      opacity: 0.8;
+    }
+    .btn-load-more:hover {
+      opacity: 1;
+      border-color: var(--color-gold);
+      background: var(--color-gold-dim);
+    }
+    .bk-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: var(--color-gold);
+      font-weight: bold;
+      font-size: 0.8rem;
     }
 
     /* Cards de barbero (horizontales) */
@@ -956,6 +1003,16 @@
     }
     .bk-input:focus { border-color: var(--color-gold); }
     .bk-input::placeholder { color: var(--color-gray); opacity: 0.6; }
+
+    /* Estilos para el autorrelleno del navegador (autofill) */
+    .bk-input:-webkit-autofill,
+    .bk-input:-webkit-autofill:hover, 
+    .bk-input:-webkit-autofill:focus, 
+    .bk-input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px var(--color-bg-card) inset !important;
+      -webkit-text-fill-color: var(--color-white) !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
 
     /* Resumen */
     .bk-summary {
@@ -1283,6 +1340,85 @@
       color: rgba(136,136,136,0.45);
       transition: color var(--transition);
     }
+    /* ===================================================================
+       STORYTELLING Z-PATTERN
+    =================================================================== */
+    .story-section {
+      display: flex;
+      flex-direction: column;
+      gap: 120px;
+      margin-top: 60px;
+    }
+    .story-block {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .story-block:nth-child(even) {
+      direction: rtl;
+    }
+    .story-block:nth-child(even) .story-content {
+      direction: ltr;
+    }
+    .story-content {
+      padding: 20px 0;
+    }
+    .story-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      aspect-ratio: 1/1;
+    }
+    .story-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .story-block:hover .story-image img {
+      transform: scale(1.08);
+    }
+    .story-subtitle {
+      color: var(--color-gold);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .story-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 28px;
+      color: var(--color-white);
+    }
+    .story-text {
+      color: var(--color-gray);
+      line-height: 1.9;
+      font-size: 1rem;
+      margin-bottom: 22px;
+    }
+    .story-text strong {
+      color: var(--color-gold);
+    }
+
+    @media (max-width: 900px) {
+      .story-section { gap: 80px; }
+      .story-block, .story-block:nth-child(even) {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        gap: 40px;
+      }
+      .story-image {
+        order: -1;
+        aspect-ratio: 16/9;
+      }
+    }
+
     /* Ocultar botón flotante móvil durante la reserva o tras confirmarla */
     body.booking-active .mobile-cta-btn,
     body.booking-done .mobile-cta-btn { display: none !important; }
@@ -1430,29 +1566,66 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="section-label">Nuestros servicios</span>
-        <h2 class="section-title" id="srv-title">Una experiencia<br>a tu medida</h2>
+        <h2 class="section-title" id="srv-title">El Ritual Escarcha</h2>
         <span class="gold-divider"></span>
-        <p style="color:var(--color-gray);max-width:500px;font-size:0.88rem;line-height:1.8">
-          Cada servicio es un ritual. Productos de primera línea, técnicas refinadas y un equipo
-          comprometido con la excelencia.
+        <p style="color:var(--color-gray);max-width:550px;font-size:0.95rem;line-height:1.8">
+          No vendemos cortes de pelo, diseñamos identidades. Cada servicio es un ritual meticuloso 
+          donde la tradición se encuentra con la exclusividad.
         </p>
       </div>
 
-      <!-- H3 semánticos para SEO — visually-hidden, no afectan al diseño -->
-      <div class="sr-only" aria-hidden="true">
-        <h3>Corte de pelo para hombre en Madrid</h3>
-        <p>Cortes clásicos y modernos adaptados a cada tipo de cabello. Precisión milimétrica en cada sesión.</p>
-        <h3>Corte degradado (fade) en Tetuán Madrid</h3>
-        <p>Especialistas en técnica fade: low fade, mid fade, high fade y skin fade. El acabado más demandado en Madrid.</p>
-        <h3>Arreglo de barba en Madrid</h3>
-        <p>Perfilado, relleno y tratamiento de barba con productos premium. Definición perfecta para cada fisonomía.</p>
-        <h3>Afeitado clásico en barbería Castellana</h3>
-        <p>Afeitado tradicional con navaja, toalla caliente y bálsamo. Una experiencia de grooming completa.</p>
-      </div>
-      <!-- Sección de servicios unificada: se renderiza dinámicamente -->
-      <div id="srv-tabs" class="srv-tabs reveal reveal-d1"></div>
-      <div id="srv-panels" class="srv-panels reveal reveal-d2"></div>
+      <div class="story-section">
+        <!-- Bloque 1: Asesoramiento -->
+        <article class="story-block reveal">
+          <div class="story-content">
+            <span class="story-subtitle">Identidad y Estilo</span>
+            <h3 class="story-title">Asesoramiento Personalizado: Una Declaración de Intenciones</h3>
+            <p class="story-text">
+              Como referentes de la <strong>barbería de lujo</strong> en Madrid, cada visita comienza con un diagnóstico profundo. No se trata solo de usar tijera y navaja, sino de entender tu fisonomía y estilo de vida.
+            </p>
+            <p class="story-text">
+              Nuestros expertos analizan tus facciones para ofrecerte un diseño que proyecte tu mejor versión. Es el primer paso de un <strong>rituales de cuidado masculino</strong> impecable cerca de la <strong>Castellana</strong>.
+            </p>
+          </div>
+          <div class="story-image">
+            <img src="uploads/ritual.png" alt="Detalle de asesoramiento en barbería premium">
+          </div>
+        </article>
 
+        <!-- Bloque 2: El Ritual -->
+        <article class="story-block reveal">
+          <div class="story-content">
+            <span class="story-subtitle">La Experiencia Sensorial</span>
+            <h3 class="story-title">El Arte del Afeitado Tradicional y Cuidado Profundo</h3>
+            <p class="story-text">
+              Descubre el placer de un <strong>afeitado tradicional</strong> bajo el sello de nuestros niveles Blue, Gold y Green Label. Sentirás la <strong>limpieza profunda del cuero cabelludo</strong>, el vapor de toallas calientes y la precisión de la navaja sobre la piel.
+            </p>
+            <p class="story-text">
+              Somos tu <strong>barbería en Tetuán</strong> donde el grooming se eleva a la categoría de arte, utilizando productos orgánicos que respetan y revitalizan tu esencia.
+            </p>
+          </div>
+          <div class="story-image">
+            <img src="uploads/ambiente.png" alt="Ritual de toalla caliente y afeitado premium">
+          </div>
+        </article>
+
+        <!-- Bloque 3: Bienestar -->
+        <article class="story-block reveal">
+          <div class="story-content">
+            <span class="story-subtitle">Bienestar Post-Servicio</span>
+            <h3 class="story-title">Más que un Corte: Renovación Facial y Capilar</h3>
+            <p class="story-text">
+              Nuestros rituales concluyen con una sensación de renovación total. Integramos masajes capilares y técnicas de <strong>higiene facial</strong> que eliminan el estrés acumulado, dejando tu rostro impecable y tu mente despejada.
+            </p>
+            <p class="story-text">
+              Sal de <strong>Escarcha Grooming Club</strong> no solo con un estilo renovado, sino con la confianza de haber vivido una experiencia de lujo diseñada exclusivamente para el caballero contemporáneo.
+            </p>
+          </div>
+          <div class="story-image">
+            <img src="uploads/facial.png" alt="Tratamiento de higiene facial y cuidado masculino">
+          </div>
+        </article>
+      </div>
 
     </div>
   </section>
@@ -1692,7 +1865,7 @@
                 </div>
                 <div class="bk-field">
                   <label class="bk-label" for="bk-telefono">Teléfono *</label>
-                  <input class="bk-input" id="bk-telefono" type="tel" placeholder="+34 600 000 000" autocomplete="tel" pattern="(\+\d{1,3})?\d{9,}" title="Introduce un número de teléfono válido" required>
+                  <input class="bk-input" id="bk-telefono" type="tel" placeholder="+34 600 000 000" autocomplete="tel" pattern="(\+\d{1,4})?\d{9,14}" title="Introduce un número de teléfono válido">
                 </div>
                 <div class="bk-field full">
                   <label class="bk-label" for="bk-email">Email *</label>
@@ -2180,65 +2353,11 @@
     ]},
   ];
 
-  // ── Renderiza la sección de servicios de la página ────────────────────────
-  (function renderSrvSection() {
-    const tabsEl   = document.getElementById('srv-tabs');
-    const panelsEl = document.getElementById('srv-panels');
-    if (!tabsEl || !panelsEl) return;
-
-    function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    function fmtPrecio(p) { return Number.isInteger(p) ? p + ' €' : p.toFixed(2).replace('.',',') + ' €'; }
-
-    SERVICIOS_CATS.forEach((cat, i) => {
-      // Tab
-      const btn = document.createElement('button');
-      btn.className = 'srv-tab' + (i === 0 ? ' active' : '');
-      btn.textContent = cat.label;
-      btn.dataset.cat = cat.id;
-      tabsEl.appendChild(btn);
-
-      // Panel
-      const panel = document.createElement('div');
-      panel.className = 'srv-panel' + (i === 0 ? ' active' : '');
-      panel.id = 'srv-panel-' + cat.id;
-      panel.innerHTML = '<div class="srv-list">' + cat.servicios.map(s => `
-        <div class="srv-row">
-          <div>
-            ${s.sub ? `<p class="srv-row-subtitle">${esc(s.sub)}</p>` : ''}
-            <h3 class="srv-row-name">${esc(s.name)}</h3>
-            ${s.desc ? `<p class="srv-row-desc">${esc(s.desc)}</p>` : ''}
-          </div>
-          <div class="srv-row-right" style="display: flex; align-items: center; gap: 16px; justify-content: flex-end;">
-            <div style="text-align: right;">
-              <span class="srv-row-price">${fmtPrecio(s.precio)}</span>
-              <span class="srv-row-dur">${esc(s.dur)}</span>
-            </div>
-            <button class="btn-outline btn-reserva-directa" data-cat="${cat.id}" data-id="${s.id}" style="padding: 8px 16px; font-size: 0.6rem;">Reservar</button>
-          </div>
-        </div>`).join('') + '</div>';
-      panelsEl.appendChild(panel);
-    });
-
-    tabsEl.addEventListener('click', e => {
-      const btn = e.target.closest('.srv-tab');
-      if (!btn) return;
-      tabsEl.querySelectorAll('.srv-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      panelsEl.querySelectorAll('.srv-panel').forEach(p => p.classList.remove('active'));
-      const panel = document.getElementById('srv-panel-' + btn.dataset.cat);
-      if (panel) panel.classList.add('active');
-    });
-
-    panelsEl.addEventListener('click', e => {
-      const btn = e.target.closest('.btn-reserva-directa');
-      if (btn) {
-        const catId = btn.dataset.cat;
-        const srvId = btn.dataset.id;
-        window.dispatchEvent(new CustomEvent('reserva-directa', { detail: { catId, srvId } }));
-      }
-    });
-
-  })();
+    /* 
+    Página de inicio: La sección de servicios ahora es estática (Storytelling).
+    Se mantiene SERVICIOS_CATS para alimentar el widget de reservas exclusivamente.
+    */
+    // (function renderSrvSection() { ... })(); // Inactivo para el landing de Storytelling
   </script>
 
   <!-- ── Widget de Reservas — lógica ──────────────────────────────────────── -->
@@ -2249,7 +2368,7 @@
     // ── Estado ────────────────────────────────────────────────────────────────
     const state = {
       step: 1,
-      servicio: null,   // { id, name, price }
+      servicios: [],   // Array of { id, name, price, dur }
       barbero:  null,   // { id, name }
       fecha:    null,   // 'YYYY-MM-DD'
       hora:     null,   // 'HH:MM'
@@ -2260,7 +2379,9 @@
       calYear:  new Date().getFullYear(),
       calMonth: new Date().getMonth(),
       // slots disponibles cargados del servidor (por fecha)
+      slots: [],
       slotsCache: {},
+      showAllServices: false
     };
 
     // ── Helpers DOM ───────────────────────────────────────────────────────────
@@ -2292,7 +2413,7 @@
       if (n === 2) loadAndRenderBarberos();
       
       // Ocultar botones globales cuando se inicia la reserva
-      const isBookingStarted = (n > 1) || (n === 1 && state.servicio);
+      const isBookingStarted = (n > 1) || (n === 1 && state.servicios.length > 0);
       document.body.classList.toggle('booking-active', isBookingStarted);
       
       // Centrar el widget en cada paso
@@ -2308,28 +2429,68 @@
     function renderServicioCards() {
       const cat = SERVICIOS_CATS.find(c => c.id === _activeCat) || SERVICIOS_CATS[0];
       const container = $('bk-services');
-      container.innerHTML = cat.servicios.map(s => `
-        <button class="bk-card${state.servicio && state.servicio.id === s.id ? ' selected' : ''}"
-                data-id="${escHtml(s.id)}" data-name="${escHtml(s.name)}" data-price="${s.precio}">
+      
+      // Ordenar por precio descendente
+      const sortedServices = [...cat.servicios].sort((a, b) => b.precio - a.precio);
+      
+      // Lógica de "Cargar más" - Solo en móvil (< 768px)
+      const isMobileWidth = window.innerWidth < 768;
+      const needsLoadMore = isMobileWidth && sortedServices.length > 5 && !state.showAllServices;
+      const servicesToRender = needsLoadMore ? sortedServices.slice(0, 5) : sortedServices;
+
+      console.log('Rendering Services:', { isMobileWidth, needsLoadMore, total: sortedServices.length });
+
+      let html = servicesToRender.map(s => {
+        const isSelected = state.servicios.some(x => x.id === s.id);
+        const priceStr = Number.isInteger(s.precio) ? s.precio : s.precio.toFixed(2).replace('.',',');
+        return `
+        <button class="bk-card${isSelected ? ' selected' : ''}"
+                data-id="${escHtml(s.id)}" data-name="${escHtml(s.name)}" data-price="${s.precio}" data-dur="${escHtml(s.dur)}">
           <p class="bk-card-name">${escHtml(s.name)}</p>
           ${s.sub ? `<p class="bk-card-desc" style="font-size:0.7rem;color:var(--color-gold);opacity:.8;margin-bottom:4px">${escHtml(s.sub)}</p>` : ''}
           ${s.desc ? `<p class="bk-card-desc">${escHtml(s.desc)}</p>` : ''}
-          <span class="bk-card-price">${Number.isInteger(s.precio) ? s.precio : s.precio.toFixed(2).replace('.',',')} € · ${escHtml(s.dur)}</span>
-        </button>`).join('');
+          <div class="bk-card-price-area">
+            <span class="bk-card-price">${priceStr} €</span>
+            <span class="bk-card-dur">${escHtml(s.dur)}</span>
+          </div>
+        </button>`;
+      }).join('');
+
+      if (needsLoadMore) {
+        html += `
+        <div class="bk-load-more-container">
+          <button class="btn-load-more" id="btn-load-more">Cargar más servicios</button>
+        </div>`;
+      }
+
+      container.innerHTML = html;
+
+      // Event listener para "Cargar más"
+      if (needsLoadMore) {
+        const btnMore = $('btn-load-more');
+        if (btnMore) {
+          btnMore.addEventListener('click', () => {
+            state.showAllServices = true;
+            renderServicioCards();
+          });
+        }
+      }
 
       container.querySelectorAll('.bk-card').forEach(card => {
         card.addEventListener('click', () => {
-          container.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
-          card.classList.add('selected');
-          state.servicio = { id: card.dataset.id, name: card.dataset.name, price: card.dataset.price };
-          clearErr('bk-err-1');
-          document.body.classList.add('booking-active');
-    
-          // Scroll suave al botón de siguiente en móvil si la lista es larga
-          if (window.innerWidth < 768) {
-             const btnNext = $('bk-next-1');
-             btnNext.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          const srv = { id: card.dataset.id, name: card.dataset.name, price: parseFloat(card.dataset.price), dur: card.dataset.dur };
+          const idx = state.servicios.findIndex(x => x.id === srv.id);
+          
+          if (idx > -1) {
+            state.servicios.splice(idx, 1);
+            card.classList.remove('selected');
+          } else {
+            state.servicios.push(srv);
+            card.classList.add('selected');
           }
+          
+          clearErr('bk-err-1');
+          document.body.classList.toggle('booking-active', state.servicios.length > 0);
         });
       });
     }
@@ -2345,6 +2506,7 @@
       tabsEl.querySelectorAll('.bk-cat-tab').forEach(btn => {
         btn.addEventListener('click', () => {
           _activeCat = btn.dataset.cat;
+          state.showAllServices = false; // Reset "ver todos" al cambiar de categoría
           tabsEl.querySelectorAll('.bk-cat-tab').forEach(t => t.classList.remove('active'));
           btn.classList.add('active');
           renderServicioCards();
@@ -2360,7 +2522,7 @@
     renderServicioCards();
 
     $('bk-next-1').addEventListener('click', () => {
-      if (!state.servicio) { setErr('bk-err-1', 'Por favor selecciona un servicio.'); return; }
+      if (state.servicios.length === 0) { setErr('bk-err-1', 'Por favor selecciona al menos un servicio.'); return; }
       showStep(2);
     });
 
@@ -2401,6 +2563,7 @@
         container.querySelectorAll('.bk-card-barber').forEach(c => c.classList.remove('selected'));
         btnAny.classList.add('selected');
         state.barbero = { id: 'any', name: 'Cualquier profesional' };
+        state.slotsCache = {}; // Limpiar caché al cambiar barbero
         clearErr('bk-err-2');
       });
       container.appendChild(btnAny);
@@ -2422,6 +2585,7 @@
           container.querySelectorAll('.bk-card-barber').forEach(c => c.classList.remove('selected'));
           btn.classList.add('selected');
           state.barbero = { id: b.id, name: fullName };
+          state.slotsCache = {}; // Limpiar caché al cambiar barbero
           clearErr('bk-err-2');
         });
         container.appendChild(btn);
@@ -2449,29 +2613,32 @@
     }
 
     async function fetchSlots(fecha) {
-      if (state.slotsCache[fecha] !== undefined) return state.slotsCache[fecha];
+      // Usar caché por fecha y barbero para evitar conflictos
+      const cacheKey = `${fecha}_${state.barbero.id}`;
+      if (state.slotsCache[cacheKey] !== undefined) return state.slotsCache[cacheKey];
+
       try {
         const url = state.barbero.id === 'any' 
           ? `/api/disponibilidad?fecha=${fecha}` 
           : `/api/disponibilidad?fecha=${fecha}&barbero=${state.barbero.id}`;
+        
         const r = await fetch(url);
         const data = await r.json();
         
-        // Si es "any", consolidamos por hora (eliminando duplicados de la misma hora pero diferentes barberos)
-        // Para simplificar, si hay 3 barberos libres a las 10:00, solo mostramos una vez las 10:00
+        let result = data;
         if (state.barbero.id === 'any') {
           const uniqueHours = {};
           data.forEach(s => {
             if (!uniqueHours[s.hora]) uniqueHours[s.hora] = s;
           });
-          state.slotsCache[fecha] = Object.values(uniqueHours);
-        } else {
-          state.slotsCache[fecha] = data;
+          result = Object.values(uniqueHours);
         }
-        return state.slotsCache[fecha];
-      } catch {
-        state.slotsCache[fecha] = [];
-        return state.slotsCache[fecha];
+        
+        state.slotsCache[cacheKey] = result;
+        return result;
+      } catch (err) {
+        console.error('Error fetchSlots:', err);
+        return [];
       }
     }
 
@@ -2535,52 +2702,70 @@
     }
 
     async function renderSlots(fecha) {
+      if (!fecha) return;
+      console.log('renderSlots for:', fecha);
       const wrap  = $('bk-slots');
       const title = $('bk-slots-title');
       wrap.innerHTML = '<span class="bk-slots-empty" style="opacity:0.5">Cargando horas…</span>';
 
-      const d = new Date(fecha + 'T00:00:00');
-      title.textContent = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+      try {
+        const d = new Date(fecha + 'T00:00:00');
+        title.textContent = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
 
-      let slots = await fetchSlots(fecha);
-      
-      // Ordenar horas de forma correlativa
-      slots.sort((a, b) => a.hora.localeCompare(b.hora));
+        const slots = await fetchSlots(fecha);
+        console.log('Slots received:', slots?.length);
+        
+        wrap.innerHTML = '';
 
-      // Filtrar horas pasadas si es hoy
-      const now = new Date();
-      const todayStr = isoDate(now.getFullYear(), now.getMonth(), now.getDate());
-      
-      if (fecha === todayStr) {
-        slots = slots.filter(s => {
-          const [h, m] = s.hora.split(':');
-          const slotTime = new Date();
-          slotTime.setHours(parseInt(h), parseInt(m), 0, 0);
-          return slotTime > now;
+        if (!slots || !slots.length) {
+          wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles este día.</span>';
+          $('bk-waitlist-box').style.display = 'block';
+          return;
+        }
+
+        $('bk-waitlist-box').style.display = 'none';
+        
+        // Copia para no mutar el original
+        const sortedSlots = [...slots].sort((a, b) => (a.hora || '').localeCompare(b.hora || ''));
+
+        // Filtrar horas pasadas si es hoy
+        const now = new Date();
+        const todayStr = isoDate(now.getFullYear(), now.getMonth(), now.getDate());
+        
+        let filteredSlots = sortedSlots;
+        if (fecha === todayStr) {
+          filteredSlots = sortedSlots.filter(s => {
+            if (!s.hora) return false;
+            const [h, m] = s.hora.split(':');
+            const slotTime = new Date();
+            slotTime.setHours(parseInt(h), parseInt(m), 0, 0);
+            return slotTime > now;
+          });
+        }
+
+        if (filteredSlots.length === 0 && sortedSlots.length > 0) {
+           wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles para lo que queda de hoy.</span>';
+           return;
+        }
+
+        filteredSlots.forEach(s => {
+          if (!s.hora) return;
+          const btn = document.createElement('button');
+          btn.className = 'bk-slot' + (state.hora === s.hora ? ' selected' : '');
+          btn.textContent = s.hora;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            state.hora = s.hora;
+            wrap.querySelectorAll('.bk-slot').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            clearErr('bk-err-3');
+          });
+          wrap.appendChild(btn);
         });
+      } catch (err) {
+        console.error('Error in renderSlots:', err);
+        wrap.innerHTML = '<span class="bk-slots-empty" style="color:#e05252">Error al cargar las horas.</span>';
       }
-
-      wrap.innerHTML = '';
-
-      if (!slots.length) {
-        wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles este día.</span>';
-        $('bk-waitlist-box').style.display = 'block';
-        return;
-      }
-      $('bk-waitlist-box').style.display = 'none';
-      slots.forEach(s => {
-        const btn = document.createElement('button');
-        btn.className = 'bk-slot' + (state.hora === s.hora ? ' selected' : '');
-        btn.textContent = s.hora;
-        btn.type = 'button';
-        btn.addEventListener('click', () => {
-          state.hora = s.hora;
-          wrap.querySelectorAll('.bk-slot').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          clearErr('bk-err-3');
-        });
-        wrap.appendChild(btn);
-      });
     }
 
     $('bk-cal-prev').addEventListener('click', () => {
@@ -2602,18 +2787,20 @@
     });
 
     // ── Paso 4: Datos personales ──────────────────────────────────────────────
+    const emailStrictRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     $('bk-prev-4').addEventListener('click', () => showStep(3));
     $('bk-next-4').addEventListener('click', () => {
       const nombre   = $('bk-nombre').value.trim();
       const email    = $('bk-email').value.trim();
       const telefono = $('bk-telefono').value.trim();
       const gdpr     = $('bk-gdpr').checked;
-      const phoneClean = telefono.replace(/\s/g, '');
-      const phoneRegex = /^(\+\d{1,3})?\d{9,11}$/;
+      const phoneClean = telefono.replace(/[\s\-()]/g, ''); // Limpiar espacios, guiones y paréntesis
+      const phoneRegex = /^(\+?\d{1,4})?\d{9,14}$/; // Regex más flexible para números internacionales
 
       if (!nombre)                         { setErr('bk-err-4', 'El nombre es obligatorio.'); return; }
       if (!phoneRegex.test(phoneClean))    { setErr('bk-err-4', 'Introduce un teléfono válido (ej: 600000000 o +34600000000).'); return; }
-      if (!email || !emailStrictRegex.test(email)) { setErr('bk-err-4', 'Introduce un email válido (debe contener @ y terminar en .com).'); return; }
+      if (!email || !emailStrictRegex.test(email)) { setErr('bk-err-4', 'Introduce un email válido (debe contener @ y un dominio válido).'); return; }
       if (!gdpr)                           { setErr('bk-err-4', 'Debes aceptar la política de privacidad.'); return; }
       state.nombre   = nombre;
       state.email    = email;
@@ -2642,7 +2829,7 @@
             telefono: state.telefono,
             fecha: state.fecha,
             barbero: state.barbero.id,
-            servicio: state.servicio.name
+            servicio: state.servicios.map(s => s.name).join(' + ')
           })
         });
         if (!r.ok) throw new Error('Error al apuntarse');
@@ -2669,10 +2856,19 @@
     function renderSummary() {
       const fecha = new Date(state.fecha + 'T00:00:00');
       const fechaFmt = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      
+      const totalPrecio = state.servicios.reduce((acc, s) => acc + s.price, 0);
+      const srvListHtml = state.servicios.map(s => `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.85rem">
+          <span>${s.name}</span>
+          <span>${s.price.toFixed(2).replace('.',',')} €</span>
+        </div>
+      `).join('');
+
       $('bk-summary').innerHTML = `
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Servicio</span>
-          <span class="bk-summary-value">${state.servicio.name}</span>
+        <div class="bk-summary-row" style="display:block">
+          <span class="bk-summary-label">Servicios</span>
+          <div style="margin-top:10px">${srvListHtml}</div>
         </div>
         <div class="bk-summary-row">
           <span class="bk-summary-label">Barbero</span>
@@ -2700,7 +2896,7 @@
         </div>
         <div class="bk-summary-row bk-summary-total">
           <span class="bk-summary-label">Total</span>
-          <span class="bk-summary-value">${state.servicio.price} €</span>
+          <span class="bk-summary-value">${totalPrecio.toFixed(2).replace('.',',')} €</span>
         </div>
       `;
     }
@@ -2716,8 +2912,8 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            servicio:  state.servicio.name,
-            precio:    state.servicio.price,
+            servicio:  state.servicios.map(s => s.name).join(' + '),
+            precio:    state.servicios.reduce((acc, s) => acc + s.price, 0),
             barbero:   state.barbero.id,
             fecha:     state.fecha,
             hora:      state.hora,
@@ -2732,7 +2928,8 @@
         // Éxito
         const fecha = new Date(state.fecha + 'T00:00:00');
         const fechaFmt = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-        $('bk-success-detail').textContent = `${state.servicio.name} · ${state.barbero.name} · ${fechaFmt} a las ${state.hora}`;
+        const srvNames = state.servicios.map(s => s.name).join(' + ');
+        $('bk-success-detail').textContent = `${srvNames} · ${state.barbero.name} · ${fechaFmt} a las ${state.hora}`;
         $('bk-success-id').textContent = `Referencia: ${data.id}`;
         // Limpiar cache del slot reservado
         delete state.slotsCache[state.fecha];
@@ -2817,39 +3014,37 @@
     // ── Reset ─────────────────────────────────────────────────────────────────
     $('bk-reset').addEventListener('click', () => {
       Object.assign(state, {
-        step: 1, servicio: null, barbero: null, fecha: null, hora: null,
+        step: 1, servicios: [], barbero: null, fecha: null, hora: null,
         nombre: '', email: '', telefono: '',
         calYear: new Date().getFullYear(), calMonth: new Date().getMonth(),
         slotsCache: {},
       });
       document.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
-      document.body.classList.remove('booking-done');
+      document.body.classList.remove('booking-done', 'booking-active');
       ['bk-nombre','bk-email','bk-telefono'].forEach(id => { const el = $(id); if(el) el.value = ''; });
       showStep(1);
     });
 
-    // ── Conexión con Catálogo directo (Propuesta 1) ───────────────────────────
+    // ── Conexión con Catálogo directo ─────────────────────────────────────────
     window.addEventListener('reserva-directa', e => {
-      const { catId, srvId } = e.detail;
+      const { srvId } = e.detail;
       
-      // 1. Scroll al widget centrado
-      const widget = document.getElementById('bk-widget');
-      if (widget) {
-        widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      let foundSrv = null;
+      SERVICIOS_CATS.forEach(c => {
+        const s = c.servicios.find(x => x.id === srvId);
+        if (s) foundSrv = s;
+      });
 
-      // 2. Pre-seleccionar la categoría en el widget
-      _activeCat = catId;
-      renderCatTabs();
-      renderServicioCards();
-
-      // 3. Simular clic en la tarjeta de servicio correcta y avanzar
-      const card = document.querySelector(`.bk-card[data-id="${srvId}"]`);
-      if (card) {
-        card.click();
-        showStep(2);
+      if (foundSrv) {
+        const isAlreadyIn = state.servicios.some(x => x.id === foundSrv.id);
+        if (!isAlreadyIn) {
+          state.servicios.push({ ...foundSrv });
+          renderServicioCards();
+        }
       }
     });
+
+
 
   })();
   </script>
@@ -3157,6 +3352,22 @@
     mobCta.id = 'mobile-cta';
     mobCta.textContent = 'Pedir Cita Ahora';
     document.body.appendChild(mobCta);
+
+    // Ocultar CTA cuando el widget de reservas está en pantalla
+    const observerCta = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          mobCta.style.opacity = '0';
+          mobCta.style.pointerEvents = 'none';
+        } else {
+          mobCta.style.opacity = '1';
+          mobCta.style.pointerEvents = 'all';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const reservasSec = document.getElementById('reservas');
+    if (reservasSec) observerCta.observe(reservasSec);
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 400 && window.innerWidth < 768) {
