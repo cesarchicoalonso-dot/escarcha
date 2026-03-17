@@ -1244,8 +1244,8 @@
       color: rgba(136,136,136,0.45);
       transition: color var(--transition);
     }
-    /* Ocultar CTAs globales durante la reserva */
-    body.booking-active .global-cta { display: none !important; }
+    /* Ocultar botón flotante móvil durante la reserva */
+    body.booking-active .mobile-cta-btn { display: none !important; }
   </style>
 </head>
 <body>
@@ -1259,7 +1259,7 @@
     <a href="#equipo"    onclick="closeNav()">Equipo</a>
     <a href="#galeria"   onclick="closeNav()">Galería</a>
     <a href="#blog"      onclick="closeNav()">Blog</a>
-    <a href="#reservas"  onclick="closeNav()" class="btn-gold global-cta" style="margin-top:8px;">Reservar Cita</a>
+    <a href="#reservas"  onclick="closeNav()" class="btn-gold" style="margin-top:8px;">Reservar Cita</a>
   </nav>
 
   <!-- =================================================================
@@ -1277,7 +1277,7 @@
         <a href="#blog">Blog</a>
       </nav>
 
-      <a href="#reservas" class="btn-gold hd-cta global-cta" style="padding:11px 26px;font-size:0.66rem;">Reservar Cita</a>
+      <a href="#reservas" class="btn-gold hd-cta" style="padding:11px 26px;font-size:0.66rem;">Reservar Cita</a>
 
       <button class="hbg" id="hbg" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobNav">
         <span></span><span></span><span></span>
@@ -1297,7 +1297,7 @@
       <p class="hero-eyebrow reveal">Madrid &nbsp;·&nbsp; Grooming &nbsp;·&nbsp; Exclusivo</p>
       <h1 class="hero-title reveal reveal-d1">GROOMING<br>CLUB</h1>
       <p class="hero-sub reveal reveal-d2">El arte del caballero moderno. Madrid.</p>
-      <a href="#reservas" class="btn-gold global-cta reveal reveal-d3">Reserva tu Cita</a>
+      <a href="#reservas" class="btn-gold reveal reveal-d3">Reserva tu Cita</a>
     </div>
 
     <div class="hero-scroll-ind" aria-hidden="true">
@@ -1918,7 +1918,7 @@
             <li><a href="#equipo">Equipo</a></li>
             <li><a href="#galeria">Galería</a></li>
             <li><a href="#blog">Blog</a></li>
-            <li><a href="#reservas" class="global-cta">Reservar</a></li>
+            <li><a href="#reservas">Reservar</a></li>
           </ul>
         </div>
 
@@ -2579,6 +2579,7 @@
         document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
         $('bk-progress').style.display = 'none';
         $('bk-success').classList.add('active');
+        document.body.classList.remove('booking-active');
       } catch (err) {
         setErr('bk-err-5', err.message || 'Error de conexión. Inténtalo de nuevo.');
         btn.disabled = false;
