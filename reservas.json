@@ -11,5 +11,18 @@
     "telefono": "611714523",
     "estado": "pendiente",
     "creadoEn": "2026-03-17T10:47:16.932Z"
+  },
+  {
+    "id": "964A6CFF",
+    "servicio": "Gold Label",
+    "precio": "50",
+    "barbero": "BARB01",
+    "fecha": "2026-03-19",
+    "hora": "18:15",
+    "nombre": "Cesar Chico",
+    "email": "cesarchicoalonso@gmail.com",
+    "telefono": "651562654",
+    "estado": "pendiente",
+    "creadoEn": "2026-03-17T12:08:11.136Z"
   }
 ]
