@@ -3023,26 +3023,35 @@
       $('bk-lookup-err').style.color = 'var(--color-gold)';
       
       try {
-        const r = await fetch(`/api/auth?email=${encodeURIComponent(email)}`);
+        const url = `/api/auth?email=${encodeURIComponent(email)}`;
+        const r = await fetch(url);
         if (r.ok) {
           const user = await r.json();
-          // Usamos el email buscado si por algún motivo user.email viene vacío
           const emailToUse = user.email || email;
           
-          $('bk-nombre').value = user.nombre;
+          console.log("User found:", user);
+          
+          // Rellenar campos del formulario
+          $('bk-nombre').value = user.nombre || '';
           $('bk-email').value = emailToUse;
           $('bk-telefono').value = user.telefono || '';
+          
+          // Bloquear email y ocultar opciones de login
           $('bk-email').readOnly = true;
           $('bk-login-options').style.display = 'none';
           
-          state.nombre = user.nombre;
+          // Actualizar estado interno del widget
+          state.nombre = user.nombre || '';
           state.email = emailToUse;
           state.telefono = user.telefono || '';
+          
+          $('bk-lookup-err').textContent = '';
         } else {
           $('bk-lookup-err').textContent = 'No encontramos ninguna cuenta con ese email.';
           $('bk-lookup-err').style.color = '#e05252';
         }
       } catch (err) {
+        console.error("Lookup error:", err);
         $('bk-lookup-err').textContent = 'Error al conectar con el servidor.';
         $('bk-lookup-err').style.color = '#e05252';
       }

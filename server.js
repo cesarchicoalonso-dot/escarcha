@@ -380,11 +380,19 @@ async function handleAPI(method, pathname, query, req, res) {
 
   // GET /api/auth?email=... — buscar usuario por email
   if (method === 'GET' && pathname === '/api/auth') {
-    const { email } = query;
+    const email = (query.email || '').trim().toLowerCase();
+    console.log(`🔍 [DEBUG] Buscando usuario: "${email}"`);
     if (!email) return json(res, 400, { error: 'Email obligatorio' });
+    
     const users = await readDB(DB_USERS);
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (!user) return json(res, 404, { error: 'Usuario no encontrado' });
+    const user = users.find(u => (u.email || '').trim().toLowerCase() === email);
+    
+    if (!user) {
+      console.log(`❌ [DEBUG] Usuario no encontrado: "${email}" (Total usuarios: ${users.length})`);
+      return json(res, 404, { error: 'Usuario no encontrado' });
+    }
+    
+    console.log(`✅ [DEBUG] Usuario encontrado: ${user.nombre}`);
     return json(res, 200, user);
   }
 
