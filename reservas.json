@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "DD910EBE",
+    "servicio": "Blue Label",
+    "precio": "60",
+    "barbero": "BARB01",
+    "fecha": "2026-03-17",
+    "hora": "13:00",
+    "nombre": "Juan Escarcha",
+    "email": "juan.escarcha@gmail.com",
+    "telefono": "611714523",
+    "estado": "pendiente",
+    "creadoEn": "2026-03-17T10:47:16.932Z"
+  }
+]

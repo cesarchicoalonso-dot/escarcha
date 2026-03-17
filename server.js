@@ -106,6 +106,8 @@ Gracias por confiar en Escarcha Grooming Club / Barbería
 const DB_RESERVAS       = path.join(ROOT, 'reservas.json');
 const DB_DISPONIBILIDAD = path.join(ROOT, 'disponibilidad.json');
 const DB_BARBEROS       = path.join(ROOT, 'barberos.json');
+const DB_WAITLIST       = path.join(ROOT, 'waitlist.json');
+const DB_USERS          = path.join(ROOT, 'users.json');
 const UPLOADS_DIR       = path.join(ROOT, 'uploads');
 
 // Crear carpeta uploads si no existe
@@ -119,6 +121,8 @@ if (!fs.existsSync(DB_BARBEROS)) {
     { id: 'BARB03', nombre: 'Lucas',  apellido: '',          rol: 'Barber & Estilista',         descripcion: 'Fusiona técnicas clásicas con tendencias modernas.', foto: '', activo: true },
   ], null, 2), 'utf8');
 }
+if (!fs.existsSync(DB_WAITLIST)) fs.writeFileSync(DB_WAITLIST, '[]', 'utf8');
+if (!fs.existsSync(DB_USERS)) fs.writeFileSync(DB_USERS, '[]', 'utf8');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -232,6 +236,19 @@ async function handleAPI(method, pathname, query, req, res) {
     await writeDB(DB_DISPONIBILIDAD, disp);
     // Enviar email de confirmación automáticamente al instante
     enviarEmailConfirmacion(reserva).catch(err => console.error('Email confirmación:', err));
+    
+    // Registrar/Actualizar usuario para futuras reservas (Login)
+    const users = await readDB(DB_USERS);
+    const userIdx = users.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
+    const userData = { nombre, email, telefono, actualizadoEn: new Date().toISOString() };
+    if (userIdx === -1) {
+      userData.creadoEn = new Date().toISOString();
+      users.push(userData);
+    } else {
+      users[userIdx] = { ...users[userIdx], ...userData };
+    }
+    await writeDB(DB_USERS, users);
+
     return json(res, 201, { ok: true, id: reserva.id });
   }
 
@@ -302,6 +319,28 @@ async function handleAPI(method, pathname, query, req, res) {
     return json(res, 200, { ok: true });
   }
 
+  // POST /api/waitlist — apuntarse a la lista de espera
+  if (method === 'POST' && pathname === '/api/waitlist') {
+    const body = await readBody(req);
+    const { nombre, email, telefono, fecha, barbero, servicio } = body;
+    if (!nombre || !email || !telefono || !fecha) {
+      return json(res, 400, { error: 'Faltan campos obligatorios' });
+    }
+    const waitlist = await readDB(DB_WAITLIST);
+    const entry = {
+      id: genId(),
+      nombre, email, telefono, fecha,
+      barbero: barbero || 'any',
+      servicio,
+      creadoEn: new Date().toISOString(),
+      notificado: false
+    };
+    waitlist.push(entry);
+    await writeDB(DB_WAITLIST, waitlist);
+    console.log(`📝 Usuario ${nombre} añadido a lista de espera para ${fecha}`);
+    return json(res, 201, { ok: true, id: entry.id });
+  }
+
   // GET /api/admin/facturacion — datos de facturación con filtros
   if (method === 'GET' && pathname === '/api/admin/facturacion') {
     if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
@@ -339,6 +378,16 @@ async function handleAPI(method, pathname, query, req, res) {
     return json(res, 200, await readDB(DB_RESERVAS));
   }
 
+  // GET /api/auth?email=... — buscar usuario por email
+  if (method === 'GET' && pathname === '/api/auth') {
+    const { email } = query;
+    if (!email) return json(res, 400, { error: 'Email obligatorio' });
+    const users = await readDB(DB_USERS);
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) return json(res, 404, { error: 'Usuario no encontrado' });
+    return json(res, 200, user);
+  }
+
   if (method === 'PATCH' && pathname.startsWith('/api/reservas/')) {
     if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
     const id = pathname.split('/')[3];
@@ -346,7 +395,22 @@ async function handleAPI(method, pathname, query, req, res) {
     const reservas = await readDB(DB_RESERVAS);
     const r = reservas.find(x => x.id === id);
     if (!r) return json(res, 404, { error: 'Reserva no encontrada' });
-    if (body.estado) r.estado = body.estado;
+    
+    if (body.estado) {
+      const oldEstado = r.estado;
+      r.estado = body.estado;
+      
+      // Si se cancela, liberamos el slot y avisamos a la lista de espera
+      if (body.estado === 'cancelada' && oldEstado !== 'cancelada') {
+        const disp = await readDB(DB_DISPONIBILIDAD);
+        const slot = disp.find(s => s.barbero === r.barbero && s.fecha === r.fecha && s.hora === r.hora);
+        if (slot) slot.ocupado = false;
+        await writeDB(DB_DISPONIBILIDAD, disp);
+        
+        // Notificar lista de espera
+        procesarListaEspera(r.fecha, r.barbero, r.hora).catch(console.error);
+      }
+    }
     await writeDB(DB_RESERVAS, reservas);
     return json(res, 200, { ok: true, reserva: r });
   }
@@ -362,6 +426,10 @@ async function handleAPI(method, pathname, query, req, res) {
     const slot = disp.find(s => s.barbero === r.barbero && s.fecha === r.fecha && s.hora === r.hora);
     if (slot) slot.ocupado = false;
     await writeDB(DB_DISPONIBILIDAD, disp);
+    
+    // Notificar lista de espera al borrar una reserva (que libera hueco)
+    procesarListaEspera(r.fecha, r.barbero, r.hora).catch(console.error);
+
     reservas.splice(idx, 1);
     await writeDB(DB_RESERVAS, reservas);
     return json(res, 200, { ok: true });
@@ -509,6 +577,24 @@ async function handleAPI(method, pathname, query, req, res) {
 }
 
 // ── Servidor principal ────────────────────────────────────────────────────────
+
+async function procesarListaEspera(fecha, barbero, hora) {
+  const waitlist = await readDB(DB_WAITLIST);
+  const interesados = waitlist.filter(w => !w.notificado && w.fecha === fecha && (w.barbero === 'any' || w.barbero === barbero));
+  
+  if (interesados.length === 0) return;
+
+  console.log(`🔔 Notificando a ${interesados.length} interesados en la lista de espera para el ${fecha} a las ${hora}`);
+  
+  for (const user of interesados) {
+    // Simulamos notificación
+    console.log(`✉️ [SIMULACRO] Notificando a ${user.nombre} (${user.email}) que hay un hueco el ${fecha} a las ${hora}`);
+    user.notificado = true;
+    user.notificadoEn = new Date().toISOString();
+  }
+  
+  await writeDB(DB_WAITLIST, waitlist);
+}
 
 // ── Scheduler 24H (WhatsApp / NodeJS nativo) ───────────────────────────────
 async function cronJobRecordatorios() {

@@ -757,7 +757,25 @@
       margin: 0 0 28px;
     }
 
-    /* Cards de servicio y barbero */
+    .bk-card-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--color-white);
+      margin: 0 0 6px;
+    }
+    .bk-card-desc {
+      font-size: 0.75rem;
+      color: var(--color-gray);
+      line-height: 1.5;
+      margin: 0 0 10px;
+    }
+    .bk-card-price {
+      font-size: 0.8rem;
+      color: var(--color-gold);
+      font-weight: 600;
+    }
+
+    /* Cards de servicio */
     .bk-cards {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -777,25 +795,43 @@
       border-color: var(--color-gold);
       background: var(--color-gold-dim);
     }
-    .bk-card-name {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: var(--color-white);
-      margin: 0 0 6px;
-    }
-    .bk-card-desc {
-      font-size: 0.75rem;
-      color: var(--color-gray);
-      line-height: 1.5;
-      margin: 0 0 10px;
-    }
 
-
-    .bk-card-price {
-      font-size: 0.8rem;
-      color: var(--color-gold);
-      font-weight: 600;
+    /* Cards de barbero (horizontales) */
+    .bk-barber-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
+    .bk-card-barber {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: left;
+      min-height: 80px;
+    }
+    .bk-card-barber:hover { border-color: var(--color-gold); background: var(--color-bg-hover); }
+    .bk-card-barber.selected { border-color: var(--color-gold); background: var(--color-gold-dim); }
+
+    .bk-barber-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bk-barber-img svg { width: 24px; height: 24px; opacity: 0.3; color: var(--color-white); }
+
     .bk-card-role {
       font-size: 0.72rem;
       color: var(--color-gray);
@@ -1587,7 +1623,7 @@
             <div class="bk-step" id="bk-step-2">
               <p class="bk-step-title">Elige tu barbero</p>
               <!-- Barberos cargados dinámicamente desde /api/barberos -->
-              <div class="bk-cards" id="bk-barbers">
+              <div class="bk-barber-grid" id="bk-barbers">
                 <span style="color:var(--color-gray);font-size:0.82rem">Cargando barberos…</span>
               </div>
               <p class="bk-error" id="bk-err-2"></p>
@@ -1609,10 +1645,16 @@
                   </div>
                   <div class="bk-cal-grid" id="bk-cal-grid"></div>
                 </div>
-                <div class="bk-slots-wrap">
                   <p class="bk-slots-title" id="bk-slots-title">Selecciona un día</p>
                   <div class="bk-slots" id="bk-slots"></div>
-                </div>
+                  
+                  <!-- Cuadro de lista de espera -->
+                  <div id="bk-waitlist-box" style="display:none; margin-top:24px; padding:20px; background:var(--color-gold-dim); border:1px solid var(--color-gold); border-radius:4px; text-align:center;">
+                    <p style="font-size:0.85rem; color:var(--color-white); margin-bottom:16px;">
+                      Si no encuentras la hora que necesitas, puedes apuntarte a nuestra lista de espera y te avisaremos si queda un hueco disponible.
+                    </p>
+                    <button class="btn-gold" id="bk-btn-waitlist" style="font-size:0.65rem; padding:10px 20px;">Apuntarme a lista de espera</button>
+                  </div>
               </div>
               <p class="bk-error" id="bk-err-3"></p>
               <div class="bk-nav">
@@ -1624,6 +1666,20 @@
             <!-- PASO 4: Datos personales -->
             <div class="bk-step" id="bk-step-4">
               <p class="bk-step-title">Tus datos de contacto</p>
+
+              <!-- Login / Identificación -->
+              <div id="bk-login-options" style="margin-bottom:24px; border-bottom:1px solid var(--color-border); padding-bottom:24px;">
+                <p style="font-size:0.8rem; color:var(--color-gray); margin-bottom:12px;">Identifícate para reservar más rápido:</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button type="button" class="btn-outline" id="bk-btn-google" style="font-size:0.7rem; flex:1; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Google
+                  </button>
+                  <button type="button" class="btn-outline" id="bk-btn-login-email" style="font-size:0.7rem; flex:1;">
+                    Tengo cuenta
+                  </button>
+                </div>
+              </div>
               <div class="bk-form-grid">
                 <div class="bk-field">
                   <label class="bk-label" for="bk-nombre">Nombre completo *</label>
@@ -2322,17 +2378,43 @@
     function renderBarberoCards(barberos) {
       const container = $('bk-barbers');
       container.innerHTML = '';
+
+      // Opción: Cualquier profesional
+      const btnAny = document.createElement('button');
+      btnAny.className = 'bk-card-barber' + (state.barbero && state.barbero.id === 'any' ? ' selected' : '');
+      btnAny.type = 'button';
+      btnAny.innerHTML = `
+        <div class="bk-barber-img">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        </div>
+        <div class="bk-barber-info">
+          <p class="bk-card-name">Cualquier profesional</p>
+          <p class="bk-card-role" style="font-size:0.75rem;color:var(--color-gray)">Muestra todas las horas libres</p>
+        </div>
+      `;
+      btnAny.addEventListener('click', () => {
+        container.querySelectorAll('.bk-card-barber').forEach(c => c.classList.remove('selected'));
+        btnAny.classList.add('selected');
+        state.barbero = { id: 'any', name: 'Cualquier profesional' };
+        clearErr('bk-err-2');
+      });
+      container.appendChild(btnAny);
+
       barberos.forEach(b => {
         const fullName = `${b.nombre} ${b.apellido || ''}`.trim();
         const btn = document.createElement('button');
-        btn.className = 'bk-card' + (state.barbero && state.barbero.id === b.id ? ' selected' : '');
+        btn.className = 'bk-card-barber' + (state.barbero && state.barbero.id === b.id ? ' selected' : '');
         btn.type = 'button';
         const fotoHTML = b.foto
-          ? `<img src="${escHtml(b.foto)}" alt="${escHtml(fullName)}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;margin-bottom:10px;border:1px solid var(--color-border);display:block">`
-          : '';
-        btn.innerHTML = `${fotoHTML}<p class="bk-card-name">${escHtml(fullName)}</p><p class="bk-card-role">${escHtml(b.rol)}</p>`;
+          ? `<img src="${escHtml(b.foto)}" alt="${escHtml(fullName)}" class="bk-barber-img">`
+          : `<div class="bk-barber-img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>`;
+        btn.innerHTML = `${fotoHTML}
+          <div class="bk-barber-info">
+            <p class="bk-card-name">${escHtml(fullName)}</p>
+            <p class="bk-card-role" style="font-size:0.75rem;color:var(--color-gray)">${escHtml(b.rol)}</p>
+          </div>`;
         btn.addEventListener('click', () => {
-          container.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
+          container.querySelectorAll('.bk-card-barber').forEach(c => c.classList.remove('selected'));
           btn.classList.add('selected');
           state.barbero = { id: b.id, name: fullName };
           clearErr('bk-err-2');
@@ -2364,10 +2446,23 @@
     async function fetchSlots(fecha) {
       if (state.slotsCache[fecha] !== undefined) return state.slotsCache[fecha];
       try {
-        const r = await fetch(`/api/disponibilidad?fecha=${fecha}&barbero=${state.barbero.id}`);
+        const url = state.barbero.id === 'any' 
+          ? `/api/disponibilidad?fecha=${fecha}` 
+          : `/api/disponibilidad?fecha=${fecha}&barbero=${state.barbero.id}`;
+        const r = await fetch(url);
         const data = await r.json();
-        // Solo mostramos los slots generados y libres del backend
-        state.slotsCache[fecha] = data;
+        
+        // Si es "any", consolidamos por hora (eliminando duplicados de la misma hora pero diferentes barberos)
+        // Para simplificar, si hay 3 barberos libres a las 10:00, solo mostramos una vez las 10:00
+        if (state.barbero.id === 'any') {
+          const uniqueHours = {};
+          data.forEach(s => {
+            if (!uniqueHours[s.hora]) uniqueHours[s.hora] = s;
+          });
+          state.slotsCache[fecha] = Object.values(uniqueHours);
+        } else {
+          state.slotsCache[fecha] = data;
+        }
         return state.slotsCache[fecha];
       } catch {
         state.slotsCache[fecha] = [];
@@ -2442,17 +2537,32 @@
       const d = new Date(fecha + 'T00:00:00');
       title.textContent = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
 
-      const slots = await fetchSlots(fecha);
+      let slots = await fetchSlots(fecha);
       
       // Ordenar horas de forma correlativa
       slots.sort((a, b) => a.hora.localeCompare(b.hora));
+
+      // Filtrar horas pasadas si es hoy
+      const now = new Date();
+      const todayStr = isoDate(now.getFullYear(), now.getMonth(), now.getDate());
+      
+      if (fecha === todayStr) {
+        slots = slots.filter(s => {
+          const [h, m] = s.hora.split(':');
+          const slotTime = new Date();
+          slotTime.setHours(parseInt(h), parseInt(m), 0, 0);
+          return slotTime > now;
+        });
+      }
 
       wrap.innerHTML = '';
 
       if (!slots.length) {
         wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles este día.</span>';
+        $('bk-waitlist-box').style.display = 'block';
         return;
       }
+      $('bk-waitlist-box').style.display = 'none';
       slots.forEach(s => {
         const btn = document.createElement('button');
         btn.className = 'bk-slot' + (state.hora === s.hora ? ' selected' : '');
@@ -2501,9 +2611,51 @@
       state.email    = email;
       state.telefono = telefono;
       clearErr('bk-err-4');
-      renderSummary();
-      showStep(5);
+
+      if (state.isWaitlist) {
+        enviarAListaEspera();
+      } else {
+        renderSummary();
+        showStep(5);
+      }
     });
+
+    async function enviarAListaEspera() {
+      const btn = $('bk-next-4');
+      btn.disabled = true;
+      btn.textContent = 'Procesando…';
+      try {
+        const r = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombre: state.nombre,
+            email: state.email,
+            telefono: state.telefono,
+            fecha: state.fecha,
+            barbero: state.barbero.id,
+            servicio: state.servicio.name
+          })
+        });
+        if (!r.ok) throw new Error('Error al apuntarse');
+        
+        $('bk-success-title').textContent = '¡Apuntado con éxito!';
+        $('bk-success-sub').textContent = 'Hemos recibido tu solicitud. Te avisaremos en cuanto quede un hueco libre para el ' + state.fecha + '.';
+        $('bk-success-detail').textContent = '';
+        $('bk-success-id').textContent = '';
+        
+        document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
+        $('bk-progress').style.display = 'none';
+        $('bk-success').classList.add('active');
+        document.body.classList.remove('booking-active');
+        document.body.classList.add('booking-done');
+        resetStep4();
+      } catch (err) {
+        setErr('bk-err-4', 'Hubo un error al apuntarte. Inténtalo de nuevo.');
+        btn.disabled = false;
+        btn.textContent = 'Apuntarme ahora';
+      }
+    }
 
     // ── Paso 5: Resumen ───────────────────────────────────────────────────────
     function renderSummary() {
@@ -2586,6 +2738,40 @@
         setErr('bk-err-5', err.message || 'Error de conexión. Inténtalo de nuevo.');
         btn.disabled = false;
         btn.textContent = 'Confirmar Cita';
+      }
+    });
+
+    // ── Reset ─────────────────────────────────────────────────────────────────
+    // ── Login / Identificación ──────────────────────────────────────────────
+    $('bk-btn-google').addEventListener('click', () => {
+      // Simulación de login con Google
+      alert('Simulación: Conectando con Google...');
+      const fakeData = { nombre: 'Juan Escarcha', email: 'juan.escarcha@gmail.com', telefono: '611714523' };
+      $('bk-nombre').value = fakeData.nombre;
+      $('bk-email').value = fakeData.email;
+      $('bk-telefono').value = fakeData.telefono;
+      $('bk-email').readOnly = true; // Evitar cambios post-login
+      $('bk-login-options').style.display = 'none';
+    });
+
+    $('bk-btn-login-email').addEventListener('click', async () => {
+      const email = prompt('Introduce tu email para identificarte:');
+      if (!email || !/\S+@\S+\.\S+/.test(email)) return;
+      
+      try {
+        const r = await fetch(`/api/auth?email=${encodeURIComponent(email)}`);
+        if (r.ok) {
+          const user = await r.json();
+          $('bk-nombre').value = user.nombre;
+          $('bk-email').value = user.email;
+          $('bk-telefono').value = user.telefono || '';
+          $('bk-email').readOnly = true;
+          $('bk-login-options').style.display = 'none';
+        } else {
+          alert('No hemos encontrado ninguna cuenta con ese email.');
+        }
+      } catch (e) {
+        console.error(e);
       }
     });
 
