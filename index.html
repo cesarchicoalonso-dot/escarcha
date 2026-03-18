@@ -889,8 +889,9 @@
     }
 
     /* Calendario */
-    .bk-cal-wrap { display: flex; gap: 32px; flex-wrap: wrap; }
-    .bk-calendar { flex: 0 0 auto; }
+    .bk-cal-wrap { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-start; }
+    .bk-calendar { flex: 0 0 auto; min-width: 276px; margin: 0 auto; }
+    @media (min-width: 640px) { .bk-calendar { margin: 0; } }
     .bk-cal-header {
       display: flex;
       align-items: center;
@@ -944,7 +945,7 @@
     .bk-cal-day.today { border-color: rgba(201,168,76,0.5); }
 
     /* Slots de hora */
-    .bk-slots-wrap { flex: 1; min-width: 180px; }
+    .bk-slots-wrap { flex: 1; min-width: 280px; text-align: left; }
     .bk-slots-title {
       font-size: 0.72rem;
       color: var(--color-gray);
@@ -1821,6 +1822,8 @@
                   </div>
                   <div class="bk-cal-grid" id="bk-cal-grid"></div>
                 </div>
+                
+                <div class="bk-slots-wrap">
                   <p class="bk-slots-title" id="bk-slots-title">Selecciona un día</p>
                   <div class="bk-slots" id="bk-slots"></div>
                   
@@ -1831,6 +1834,7 @@
                     </p>
                     <button class="btn-gold" id="bk-btn-waitlist" style="font-size:0.65rem; padding:10px 20px;">Apuntarme a lista de espera</button>
                   </div>
+                </div>
               </div>
               <p class="bk-error" id="bk-err-3"></p>
               <div class="bk-nav">
