@@ -152,24 +152,6 @@ async function handle(method, pathname, query, req, res) {
     return json(res, 200, result);
   }
 
-  // GET /api/disponibilidad
-  if (method === 'GET' && pathname === '/api/disponibilidad') {
-    const barbId = query.get('barbero');
-    const fecha = query.get('fecha');
-    const disp = await Disponibilidad.getAll();
-    const reservas = await Reservas.getAll();
-    
-    let filtered = disp;
-    if (barbId && barbId !== 'any') filtered = filtered.filter(s => s.barbero === barbId);
-    if (fecha) filtered = filtered.filter(s => s.fecha === fecha);
-    
-    // Mezclar dinámicamente con reservas para el widget (solo devolvemos los libres)
-    const result = filtered.map(s => {
-      const r = reservas.find(res => res.barbero === s.barbero && res.fecha === s.fecha && res.hora === s.hora && res.estado !== 'cancelada');
-      return { ...s, ocupado: s.ocupado || !!r };
-    }).filter(s => !s.ocupado);
-    return json(res, 200, result);
-  }
 
   // GET /api/barberos
   if (method === 'GET' && pathname === '/api/barberos') {

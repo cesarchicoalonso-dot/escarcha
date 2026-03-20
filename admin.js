@@ -22,6 +22,34 @@
     toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
   }
 
+  // ── Confirmación Custom (Asíncrona) ───────────────────────────────────────
+  function confirmCustom(titulo, mensaje, okText = 'Confirmar', cancelText = 'Cancelar') {
+    return new Promise((resolve) => {
+      const modal = document.getElementById('confirm-modal');
+      const titleEl = document.getElementById('confirm-title');
+      const msgEl = document.getElementById('confirm-msg');
+      const btnOk = document.getElementById('confirm-ok');
+      const btnCancel = document.getElementById('confirm-cancel');
+
+      titleEl.textContent = titulo;
+      msgEl.textContent = mensaje;
+      btnOk.textContent = okText;
+      btnCancel.textContent = cancelText;
+      modal.classList.remove('hidden');
+
+      const cleanup = (val) => {
+        modal.classList.add('hidden');
+        btnOk.onclick = null;
+        btnCancel.onclick = null;
+        resolve(val);
+      };
+
+      btnOk.onclick = () => cleanup(true);
+      btnCancel.onclick = () => cleanup(false);
+      modal.onclick = (e) => { if (e.target === modal) cleanup(false); };
+    });
+  }
+
   // ── API ──────────────────────────────────────────────────────────────────
   async function api(method, url, body) {
     const opts = {
@@ -233,11 +261,13 @@
         await api('PATCH', `/api/reservas/${id}`, { estado: 'confirmada' });
         toast('Reserva confirmada');
       } else if (action === 'cancelar') {
-        if (!confirm('¿Cancelar esta reserva?')) return;
+        const ok = await confirmCustom("Cancelar reserva", "¿Seguro que quieres cancelar esta reserva?", "Cancelar reserva");
+        if (!ok) return;
         await api('PATCH', `/api/reservas/${id}`, { estado: 'cancelada' });
         toast('Reserva cancelada', 'err');
       } else if (action === 'noshow') {
-        if (!confirm('¿Marcar como No-Show?')) return;
+        const ok = await confirmCustom("Marcar como no-show", "¿Confirmas que el cliente no se ha presentado?", "Marcar no-show");
+        if (!ok) return;
         await api('PATCH', `/api/reservas/${id}`, { estado: 'no-show' });
         toast('Marcada como No-Show', 'err');
       } else if (action === 'pagada') {
@@ -407,14 +437,36 @@
     if (!payload.fecha)    { errEl.textContent = 'Selecciona una fecha.'; return; }
     if (!payload.servicio) { errEl.textContent = 'Selecciona al menos un servicio.'; return; }
     if (!payload.nombre)   { errEl.textContent = 'El nombre del cliente es obligatorio.'; return; }
+    
+    document.getElementById('rm-save').disabled = true;
+    document.getElementById('rm-save').textContent = 'Guardando...';
 
     try {
+      // VALIDACIÓN de DISPONIBILIDAD (Gris vs Verde)
+      // Chequeamos si existe en disponibilidad.json (no excepcional)
+      const currentDisp = await api('GET', `/api/disponibilidad/all?barbero=${payload.barbero}`);
+      const baseExiste = currentDisp.some(s => s.fecha === payload.fecha && s.hora === payload.hora && !s.excepcional);
+      
+      if (!baseExiste) {
+        const ok = await confirmCustom(
+          "Reserva excepcional",
+          "Este barbero no tiene disponibilidad base en esa franja. ¿Quieres crear una reserva excepcional?",
+          "Crear reserva"
+        );
+        if (!ok) return;
+      }
+
       await api('POST', '/api/admin/reservas', payload);
       toast('Cita creada correctamente ✓');
       document.getElementById('res-modal').classList.add('hidden');
       await loadReservas();
       if (document.getElementById('panel-disponibilidad').classList.contains('active')) renderWeek();
-    } catch (err) { errEl.textContent = err.message || 'Error al crear la cita.'; }
+    } catch (err) { 
+      errEl.textContent = err.message || 'Error al crear la cita.'; 
+    } finally {
+      document.getElementById('rm-save').disabled = false;
+      document.getElementById('rm-save').textContent = 'Guardar Cita';
+    }
   });
 
   // ── Historial de Cliente ─────────────────────────────────────────────────
@@ -711,8 +763,10 @@
         } else if (slot) {
           // Usamos slot.reservado para mayor claridad
           cell.classList.add(slot.reservado ? 'ocupado' : 'libre');
+          if (slot.excepcional) cell.classList.add('excepcional');
+
           if (slot.reservado) {
-            cell.title = slot.clienteNombre ? `Reservado: ${slot.clienteNombre}${slot.servicio ? ' — ' + slot.servicio : ''}` : 'Reservado';
+            cell.title = slot.clienteNombre ? `Reservado: ${slot.clienteNombre}${slot.servicio ? ' — ' + slot.servicio : ''}` : (slot.excepcional ? 'Reserva Excepcional' : 'Reservado');
             cell.innerHTML = `
               <span class="slot-cliente">${slot.clienteNombre || 'Reservado'}</span>
               ${slot.servicio ? `<span class="slot-servicio">${slot.servicio}</span>` : ''}
@@ -1000,7 +1054,12 @@
     const actBtn  = e.target.closest('[data-barb-activate]');
     if (editBtn) { openModal(editBtn.dataset.barbEdit); return; }
     if (delBtn) {
-      if (!confirm('¿Desactivar este barbero? Dejará de aparecer en la web.')) return;
+      const ok = await confirmCustom(
+        "Desactivar barbero",
+        "Este barbero dejará de aparecer en el sistema. ¿Deseas continuar?",
+        "Desactivar"
+      );
+      if (!ok) return;
       await api('DELETE', `/api/barberos/${delBtn.dataset.barbDelete}`);
       toast('Barbero desactivado'); loadBarberos(); return;
     }

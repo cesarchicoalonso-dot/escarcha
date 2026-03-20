@@ -184,5 +184,57 @@
     "creadoEn": "2026-03-27T11:00:00.000Z",
     "gdpr_aceptado": true,
     "gdpr_timestamp": "2026-03-27T11:00:00.000Z"
+  },
+  {
+    "id": "BD338558",
+    "servicio": "Rapado de cabeza",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "12:15",
+    "nombre": "Pedro Martinez",
+    "email": "pemart@gmail.com",
+    "telefono": "658974563",
+    "estado": "confirmada",
+    "creadoEn": "2026-03-20T11:15:43.966Z",
+    "gdpr_aceptado": false
+  },
+  {
+    "id": "19797035",
+    "servicio": "Corte Caballero",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "10:00",
+    "nombre": "Oscar Colomar",
+    "email": "oscol@gmail.com",
+    "telefono": "698475632",
+    "estado": "confirmada",
+    "creadoEn": "2026-03-20T11:16:49.917Z",
+    "gdpr_aceptado": false
+  },
+  {
+    "id": "78B76FB4",
+    "servicio": "Cambio Look, Peinado",
+    "barbero": "BARB01",
+    "fecha": "2026-03-24",
+    "hora": "10:00",
+    "nombre": "Rulo Perez",
+    "email": "rulo@gmail.com",
+    "telefono": "654123987",
+    "estado": "cancelada",
+    "creadoEn": "2026-03-20T11:30:30.174Z",
+    "gdpr_aceptado": false
+  },
+  {
+    "id": "03910D27",
+    "servicio": "Corte Niño",
+    "barbero": "BARB01",
+    "fecha": "2026-03-23",
+    "hora": "11:30",
+    "nombre": "Fermin res",
+    "email": "feres@gmail.com",
+    "telefono": "654123987",
+    "estado": "confirmada",
+    "creadoEn": "2026-03-20T11:32:23.035Z",
+    "gdpr_aceptado": false
   }
 ]

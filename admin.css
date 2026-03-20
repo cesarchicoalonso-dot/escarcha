@@ -416,6 +416,7 @@
     .wg-cell.pasado { opacity: 0.25; cursor: default; }
     .wg-cell.domingo { background: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.03) 5px, rgba(255,255,255,0.03) 10px); opacity: 0.4; cursor: not-allowed; border-color: transparent; }
     .wg-cell.drag-select { background: rgba(52,152,219,0.3) !important; border-color: rgba(52,152,219,0.6) !important; }
+    .wg-cell.excepcional { border-top: 3px dashed var(--color-gold) !important; }
     .slot-cliente {
       font-size: 0.55rem;
       color: #e07b7b;
@@ -594,6 +595,16 @@
     .toast.ok   { border-color: rgba(82,196,120,0.5); }
     .toast.err  { border-color: rgba(224,82,82,0.5); }
   
+    /* Modal Confirmación Reutilizable */
+    #confirm-modal .modal-card {
+      border: 1px solid var(--color-gold);
+      box-shadow: 0 0 20px rgba(201,168,76,0.15);
+    }
+    #confirm-modal .modal-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
     /* Facturación Grid Responsivo */
     .fact-grid {
       display: grid;

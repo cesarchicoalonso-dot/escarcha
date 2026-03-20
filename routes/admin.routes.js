@@ -258,6 +258,8 @@ async function handle(method, pathname, query, req, res) {
       filteredDisp = disp.filter(s => s.barbero === barbId);
     }
 
+    const slotKeys = new Set(filteredDisp.map(s => `${s.barbero}_${s.fecha}_${s.hora}`));
+
     let result = filteredDisp.map(s => {
       // Solo consideramos reservado si existe una reserva y NO está cancelada o no-show
       const r = reservas.find(res => res.barbero === s.barbero && res.fecha === s.fecha && res.hora === s.hora && !['cancelada', 'no-show'].includes(res.estado));
@@ -268,6 +270,27 @@ async function handle(method, pathname, query, req, res) {
         servicio: r ? r.servicio : null 
       };
     });
+
+    // Añadir slots "virtuales" si hay una reserva pero no hay slot en disponibilidad.json
+    reservas.forEach(r => {
+      if (['cancelada', 'no-show'].includes(r.estado)) return;
+      if (barbId && barbId !== 'all' && r.barbero !== barbId) return;
+      
+      const key = `${r.barbero}_${r.fecha}_${r.hora}`;
+      if (!slotKeys.has(key)) {
+        result.push({
+          id: `VIRTUAL_${r.id}`,
+          barbero: r.barbero,
+          fecha: r.fecha,
+          hora: r.hora,
+          reservado: true,
+          excepcional: true, // Propiedad solicitada para distinguir estas reservas
+          clienteNombre: r.nombre,
+          servicio: r.servicio
+        });
+      }
+    });
+
     return json(res, 200, result);
   }
 

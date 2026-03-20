@@ -798,13 +798,6 @@
     "ocupado": false
   },
   {
-    "id": "7CC7143E",
-    "barbero": "BARB01",
-    "fecha": "2026-03-24",
-    "hora": "16:00",
-    "ocupado": false
-  },
-  {
     "id": "75C9BF29",
     "barbero": "BARB01",
     "fecha": "2026-03-23",
@@ -1071,45 +1064,10 @@
     "ocupado": false
   },
   {
-    "id": "EBD969CC",
-    "barbero": "BARB01",
-    "fecha": "2026-03-24",
-    "hora": "13:00",
-    "ocupado": false
-  },
-  {
-    "id": "33804CFB",
-    "barbero": "BARB01",
-    "fecha": "2026-03-24",
-    "hora": "12:15",
-    "ocupado": false
-  },
-  {
-    "id": "78CB3F8B",
-    "barbero": "BARB01",
-    "fecha": "2026-03-24",
-    "hora": "11:30",
-    "ocupado": false
-  },
-  {
     "id": "C5B5FB8C",
     "barbero": "BARB01",
     "fecha": "2026-03-23",
     "hora": "13:00",
-    "ocupado": false
-  },
-  {
-    "id": "8BFA5812",
-    "barbero": "BARB01",
-    "fecha": "2026-03-24",
-    "hora": "10:45",
-    "ocupado": false
-  },
-  {
-    "id": "ACB7E42E",
-    "barbero": "BARB01",
-    "fecha": "2026-03-24",
-    "hora": "10:00",
     "ocupado": false
   },
   {
@@ -1277,13 +1235,6 @@
     "id": "E99D2F06",
     "barbero": "BARB02",
     "fecha": "2026-03-24",
-    "hora": "10:00",
-    "ocupado": false
-  },
-  {
-    "id": "874375F8",
-    "barbero": "BARB02",
-    "fecha": "2026-03-25",
     "hora": "10:00",
     "ocupado": false
   },
