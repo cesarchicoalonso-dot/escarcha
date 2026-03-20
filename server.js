@@ -5,110 +5,55 @@ const fsPromises = require('fs').promises;
 const path   = require('path');
 const crypto = require('crypto');
 
-const PORT      = 3001;
-const ROOT      = __dirname;
+// Configuración y Utilidades
+const config = require('./lib/config');
+const utils  = require('./lib/utils');
 
-// Cargar variables de entorno desde .env si existe
-try {
-  const envFile = fs.readFileSync(path.join(ROOT, '.env'), 'utf8');
-  envFile.split('\n').forEach(line => {
-    const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
-    if (match) {
-      process.env[match[1]] = match[2];
-    }
-  });
-} catch (e) {
-  // Ignorar si no existe .env
-}
+const {
+  PORT, ROOT, ADMIN_KEY,
+  RESEND_API_KEY, TWILIO_ACCT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM_NUM,
+  GOOGLE_REVIEWS_URL, EMAIL_FROM,
+  DB_RESERVAS, DB_DISPONIBILIDAD, DB_BARBEROS, DB_WAITLIST, DB_USERS,
+  UPLOADS_DIR, MIME
+} = config;
 
-const ADMIN_KEY = process.env.ADMIN_KEY || 'escarcha2025';
+const { json, readBody, genId } = utils;
 
-// ── Servicios 3rd Party (Cero Dependencias) ───────────────────────────────────
-const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_1234_placeholder';
-const TWILIO_ACCT_SID = process.env.TWILIO_ACCT_SID || 'AC_placeholder';
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || 'AUTH_placeholder';
-const TWILIO_FROM_NUM = process.env.TWILIO_FROM_NUM || '+123456789';
-const GOOGLE_REVIEWS_URL = process.env.GOOGLE_REVIEWS_URL || 'https://g.page/r/XXXXXX/review'; // CAMBIAR: enlace real Google Reviews
-const EMAIL_FROM = process.env.EMAIL_FROM || 'citas@escarchagroomingclub.com'; // CAMBIAR: email de Resend verificado
+// Repositorios
+const Reservas       = require('./repositories/reservas.repository');
+const Disponibilidad = require('./repositories/disponibilidad.repository');
+const Barberos       = require('./repositories/barberos.repository');
+const Users          = require('./repositories/users.repository');
+const Waitlist       = require('./repositories/waitlist.repository');
 
-async function enviarEmailConfirmacion(reserva) {
-  try {
-    if (RESEND_API_KEY.includes('placeholder')) {
-      console.log('✉️ [SIMULACRO EMAIL CONFIRMACIÓN] Enviando a', reserva.email);
-      console.log(`   Hola ${reserva.nombre} | Servicio: ${reserva.servicio} | Fecha: ${reserva.fecha} | Hora: ${reserva.hora}`);
-      return;
-    }
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: `Escarcha Grooming Club <${EMAIL_FROM}>`,
-        to: [reserva.email],
-        subject: `✅ Cita Confirmada — Escarcha Grooming Club`,
-        html: `
-          <div style="background:#0a0a0a;padding:32px;font-family:sans-serif;color:#fff;max-width:600px;margin:auto">
-            <h1 style="color:#C9A96E;font-size:1.4rem;margin-bottom:8px">✅ ¡Cita confirmada!</h1>
-            <p style="color:#aaa;margin-bottom:24px">Hola <strong style="color:#fff">${reserva.nombre}</strong>, tu reserva está lista.</p>
-            <div style="background:#111;border:1px solid #2a2a2a;padding:20px;border-radius:4px;margin-bottom:24px">
-              <p style="margin:0 0 8px"><strong style="color:#C9A96E">Servicio:</strong> ${reserva.servicio}</p>
-              <p style="margin:0 0 8px"><strong style="color:#C9A96E">Barbero:</strong> ${reserva.barbero}</p>
-              <p style="margin:0 0 8px"><strong style="color:#C9A96E">Fecha:</strong> ${reserva.fecha}</p>
-              <p style="margin:0"><strong style="color:#C9A96E">Hora:</strong> ${reserva.hora}</p>
-            </div>
-            <p style="color:#aaa;font-size:0.85rem">Escarcha Grooming Club — C/ Rosario Pino, 18, Madrid</p>
-          </div>`
-      })
-    });
-    console.log(`✉️ Email de confirmación enviado a ${reserva.email}`);
-  } catch (error) {
-    console.error('Error enviando Email de confirmación:', error);
+// Servicios
+const Email    = require('./services/email.service');
+const WhatsApp = require('./services/whatsapp.service');
+// apiRouter se importará más abajo para evitar circularidad
+
+// ── Sistema de Sesiones Admin (En Memoria) ──────────────────────────────────
+const SESSIONS = new Map(); // token -> { expires: timestamp }
+const SESSION_DURATION = 30 * 60 * 1000; // 30 minutos
+
+// ── Rate Limiting Admin Login (En Memoria) ───────────────────────────────────
+const LOGIN_ATTEMPTS = new Map(); // ip -> { count: number, lastAttempt: timestamp }
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_WINDOW = 15 * 60 * 1000; // 15 minutos
+
+// Limpieza automática cada 10 min
+setInterval(() => {
+  const ahora = Date.now();
+  for (const [token, data] of SESSIONS.entries()) {
+    if (ahora > data.expires) SESSIONS.delete(token);
   }
-}
-
-async function enviarRecordatorioWhatsApp(reserva) {
-  try {
-    if (TWILIO_ACCT_SID.includes('placeholder')) {
-      console.log('📱 [SIMULACRO WHATSAPP] Enviando recordatorio 24h a', reserva.telefono);
-      return;
-    }
-    // Lógica Twilio WhatsApp vía fetch
-    const auth = Buffer.from(`${TWILIO_ACCT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64');
-    const params = new URLSearchParams();
-    params.append('To', `whatsapp:${reserva.telefono}`);
-    params.append('From', `whatsapp:${TWILIO_FROM_NUM}`);
-    const barberos = await readDB(DB_BARBEROS);
-    const b = barberos.find(x => x.id === reserva.barbero);
-    const nombreBarbero = b ? `${b.nombre} ${b.apellido || ''}`.trim() : reserva.barbero;
-
-    const fechaFormateada = reserva.fecha.split('-').reverse().join('/');
-    const msg = `Hola *${reserva.nombre}*, nos ponemos en contacto contigo desde *Escarcha Grooming Club / Barbería* para confirmar la cita que tienes con *${nombreBarbero}* el día *${fechaFormateada}* 📅 a las *${reserva.hora}* 🕒
-
-🤝 La reserva es un compromiso de asistencia en la fecha y hora acordadas, por eso te rogamos encarecidamente que, en caso de no poder acudir, por favor, avísanos a la mayor brevedad posible para poder agendar a otro cliente en lista de espera y así no perder esa hora 😊
-
-⏰ Damos *10 minutos de cortesía*, a partir de ahí, la cita se anula automáticamente por respeto al resto de clientes agendados, por lo que, si vas a sufrir algún retraso, llámanos ☎️ para poder reajustar la agenda 😉
-
-Gracias por confiar en Escarcha Grooming Club / Barbería
-¡QUÉ TENGAS UN BONITO DÍA! ☀️`;
-
-    params.append('Body', msg);
-    
-    await fetch(`https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCT_SID}/Messages.json`, {
-      method: 'POST',
-      headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params
-    });
-    console.log(`📱 WhatsApp enviado a ${reserva.telefono}`);
-  } catch (error) {
-    console.error('Error enviando WhatsApp:', error);
+  for (const [ip, data] of LOGIN_ATTEMPTS.entries()) {
+    if (ahora - data.lastAttempt > LOGIN_WINDOW) LOGIN_ATTEMPTS.delete(ip);
   }
-}
+}, 10 * 60 * 1000);
 
-const DB_RESERVAS       = path.join(ROOT, 'reservas.json');
-const DB_DISPONIBILIDAD = path.join(ROOT, 'disponibilidad.json');
-const DB_BARBEROS       = path.join(ROOT, 'barberos.json');
-const DB_WAITLIST       = path.join(ROOT, 'waitlist.json');
-const DB_USERS          = path.join(ROOT, 'users.json');
-const UPLOADS_DIR       = path.join(ROOT, 'uploads');
+// (Lógica de notificación movida a /services)
+
+// (Rutas de DB movidas a config.js)
 
 // Crear carpeta uploads si no existe
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
@@ -124,485 +69,50 @@ if (!fs.existsSync(DB_BARBEROS)) {
 if (!fs.existsSync(DB_WAITLIST)) fs.writeFileSync(DB_WAITLIST, '[]', 'utf8');
 if (!fs.existsSync(DB_USERS)) fs.writeFileSync(DB_USERS, '[]', 'utf8');
 
-const MIME = {
-  '.html': 'text/html; charset=utf-8',
-  '.css':  'text/css',
-  '.js':   'application/javascript',
-  '.json': 'application/json',
-  '.png':  'image/png',
-  '.jpg':  'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.gif':  'image/gif',
-  '.svg':  'image/svg+xml',
-  '.ico':  'image/x-icon',
-  '.webp': 'image/webp',
-  '.woff': 'font/woff',
-  '.woff2':'font/woff2',
-  '.txt':  'text/plain; charset=utf-8',
-  '.xml':  'application/xml; charset=utf-8',
-};
+// (MIME movido a config.js)
 
 // ── Helpers de base de datos ──────────────────────────────────────────────────
 
-async function readDB(file) {
-  try { 
-    const data = await fsPromises.readFile(file, 'utf8');
-    return JSON.parse(data); 
-  }
-  catch { return []; }
-}
+// (Helpers de base de datos movidos a /repositories)
 
-async function writeDB(file, data) {
-  await fsPromises.writeFile(file, JSON.stringify(data, null, 2), 'utf8');
-}
-
-function genId() {
-  return crypto.randomBytes(4).toString('hex').toUpperCase();
-}
-
-// ── Helpers HTTP ──────────────────────────────────────────────────────────────
-
-function json(res, status, data) {
-  res.writeHead(status, {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  });
-  res.end(JSON.stringify(data));
-}
-
-function readBody(req) {
-  return new Promise((resolve, reject) => {
-    const chunks = [];
-    req.on('data', chunk => chunks.push(chunk));
-    req.on('end', () => {
-      try {
-        const raw = Buffer.concat(chunks).toString('utf8');
-        resolve(JSON.parse(raw || '{}'));
-      } catch { reject(new Error('JSON inválido')); }
-    });
-    req.on('error', reject);
-  });
-}
+// (Helpers json, readBody y genId movidos a utils.js)
 
 function isAdmin(req) {
-  return req.headers['x-admin-key'] === ADMIN_KEY;
+  const token = req.headers['x-admin-token'];
+  if (!token) return false;
+  
+  const sesion = SESSIONS.get(token);
+  if (!sesion) return false;
+  
+  if (Date.now() > sesion.expires) {
+    SESSIONS.delete(token);
+    return false;
+  }
+  
+  // Refrescar sesión en cada uso (opcional, pero mejora UX)
+  sesion.expires = Date.now() + SESSION_DURATION;
+  return true;
 }
 
-// ── Router API ────────────────────────────────────────────────────────────────
+// Exportar contexto antes de importar el router para romper circularidad
+module.exports = {
+  isAdmin,
+  SESSIONS,
+  SESSION_DURATION,
+  LOGIN_ATTEMPTS,
+  MAX_LOGIN_ATTEMPTS,
+  LOGIN_WINDOW
+};
 
-async function handleAPI(method, pathname, query, req, res) {
+const apiRouter = require('./routes/index');
 
-  // POST /api/admin/login
-  if (method === 'POST' && pathname === '/api/admin/login') {
-    const body = await readBody(req);
-    if (body.password === ADMIN_KEY) {
-      return json(res, 200, { ok: true, key: ADMIN_KEY });
-    }
-    return json(res, 401, { ok: false, error: 'Contraseña incorrecta' });
-  }
-
-  // ── RESERVAS ────────────────────────────────────────────────────────────────
-
-  if (method === 'POST' && pathname === '/api/reservas') {
-    const body = await readBody(req);
-    const { servicio, precio, barbero, fecha, hora, nombre, email, telefono } = body;
-    if (!servicio || !barbero || !fecha || !hora || !nombre || !email || !telefono) {
-      return json(res, 400, { ok: false, error: 'Faltan campos obligatorios' });
-    }
-    const reservas = await readDB(DB_RESERVAS);
-
-    // Validación estricta anti-overbooking
-    const ocupada = reservas.find(r => r.barbero === barbero && r.fecha === fecha && r.hora === hora && r.estado !== 'cancelada');
-    if (ocupada) {
-      return json(res, 409, { ok: false, error: 'Esta franja horaria ya ha sido reservada.' });
-    }
-
-    const reserva = {
-      id: genId(), servicio, precio, barbero, fecha, hora,
-      nombre, email, telefono, estado: 'pendiente',
-      creadoEn: new Date().toISOString(),
-      gdpr_aceptado: body.gdpr_aceptado || false,
-      gdpr_timestamp: body.gdpr_aceptado ? new Date().toISOString() : null
-    };
-    reservas.push(reserva);
-    await writeDB(DB_RESERVAS, reservas);
-    // Marcar slot como ocupado — crearlo si no existe
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    const slot = disp.find(s => s.barbero === barbero && s.fecha === fecha && s.hora === hora);
-    if (slot) {
-      slot.ocupado = true;
-    } else {
-      // El admin puede haber reservado sin slot previo — lo creamos ocupado
-      disp.push({ id: genId(), barbero, fecha, hora, ocupado: true });
-    }
-    await writeDB(DB_DISPONIBILIDAD, disp);
-    // Enviar email de confirmación automáticamente al instante
-    enviarEmailConfirmacion(reserva).catch(err => console.error('Email confirmación:', err));
-    
-    // Registrar/Actualizar usuario para futuras reservas (Login)
-    const users = await readDB(DB_USERS);
-    const userIdx = users.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
-    const userData = { nombre, email, telefono, actualizadoEn: new Date().toISOString() };
-    if (userIdx === -1) {
-      userData.creadoEn = new Date().toISOString();
-      users.push(userData);
-    } else {
-      users[userIdx] = { ...users[userIdx], ...userData };
-    }
-    await writeDB(DB_USERS, users);
-
-    return json(res, 201, { ok: true, id: reserva.id });
-  }
-
-  // POST /api/admin/reservas — crear reserva manual desde el panel admin (sin GDPR)
-  if (method === 'POST' && pathname === '/api/admin/reservas') {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const body = await readBody(req);
-    const { servicio, precio, barbero, fecha, hora, nombre, email, telefono, notas } = body;
-    if (!servicio || !barbero || !fecha || !hora || !nombre) {
-      return json(res, 400, { ok: false, error: 'Faltan campos obligatorios (servicio, barbero, fecha, hora, nombre)' });
-    }
-    const reservas = await readDB(DB_RESERVAS);
-    const ocupada = reservas.find(r => r.barbero === barbero && r.fecha === fecha && r.hora === hora && r.estado !== 'cancelada');
-    if (ocupada) return json(res, 409, { ok: false, error: 'Esa franja ya está ocupada.' });
-    const reserva = {
-      id: genId(), servicio, precio: precio || null, barbero, fecha, hora,
-      nombre, email: email || '', telefono: telefono || '',
-      estado: 'confirmada', // las manuales se crean directamente confirmadas
-      notas: notas || '',
-      origenManual: true,
-      creadoEn: new Date().toISOString(),
-      gdpr_aceptado: false,
-    };
-    reservas.push(reserva);
-    await writeDB(DB_RESERVAS, reservas);
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    const slot = disp.find(s => s.barbero === barbero && s.fecha === fecha && s.hora === hora);
-    if (slot) { slot.ocupado = true; } else { disp.push({ id: genId(), barbero, fecha, hora, ocupado: true }); }
-    await writeDB(DB_DISPONIBILIDAD, disp);
-    return json(res, 201, { ok: true, id: reserva.id });
-  }
-
-  // POST /api/admin/reenviar/:id/:tipo — forzar reenvío de notificación
-  if (method === 'POST' && pathname.startsWith('/api/admin/reenviar/')) {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const parts = pathname.split('/');
-    const id = parts[4]; const tipo = parts[5]; // email | whatsapp | fidelizacion
-    const reservas = await readDB(DB_RESERVAS);
-    const r = reservas.find(x => x.id === id);
-    if (!r) return json(res, 404, { error: 'Reserva no encontrada' });
-    if (tipo === 'email') {
-      await enviarEmailConfirmacion(r);
-      r.email_confirmacion_enviado = true;
-    } else if (tipo === 'whatsapp') {
-      await enviarRecordatorioWhatsApp(r);
-      r.notificado_24h = true;
-    } else if (tipo === 'fidelizacion') {
-      r.fidelizacion_enviada = true;
-      if (RESEND_API_KEY.includes('placeholder')) {
-        console.log(`⭐ [SIMULACRO FIDELIZACIÓN MANUAL] Enviando a ${r.email}`);
-      } else {
-        // mismo email que en cronJobFidelizacion
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            from: `Escarcha Grooming Club <${EMAIL_FROM}>`,
-            to: [r.email],
-            subject: `¿Qué tal tu experiencia en Escarcha Grooming Club?`,
-            html: `<div style="background:#0a0a0a;padding:32px;font-family:sans-serif;color:#fff"><h1 style="color:#C9A96E">¡Hola ${r.nombre}!</h1><p>Esperamos que tu experiencia haya sido excelente. <a href="${GOOGLE_REVIEWS_URL}" style="color:#C9A96E">Dejar reseña en Google ⭐</a></p></div>`
-          })
-        }).catch(console.error);
-      }
-    } else {
-      return json(res, 400, { error: 'Tipo debe ser: email, whatsapp o fidelizacion' });
-    }
-    await writeDB(DB_RESERVAS, reservas);
-    return json(res, 200, { ok: true });
-  }
-
-  // POST /api/waitlist — apuntarse a la lista de espera
-  if (method === 'POST' && pathname === '/api/waitlist') {
-    const body = await readBody(req);
-    const { nombre, email, telefono, fecha, barbero, servicio } = body;
-    if (!nombre || !email || !telefono || !fecha) {
-      return json(res, 400, { error: 'Faltan campos obligatorios' });
-    }
-    const waitlist = await readDB(DB_WAITLIST);
-    const entry = {
-      id: genId(),
-      nombre, email, telefono, fecha,
-      barbero: barbero || 'any',
-      servicio,
-      creadoEn: new Date().toISOString(),
-      notificado: false
-    };
-    waitlist.push(entry);
-    await writeDB(DB_WAITLIST, waitlist);
-    console.log(`📝 Usuario ${nombre} añadido a lista de espera para ${fecha}`);
-    return json(res, 201, { ok: true, id: entry.id });
-  }
-
-  // GET /api/admin/facturacion — datos de facturación con filtros
-  if (method === 'GET' && pathname === '/api/admin/facturacion') {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    let reservas = await readDB(DB_RESERVAS);
-    // Filtrar solo las que aportan ingresos
-    const estadosFacturables = ['confirmada', 'pagada', 'pendiente'];
-    reservas = reservas.filter(r => estadosFacturables.includes(r.estado));
-    if (query.desde) reservas = reservas.filter(r => r.fecha >= query.desde);
-    if (query.hasta) reservas = reservas.filter(r => r.fecha <= query.hasta);
-    if (query.barbero) reservas = reservas.filter(r => r.barbero === query.barbero);
-    const totalIngresos = reservas.reduce((s, r) => s + (parseFloat(r.precio) || 0), 0);
-    // Agrupar por servicio
-    const porServicio = {};
-    reservas.forEach(r => {
-      const key = r.servicio || 'Sin especificar';
-      if (!porServicio[key]) porServicio[key] = { servicio: key, count: 0, total: 0 };
-      porServicio[key].count++;
-      porServicio[key].total += (parseFloat(r.precio) || 0);
-    });
-    const topServicios = Object.values(porServicio).sort((a,b) => b.total - a.total);
-    // Agrupar por barbero
-    const porBarbero = {};
-    reservas.forEach(r => {
-      const key = r.barbero || 'Sin asignar';
-      if (!porBarbero[key]) porBarbero[key] = { barbero: key, count: 0, total: 0 };
-      porBarbero[key].count++;
-      porBarbero[key].total += (parseFloat(r.precio) || 0);
-    });
-    const porBarberoList = Object.values(porBarbero).sort((a,b) => b.total - a.total);
-    return json(res, 200, { totalReservas: reservas.length, totalIngresos: Math.round(totalIngresos * 100) / 100, topServicios, porBarbero: porBarberoList, reservas });
-  }
-
-  if (method === 'GET' && pathname === '/api/reservas') {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    return json(res, 200, await readDB(DB_RESERVAS));
-  }
-
-  // GET /api/auth?email=... — buscar usuario por email
-  if (method === 'GET' && pathname === '/api/auth') {
-    const email = (query.email || '').trim().toLowerCase();
-    console.log(`🔍 [DEBUG] Buscando usuario: "${email}"`);
-    if (!email) return json(res, 400, { error: 'Email obligatorio' });
-    
-    const users = await readDB(DB_USERS);
-    const user = users.find(u => (u.email || '').trim().toLowerCase() === email);
-    
-    if (!user) {
-      console.log(`❌ [DEBUG] Usuario no encontrado: "${email}" (Total usuarios: ${users.length})`);
-      return json(res, 404, { error: 'Usuario no encontrado' });
-    }
-    
-    console.log(`✅ [DEBUG] Usuario encontrado: ${user.nombre}`);
-    return json(res, 200, user);
-  }
-
-  if (method === 'PATCH' && pathname.startsWith('/api/reservas/')) {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const id = pathname.split('/')[3];
-    const body = await readBody(req);
-    const reservas = await readDB(DB_RESERVAS);
-    const r = reservas.find(x => x.id === id);
-    if (!r) return json(res, 404, { error: 'Reserva no encontrada' });
-    
-    if (body.estado) {
-      const oldEstado = r.estado;
-      r.estado = body.estado;
-      
-      // Si se cancela, liberamos el slot y avisamos a la lista de espera
-      if (body.estado === 'cancelada' && oldEstado !== 'cancelada') {
-        const disp = await readDB(DB_DISPONIBILIDAD);
-        const slot = disp.find(s => s.barbero === r.barbero && s.fecha === r.fecha && s.hora === r.hora);
-        if (slot) slot.ocupado = false;
-        await writeDB(DB_DISPONIBILIDAD, disp);
-        
-        // Notificar lista de espera
-        procesarListaEspera(r.fecha, r.barbero, r.hora).catch(console.error);
-      }
-    }
-    await writeDB(DB_RESERVAS, reservas);
-    return json(res, 200, { ok: true, reserva: r });
-  }
-
-  if (method === 'DELETE' && pathname.startsWith('/api/reservas/')) {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const id = pathname.split('/')[3];
-    const reservas = await readDB(DB_RESERVAS);
-    const idx = reservas.findIndex(x => x.id === id);
-    if (idx === -1) return json(res, 404, { error: 'Reserva no encontrada' });
-    const r = reservas[idx];
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    const slot = disp.find(s => s.barbero === r.barbero && s.fecha === r.fecha && s.hora === r.hora);
-    if (slot) slot.ocupado = false;
-    await writeDB(DB_DISPONIBILIDAD, disp);
-    
-    // Notificar lista de espera al borrar una reserva (que libera hueco)
-    procesarListaEspera(r.fecha, r.barbero, r.hora).catch(console.error);
-
-    reservas.splice(idx, 1);
-    await writeDB(DB_RESERVAS, reservas);
-    return json(res, 200, { ok: true });
-  }
-
-  // ── DISPONIBILIDAD ──────────────────────────────────────────────────────────
-
-  if (method === 'GET' && pathname === '/api/disponibilidad') {
-    let disp = await readDB(DB_DISPONIBILIDAD);
-    let reservasArr = await readDB(DB_RESERVAS);
-
-    // Optimización: filtrar por fecha antes de cruzar los datos
-    if (query.fecha) {
-      disp = disp.filter(s => s.fecha === query.fecha);
-      reservasArr = reservasArr.filter(r => r.fecha === query.fecha);
-    }
-    if (query.barbero) {
-      disp = disp.filter(s => s.barbero === query.barbero);
-    }
-
-    // Cruzar disponibilidad con reservas activas
-    const result = disp.filter(s => {
-      const estáOcupado = reservasArr.some(r => 
-        r.barbero === s.barbero && 
-        r.hora === s.hora && 
-        r.estado !== 'cancelada'
-      );
-      return !estáOcupado;
-    });
-
-    return json(res, 200, result);
-  }
-
-  if (method === 'GET' && pathname === '/api/disponibilidad/all') {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    const reservas = await readDB(DB_RESERVAS);
-    
-    let result = disp.map(s => {
-      const r = reservas.find(res => res.barbero === s.barbero && res.fecha === s.fecha && res.hora === s.hora && res.estado !== 'cancelada');
-      if (r) {
-        return { ...s, ocupado: true, clienteNombre: r.nombre, servicio: r.servicio };
-      }
-      return { ...s, ocupado: false };
-    });
-
-    if (query.fecha)   result = result.filter(s => s.fecha   === query.fecha);
-    if (query.barbero) result = result.filter(s => s.barbero === query.barbero);
-    return json(res, 200, result);
-  }
-
-  if (method === 'POST' && pathname === '/api/disponibilidad') {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const body = await readBody(req);
-    const slots = Array.isArray(body) ? body : [body];
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    let created = 0;
-    for (const s of slots) {
-      const { barbero, fecha, hora } = s;
-      if (!barbero || !fecha || !hora) continue;
-      if (!disp.find(x => x.barbero === barbero && x.fecha === fecha && x.hora === hora)) {
-        disp.push({ id: genId(), barbero, fecha, hora, ocupado: false });
-        created++;
-      }
-    }
-    await writeDB(DB_DISPONIBILIDAD, disp);
-    return json(res, 201, { ok: true, created });
-  }
-
-  if (method === 'DELETE' && pathname.startsWith('/api/disponibilidad/')) {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const id = pathname.split('/')[3];
-    const disp = await readDB(DB_DISPONIBILIDAD);
-    const idx = disp.findIndex(x => x.id === id);
-    if (idx === -1) return json(res, 404, { error: 'Slot no encontrado' });
-    disp.splice(idx, 1);
-    await writeDB(DB_DISPONIBILIDAD, disp);
-    return json(res, 200, { ok: true });
-  }
-
-  // ── BARBEROS ────────────────────────────────────────────────────────────────
-
-  // GET /api/barberos — público (solo activos); ?all=1 + admin → todos
-  if (method === 'GET' && pathname === '/api/barberos') {
-    const all = await readDB(DB_BARBEROS);
-    const result = (query.all === '1' && isAdmin(req)) ? all : all.filter(b => b.activo !== false);
-    return json(res, 200, result);
-  }
-
-  // POST /api/barberos — crear (admin), soporta fotoBase64 + fotoExt
-  if (method === 'POST' && pathname === '/api/barberos') {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const body = await readBody(req);
-    let foto = '';
-    if (body.fotoBase64) {
-      const ext = (body.fotoExt || 'jpg').replace(/[^a-z0-9]/gi, '').slice(0, 5);
-      const filename = `barbero_${genId()}.${ext}`;
-      await fsPromises.writeFile(path.join(UPLOADS_DIR, filename), Buffer.from(body.fotoBase64, 'base64'));
-      foto = `/uploads/${filename}`;
-    }
-    const barberos = await readDB(DB_BARBEROS);
-    const b = {
-      id:          genId(),
-      nombre:      body.nombre      || '',
-      apellido:    body.apellido    || '',
-      rol:         body.rol         || '',
-      descripcion: body.descripcion || '',
-      foto,
-      activo: true,
-    };
-    barberos.push(b);
-    await writeDB(DB_BARBEROS, barberos);
-    return json(res, 201, { ok: true, barbero: b });
-  }
-
-  // PATCH /api/barberos/:id — editar (admin)
-  if (method === 'PATCH' && pathname.startsWith('/api/barberos/')) {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const id = pathname.split('/')[3];
-    const body = await readBody(req);
-    const barberos = await readDB(DB_BARBEROS);
-    const b = barberos.find(x => x.id === id);
-    if (!b) return json(res, 404, { error: 'Barbero no encontrado' });
-    ['nombre','apellido','rol','descripcion','activo'].forEach(k => {
-      if (body[k] !== undefined) b[k] = body[k];
-    });
-    if (body.fotoBase64) {
-      if (b.foto && b.foto.startsWith('/uploads/')) {
-        try { await fsPromises.unlink(path.join(ROOT, b.foto.slice(1))); } catch {}
-      }
-      const ext = (body.fotoExt || 'jpg').replace(/[^a-z0-9]/gi, '').slice(0, 5);
-      const filename = `barbero_${genId()}.${ext}`;
-      await fsPromises.writeFile(path.join(UPLOADS_DIR, filename), Buffer.from(body.fotoBase64, 'base64'));
-      b.foto = `/uploads/${filename}`;
-    }
-    await writeDB(DB_BARBEROS, barberos);
-    return json(res, 200, { ok: true, barbero: b });
-  }
-
-  // DELETE /api/barberos/:id — desactivar (admin, no borra físicamente)
-  if (method === 'DELETE' && pathname.startsWith('/api/barberos/')) {
-    if (!isAdmin(req)) return json(res, 401, { error: 'No autorizado' });
-    const id = pathname.split('/')[3];
-    const barberos = await readDB(DB_BARBEROS);
-    const b = barberos.find(x => x.id === id);
-    if (!b) return json(res, 404, { error: 'Barbero no encontrado' });
-    b.activo = false;
-    await writeDB(DB_BARBEROS, barberos);
-    return json(res, 200, { ok: true });
-  }
-
-  // ── PAGO (placeholder) ──────────────────────────────────────────────────────
-  if (method === 'POST' && pathname.startsWith('/api/pago/')) {
-    return json(res, 501, { ok: false, error: 'Pasarela de pago no configurada aún' });
-  }
-
-  return null;
-}
+// ── Router API (Modularizado en /routes) ───────────────────────────────────────
+// La lógica se ha movido a routes/index.js, routes/public.routes.js y routes/admin.routes.js
 
 // ── Servidor principal ────────────────────────────────────────────────────────
 
 async function procesarListaEspera(fecha, barbero, hora) {
-  const waitlist = await readDB(DB_WAITLIST);
+  const waitlist = await Waitlist.getAll();
   const interesados = waitlist.filter(w => !w.notificado && w.fecha === fecha && (w.barbero === 'any' || w.barbero === barbero));
   
   if (interesados.length === 0) return;
@@ -616,13 +126,13 @@ async function procesarListaEspera(fecha, barbero, hora) {
     user.notificadoEn = new Date().toISOString();
   }
   
-  await writeDB(DB_WAITLIST, waitlist);
+  await Waitlist.saveAll(waitlist);
 }
 
 // ── Scheduler 24H (WhatsApp / NodeJS nativo) ───────────────────────────────
 async function cronJobRecordatorios() {
   try {
-    const reservas = await readDB(DB_RESERVAS);
+    const reservas = await Reservas.getAll();
     const ahora = new Date();
     let modificado = false;
     
@@ -636,11 +146,11 @@ async function cronJobRecordatorios() {
       if (horasParaCita > 0 && horasParaCita <= 24) {
         r.notificado_24h = true;
         modificado = true;
-        enviarRecordatorioWhatsApp(r).catch(err => console.error(err));
+        WhatsApp.sendWhatsAppReminder(r).catch(err => console.error(err));
       }
     }
     
-    if (modificado) await writeDB(DB_RESERVAS, reservas);
+    if (modificado) await Reservas.saveAll(reservas);
   } catch (err) {
     console.error('Error en el cron de recordatorios:', err);
   }
@@ -652,7 +162,7 @@ setTimeout(cronJobRecordatorios, 10000); // Primer check al vuelo
 // ── Cron de Fidelización (Email post-cita) ────────────────────────────────────────
 async function cronJobFidelizacion() {
   try {
-    const reservas = await readDB(DB_RESERVAS);
+    const reservas = await Reservas.getAll();
     const ahora = new Date();
     // Fecha de ayer en formato YYYY-MM-DD
     const ayer = new Date(ahora);
@@ -693,7 +203,7 @@ async function cronJobFidelizacion() {
       }
     }
 
-    if (modificado) await writeDB(DB_RESERVAS, reservas);
+    if (modificado) await Reservas.saveAll(reservas);
   } catch (err) {
     console.error('Error en el cron de fidelización:', err);
   }
@@ -705,48 +215,58 @@ setTimeout(cronJobFidelizacion, 30000);
 http.createServer(async (req, res) => {
   const parsed   = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = parsed.pathname;
-  const query    = Object.fromEntries(parsed.searchParams);
+  const query    = parsed.searchParams;
   const method   = req.method.toUpperCase();
 
+  // CORS (Opcional, pero recomendado si el front va por otro puerto)
   if (method === 'OPTIONS') {
     res.writeHead(204, {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,PATCH,DELETE,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type,X-Admin-Key',
+      'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Token',
     });
     return res.end();
   }
 
+  // Rutas API delegadas al router modular
   if (pathname.startsWith('/api/')) {
     try {
-      const handled = await handleAPI(method, pathname, query, req, res);
-      if (handled === null) return json(res, 404, { error: 'Ruta API no encontrada' });
+      const handled = await apiRouter.handleAPI(method, pathname, query, req, res);
+      if (handled) return;
+      return json(res, 404, { error: 'Endpoint no encontrado' });
     } catch (err) {
-      return json(res, 500, { error: err.message });
+      console.error('API Error:', err);
+      return json(res, 500, { error: 'Error interno del servidor' });
     }
-    return;
   }
 
-  let url = pathname;
-  if (url === '/') url = '/index.html';
-  
-  // SOLUCION PATH TRAVERSAL: Usando path.normalize y asegurar que está en ROOT
-  const safePathname = decodeURIComponent(url).replace(/\0/g, ''); // Evitar null byte attacks
-  let filePath = path.join(ROOT, safePathname);
-  
-  // Evitamos Path Traversal
-  if (!filePath.startsWith(ROOT + path.sep) && filePath !== ROOT) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    res.end('Access denied.');
-    return;
-  }
-
-  const ext      = path.extname(filePath).toLowerCase();
-  const mime     = MIME[ext] || 'application/octet-stream';
-
+  // Servidor Estático
   try {
+    let filePath = path.join(ROOT, pathname === '/' ? 'index.html' : pathname);
+    
+    // Seguridad: evitar path traversal
+    if (!filePath.startsWith(ROOT)) {
+      res.writeHead(403);
+      return res.end('Forbidden');
+    }
+
+    // Rewrite admin/login to admin.html
+    if (pathname === '/admin' || pathname === '/admin/login' || pathname === '/admin/') {
+      filePath = path.join(ROOT, 'admin.html');
+    }
+
+    const ext = path.extname(filePath).toLowerCase();
+    
+    // Bloquear acceso a archivos JSON confidenciales
+    if (pathname.endsWith('.json')) {
+      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('Forbidden: Acceso restringido a archivos de configuración.');
+    }
+
+    const contentType = MIME[ext] || 'application/octet-stream';
+
     const data = await fsPromises.readFile(filePath);
-    res.writeHead(200, { 'Content-Type': mime });
+    res.writeHead(200, { 'Content-Type': contentType });
     res.end(data);
   } catch (err) {
     res.writeHead(404, { 'Content-Type': 'text/plain' }); 

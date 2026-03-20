@@ -1,0 +1,58 @@
+[
+  {
+    "nombre": "César Chico Alonso",
+    "email": "cesarchicoalonso@gmail.com",
+    "telefono": "+34690332327",
+    "actualizadoEn": "2026-03-18T23:42:38.085Z",
+    "creadoEn": "2026-03-17T15:35:19.963Z"
+  },
+  {
+    "nombre": "roberto ramirez",
+    "email": "rra@gmail.com",
+    "telefono": "651562654",
+    "actualizadoEn": "2026-03-18T21:46:31.170Z",
+    "creadoEn": "2026-03-18T21:46:31.170Z"
+  },
+  {
+    "nombre": "Ramon Der",
+    "email": "rader@gmail.com",
+    "telefono": "668566579",
+    "actualizadoEn": "2026-03-18T21:58:43.255Z",
+    "creadoEn": "2026-03-18T21:58:43.255Z"
+  },
+  {
+    "nombre": "Paca Sas",
+    "email": "pasas@gmail.com",
+    "telefono": "654235987",
+    "actualizadoEn": "2026-03-18T22:15:47.992Z",
+    "creadoEn": "2026-03-18T22:15:47.992Z"
+  },
+  {
+    "nombre": "Anselmo Asno",
+    "email": "ansasno@gmail.com",
+    "telefono": "654236987",
+    "actualizadoEn": "2026-03-18T22:25:52.501Z",
+    "creadoEn": "2026-03-18T22:25:52.501Z"
+  },
+  {
+    "nombre": "QA Tester",
+    "email": "qa@test.com",
+    "telefono": "611223344",
+    "actualizadoEn": "2026-03-19T23:56:53.954Z",
+    "creadoEn": "2026-03-19T23:56:53.954Z"
+  },
+  {
+    "nombre": "QA Final",
+    "email": "qa@final.com",
+    "telefono": "600000000",
+    "actualizadoEn": "2026-03-20T00:05:12.131Z",
+    "creadoEn": "2026-03-20T00:05:12.131Z"
+  },
+  {
+    "nombre": "User Any",
+    "email": "any@user.com",
+    "telefono": "800000000",
+    "actualizadoEn": "2026-03-20T00:11:07.956Z",
+    "creadoEn": "2026-03-20T00:11:07.957Z"
+  }
+]

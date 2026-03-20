@@ -2,3 +2,9 @@
 node_modules/
 .DS_Store
 *.log
+uploads/
+.agent/
+.claude/
+AGENTS.md.md
+INICIAR_SERVIDOR.bat
+verify_security_*.js

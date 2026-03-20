@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  let ADMIN_KEY = '';
+  let ADMIN_TOKEN = '';
   const HORAS_DEFAULT = ['10:00','10:45','11:30','12:15','13:00','16:00','16:45','17:30','18:15','19:00','19:45'];
 
   let barberosData = [];
@@ -27,7 +27,7 @@
   async function api(method, url, body) {
     const opts = {
       method,
-      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': ADMIN_TOKEN },
     };
     if (body) opts.body = JSON.stringify(body);
     let r;
@@ -52,9 +52,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: pass }),
       }).then(r => r.json());
-      if (data.ok) {
-        ADMIN_KEY = pass;
-        sessionStorage.setItem('esc_admin_key', pass);
+      if (data.ok && data.token) {
+        ADMIN_TOKEN = data.token;
+        sessionStorage.setItem('esc_admin_token', data.token);
         showAdmin();
       } else {
         err.textContent = data.error || 'Contraseña incorrecta';
@@ -68,8 +68,8 @@
   document.getElementById('adm-pass').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
 
   document.getElementById('adm-logout').addEventListener('click', () => {
-    ADMIN_KEY = '';
-    sessionStorage.removeItem('esc_admin_key');
+    ADMIN_TOKEN = '';
+    sessionStorage.removeItem('esc_admin_token');
     document.getElementById('admin-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('adm-pass').value = '';
@@ -82,8 +82,8 @@
     loadReservas();
   }
 
-  const stored = sessionStorage.getItem('esc_admin_key');
-  if (stored) { ADMIN_KEY = stored; showAdmin(); }
+  const stored = sessionStorage.getItem('esc_admin_token');
+  if (stored) { ADMIN_TOKEN = stored; showAdmin(); }
 
   // ── Tabs ─────────────────────────────────────────────────────────────────
   document.querySelectorAll('.adm-tab').forEach(tab => {
@@ -231,6 +231,7 @@
         toast('Marcada como Cobrada ✓');
       }
       await loadReservas();
+      if (document.getElementById('panel-disponibilidad').classList.contains('active')) renderWeek();
       return;
     }
 
@@ -264,24 +265,87 @@
   });
   document.getElementById('flt-refresh').addEventListener('click', loadReservas);
 
+  // ── Catálogo Completo de Servicios ──
+  const SERVICIOS_CATS = [
+    { label:'Rituales', servicios:[
+      { name:'Blue Label', price:60 }, { name:'Gold Label', price:50 }, { name:'Green Label', price:40 },
+      { name:'Black Label', price:30 }, { name:'Red Label', price:23 }, { name:'Corte + Arreglo Barba', price:40 },
+      { name:'Rapado Cabeza + Barba', price:35 }
+    ]},
+    { label:'Cortes', servicios:[
+      { name:'Corte Caballero', price:20 }, { name:'Corte Skin Fade', price:22 }, { name:'Corte + Ritual Detox', price:31.9 },
+      { name:'Rapado de cabeza', price:15 }, { name:'Afeitado Cabeza Navaja', price:21 }, { name:'Cambio Look', price:38 },
+      { name:'Corte Niño', price:20 }, { name:'Peinado', price:8 }
+    ]},
+    { label:'Barba', servicios:[
+      { name:'Arreglo de Barba', price:20 }, { name:'Barba / Afeitado Spa', price:30 }, { name:'Arreglo Barba sin Afeitado', price:17 },
+      { name:'Arreglo Bigote', price:9 }, { name:'Ritual de Afeitado', price:21 }
+    ]},
+    { label:'Color & Alisados', servicios:[
+      { name:'Camuflaje de canas', price:25 }, { name:'Mechas / Reflejos', price:31.5 }, { name:'Decoloración', price:80 },
+      { name:'Alisado Orgánico (Smooth Control)', price:80 }, { name:'Alisado Permanente (Straight Pro)', price:45 },
+      { name:'Camuflaje Canas Cejas', price:8 }, { name:'Camuflaje de canas en Barba', price:15 }
+    ]},
+    { label:'Tratamientos & Faciales', servicios:[
+      { name:'Ciencia y Naturaleza (Microcámara)', price:40 }, { name:'Ritual Detox', price:20 },
+      { name:'Higiene Facial', price:20 }, { name:'Análisis facial', price:20 }
+    ]},
+    { label:'Depilación Cera', servicios:[
+      { name:'Cera Cejas', price:9 }, { name:'Cera Entrecejo', price:4 }, { name:'Cera Nariz', price:6 },
+      { name:'Cera Orejas', price:6 }, { name:'Cera Pómulos', price:6 }
+    ]},
+    { label:'Extras', servicios:[
+      { name:'ACTIVE: Prevención Caída', price:5 }, { name:'Energizing Lotion', price:3 }, { name:'Ritual Relax Extra', price:3 }
+    ]}
+  ];
+
+  function renderServiciosMultiSelect() {
+    const container = document.getElementById('rm-servicios-list');
+    if (!container) return;
+    container.innerHTML = SERVICIOS_CATS.map(cat => `
+      <div class="srv-group-label">${cat.label}</div>
+      ${cat.servicios.map(s => `
+        <label class="srv-item">
+          <input type="checkbox" class="srv-check" data-name="${s.name}" data-price="${s.price}">
+          <span class="srv-item-name">${s.name}</span>
+          <span class="srv-item-price">${s.price} €</span>
+        </label>
+      `).join('')}
+    `).join('');
+
+    // Listener para suma de precios
+    container.querySelectorAll('.srv-check').forEach(chk => {
+      chk.addEventListener('change', actualizarPrecioTotal);
+    });
+  }
+
+  function actualizarPrecioTotal() {
+    let total = 0;
+    document.querySelectorAll('.srv-check:checked').forEach(chk => {
+      total += parseFloat(chk.dataset.price || 0);
+    });
+    document.getElementById('rm-precio').value = total.toFixed(2);
+  }
+
   // ── Nueva Reserva Manual ─────────────────────────────────────────────────
   document.getElementById('res-nueva-btn').addEventListener('click', () => {
-    // Prerellenar con la fecha de hoy
     document.getElementById('rm-fecha').value = new Date().toISOString().slice(0, 10);
     document.getElementById('rm-err').textContent = '';
     document.getElementById('rm-nombre').value = '';
     document.getElementById('rm-email').value = '';
     document.getElementById('rm-telefono').value = '';
-    document.getElementById('rm-servicio').value = '';
-    document.getElementById('rm-precio').value = '';
+    document.getElementById('rm-precio').value = '0.00';
     document.getElementById('rm-notas').value = '';
+    
+    // Renderizar lista de servicios
+    renderServiciosMultiSelect();
+
     // Poblar select de barberos
     const sel = document.getElementById('rm-barbero');
-    sel.innerHTML = '';
+    sel.innerHTML = '<option value="">Selecciona barbero...</option>';
     barberosData.filter(b => b.activo !== false).forEach(b => {
       const o = document.createElement('option');
-      o.value = b.id;
-      o.textContent = `${b.nombre} ${b.apellido||''}`.trim();
+      o.value = b.id; o.textContent = `${b.nombre} ${b.apellido||''}`.trim();
       sel.appendChild(o);
     });
     document.getElementById('res-modal').classList.remove('hidden');
@@ -295,27 +359,47 @@
       document.getElementById('res-modal').classList.add('hidden');
   });
 
+  // Abrir calendario al hacer clic en cualquier input de fecha
+  document.querySelectorAll('input[type="date"]').forEach(inp => {
+    inp.addEventListener('click', () => {
+      if (typeof inp.showPicker === 'function') {
+        try { inp.showPicker(); } catch(e) {}
+      }
+    });
+  });
+
   document.getElementById('rm-save').addEventListener('click', async () => {
     const errEl = document.getElementById('rm-err');
     errEl.textContent = '';
+    
+    // Recoger servicios seleccionados
+    const selectedSrvs = [];
+    document.querySelectorAll('.srv-check:checked').forEach(chk => {
+      selectedSrvs.push(chk.dataset.name);
+    });
+    
     const payload = {
       barbero:   document.getElementById('rm-barbero').value,
       fecha:     document.getElementById('rm-fecha').value,
       hora:      document.getElementById('rm-hora').value,
-      servicio:  document.getElementById('rm-servicio').value.trim(),
-      precio:    parseFloat(document.getElementById('rm-precio').value) || null,
+      servicio:  selectedSrvs.join(', '),
+      precio:    parseFloat(document.getElementById('rm-precio').value) || 0,
       nombre:    document.getElementById('rm-nombre').value.trim(),
       telefono:  document.getElementById('rm-telefono').value.trim(),
       email:     document.getElementById('rm-email').value.trim(),
       notas:     document.getElementById('rm-notas').value.trim(),
     };
-    if (!payload.servicio) { errEl.textContent = 'El servicio es obligatorio.'; return; }
+    if (!payload.barbero)  { errEl.textContent = 'Selecciona un barbero.'; return; }
+    if (!payload.fecha)    { errEl.textContent = 'Selecciona una fecha.'; return; }
+    if (!payload.servicio) { errEl.textContent = 'Selecciona al menos un servicio.'; return; }
     if (!payload.nombre)   { errEl.textContent = 'El nombre del cliente es obligatorio.'; return; }
+
     try {
       await api('POST', '/api/admin/reservas', payload);
       toast('Cita creada correctamente ✓');
       document.getElementById('res-modal').classList.add('hidden');
       await loadReservas();
+      if (document.getElementById('panel-disponibilidad').classList.contains('active')) renderWeek();
     } catch (err) { errEl.textContent = err.message || 'Error al crear la cita.'; }
   });
 
@@ -378,9 +462,51 @@
 
   function renderFacturacion(d) {
     document.getElementById('fac-total-ingresos').textContent = d.totalIngresos.toFixed(2) + ' €';
+    document.getElementById('fac-total-pendiente').textContent = d.totalPendiente.toFixed(2) + ' €';
     document.getElementById('fac-total-reservas').textContent = d.totalReservas;
     const ticket = d.totalReservas > 0 ? (d.totalIngresos / d.totalReservas).toFixed(2) : '0.00';
     document.getElementById('fac-ticket-medio').textContent   = ticket + ' €';
+
+    // Tabla Operativa
+    const tbody = document.getElementById('fac-tbody');
+    const empty = document.getElementById('fac-empty');
+    tbody.innerHTML = '';
+    
+    if (!d.reservas || d.reservas.length === 0) {
+      empty.style.display = 'block';
+    } else {
+      empty.style.display = 'none';
+      // Ordenar por fecha descendente
+      const sorted = [...d.reservas].sort((a,b) => (b.fecha+b.hora).localeCompare(a.fecha+a.hora));
+      
+      sorted.forEach(r => {
+        const tr = document.createElement('tr');
+        
+        let facturaHTML = '';
+        if (r.invoice_id) {
+          facturaHTML = `<span style="color:var(--color-success);font-weight:600;font-family:monospace;">${r.invoice_id}</span>`;
+        } else if (r.estado === 'pagada') {
+          facturaHTML = `<button class="btn-sm-gold" data-emitir-fac="${r.id}" style="padding:4px 8px;font-size:0.6rem;">Emitir factura</button>`;
+        } else {
+          facturaHTML = `<span style="color:var(--color-gray);font-style:italic;font-size:0.75rem;">No facturable</span>`;
+        }
+
+        const pagoHTML = r.estado === 'pagada' 
+          ? `<span class="badge badge-pagada">Pagada</span>`
+          : `<span class="badge badge-${r.estado}">${r.estado}</span>`;
+
+        tr.innerHTML = `
+          <td>${formatFecha(r.fecha)}</td>
+          <td><span style="font-weight:500">${escHtml(r.nombre)}</span></td>
+          <td class="td-small">${escHtml(r.servicio)}</td>
+          <td style="color:var(--color-gold);font-weight:600">${(r.precio || 0).toFixed(2)} €</td>
+          <td class="td-small">${getBarberoName(r.barbero)}</td>
+          <td>${pagoHTML}</td>
+          <td>${facturaHTML}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     // Top Servicios (barras)
     const maxSrv = d.topServicios.length > 0 ? d.topServicios[0].total : 1;
@@ -412,6 +538,27 @@
         </div>`).join('')
       : '<p style="color:var(--color-gray);font-size:0.85rem">Sin datos.</p>';
   }
+
+  // Listener para emitir factura
+  document.getElementById('fac-tbody').addEventListener('click', async e => {
+    const btn = e.target.closest('[data-emitir-fac]');
+    if (!btn) return;
+    const id = btn.dataset.emitirFac;
+    
+    btn.disabled = true;
+    btn.textContent = 'Emitiendo...';
+    
+    try {
+      const res = await api('POST', '/api/admin/facturacion/emitir', { id });
+      toast(`Factura emitida: ${res.invoice_id} ✓`);
+      await cargarFacturacion();
+      await loadReservas(); // Refrescar el estado en la pestaña de reservas también
+    } catch (err) {
+      toast(err.message, 'err');
+      btn.disabled = false;
+      btn.textContent = 'Emitir factura';
+    }
+  });
 
   document.getElementById('fac-buscar').addEventListener('click', cargarFacturacion);
 
@@ -548,8 +695,9 @@
         } else if (isPast) {
           cell.classList.add('pasado');
         } else if (slot) {
-          cell.classList.add(slot.ocupado ? 'ocupado' : 'libre');
-          if (slot.ocupado) {
+          // Usamos slot.reservado para mayor claridad
+          cell.classList.add(slot.reservado ? 'ocupado' : 'libre');
+          if (slot.reservado) {
             cell.title = slot.clienteNombre ? `Reservado: ${slot.clienteNombre}${slot.servicio ? ' — ' + slot.servicio : ''}` : 'Reservado';
             cell.innerHTML = `
               <span class="slot-cliente">${slot.clienteNombre || 'Reservado'}</span>
@@ -778,7 +926,26 @@
         renderWeek();
       }
     }
+    // Select nueva cita (manual)
+    const rm = document.getElementById('rm-barbero');
+    if (rm) {
+      rm.innerHTML = '<option value="">Selecciona barbero...</option>';
+      active.forEach(b => {
+        const o = document.createElement('option');
+        o.value = b.id; o.textContent = `${b.nombre} ${b.apellido||''}`.trim();
+        rm.appendChild(o);
+      });
+    }
   }
+
+  // Lógica auto-precio para Nueva Cita
+  document.getElementById('rm-servicio')?.addEventListener('change', (e) => {
+    const sel = e.target;
+    const opt = sel.options[sel.selectedIndex];
+    if (opt && opt.dataset.price) {
+      document.getElementById('rm-precio').value = opt.dataset.price;
+    }
+  });
 
   function renderBarberos() {
     const grid = document.getElementById('barb-grid');

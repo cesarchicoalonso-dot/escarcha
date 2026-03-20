@@ -812,6 +812,41 @@
       box-shadow: inset 0 0 0 1px var(--color-gold);
     }
 
+    /* Estilos compactos para destacados */
+    #bk-featured-services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      #bk-featured-services { grid-template-columns: 1fr; gap: 8px; }
+    }
+    .bk-card-compact {
+      padding: 10px 14px !important;
+      min-height: auto !important;
+      position: relative;
+    }
+    .bk-card-compact .bk-card-name {
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bk-card-compact .bk-card-desc {
+      font-size: 0.65rem;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .bk-card-compact .bk-card-price-area { margin-top: 2px; }
+    .bk-card-compact .bk-card-price { font-size: 0.75rem; }
+    .bk-card-compact .bk-card-dur { font-size: 0.65rem; }
+    .bk-card-compact.selected::after { top: 6px; right: 8px; font-size: 0.7rem; }
+
     /* Botón Cargar más - Discreto y elegante */
     .bk-load-more-container {
       grid-column: 1 / -1;
@@ -981,10 +1016,10 @@
     .bk-form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      gap: 12px;
     }
     @media (max-width: 560px) { .bk-form-grid { grid-template-columns: 1fr; } }
-    .bk-field { display: flex; flex-direction: column; gap: 7px; }
+    .bk-field { display: flex; flex-direction: column; gap: 5px; }
     .bk-field.full { grid-column: 1 / -1; }
     .bk-label {
       font-size: 0.7rem;
@@ -998,7 +1033,7 @@
       color: var(--color-white);
       font-family: var(--font-body);
       font-size: 0.88rem;
-      padding: 11px 14px;
+      padding: 8px 12px;
       border-radius: 3px;
       outline: none;
       transition: border-color var(--transition);
@@ -1780,10 +1815,6 @@
               <span class="bk-progress-num">4</span>
               <span class="bk-progress-label">Tus datos</span>
             </div>
-            <div class="bk-progress-step" data-step="5" role="listitem">
-              <span class="bk-progress-num">5</span>
-              <span class="bk-progress-label">Confirmación</span>
-            </div>
           </div>
 
           <div class="bk-body">
@@ -1791,6 +1822,14 @@
             <!-- PASO 1: Servicio -->
             <div class="bk-step active" id="bk-step-1">
               <p class="bk-step-title">¿Qué servicio deseas?</p>
+              
+              <!-- Sección: Servicios más reservados (Featured) -->
+              <div id="bk-featured-section" style="margin-bottom: 40px;">
+                <p style="font-size: 0.75rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600;">Servicios más reservados</p>
+                <div class="bk-cards" id="bk-featured-services"></div>
+              </div>
+
+              <p style="font-size: 0.75rem; color: var(--color-gray); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600; border-top: 1px solid var(--color-border); padding-top: 36px;">Otras categorías</p>
               <div class="bk-cat-tabs" id="bk-cat-tabs"></div>
               <div class="bk-cards" id="bk-services"></div>
               <p class="bk-error" id="bk-err-1"></p>
@@ -1828,12 +1867,8 @@
                   <p class="bk-slots-title" id="bk-slots-title">Selecciona un día</p>
                   <div class="bk-slots" id="bk-slots"></div>
                   
-                  <!-- Cuadro de lista de espera -->
-                  <div id="bk-waitlist-box" style="display:none; margin-top:24px; padding:20px; background:var(--color-gold-dim); border:1px solid var(--color-gold); border-radius:4px; text-align:center;">
-                    <p style="font-size:0.85rem; color:var(--color-white); margin-bottom:16px;">
-                      Si no encuentras la hora que necesitas, puedes apuntarte a nuestra lista de espera y te avisaremos si queda un hueco disponible.
-                    </p>
-                    <button class="btn-gold" id="bk-btn-waitlist" style="font-size:0.65rem; padding:10px 20px;">Apuntarme a lista de espera</button>
+                  <!-- Cuadro de lista de espera / Próxima disponibilidad (Dinámico) -->
+                  <div id="bk-waitlist-box" style="display:none; margin-top:20px; padding:14px; background:var(--color-bg-card); border:1px solid var(--color-gold); border-radius:4px; text-align:center;">
                   </div>
                 </div>
               </div>
@@ -1849,27 +1884,24 @@
               <p class="bk-step-title">Tus datos de contacto</p>
 
               <!-- Login / Identificación -->
-              <div id="bk-login-options" style="margin-bottom:24px; border-bottom:1px solid var(--color-border); padding-bottom:24px;">
-                <p style="font-size:0.8rem; color:var(--color-gray); margin-bottom:12px;">Identifícate para reservar más rápido:</p>
-                <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
-                  <div id="bk-btn-google" style="width: 100%; display: flex; justify-content: center; min-height: 40px;"></div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;">
-                    <button type="button" class="btn-outline" id="bk-btn-login-email" style="font-size:0.75rem; padding: 12px; width: 100%; text-transform: uppercase; font-weight: 600;">
-                      Tengo cuenta
-                    </button>
-                    <button type="button" class="btn-outline" id="bk-btn-signup" style="font-size:0.75rem; padding: 12px; width: 100%; text-transform: uppercase; font-weight: 600;">
-                      Crear cuenta
-                    </button>
-                  </div>
+              <div id="bk-login-options" style="margin-bottom:16px; border-bottom:1px solid var(--color-border); padding-bottom:16px;">
+                <p style="font-size:0.75rem; color:var(--color-gray); margin-bottom:10px;">Identifícate para reservar más rápido:</p>
+                <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
+                  <div id="bk-btn-google" style="width: 100%; display: flex; justify-content: center; min-height: 36px;"></div>
+                  
+                  <p style="font-size:0.75rem; color:var(--color-gray); margin: 4px 0 0; text-align: center;">
+                    ¿Ya tienes cuenta? <a href="javascript:void(0)" id="bk-btn-login-email" style="color:var(--color-gold); text-decoration:underline;">Entra aquí</a> o <a href="javascript:void(0)" id="bk-btn-signup" style="color:var(--color-gold); text-decoration:underline;">regístrate</a>.
+                  </p>
+
                   <!-- Buscador de email (Oculto por defecto) -->
-                  <div id="bk-email-lookup" style="display: none; width: 100%; margin-top: 10px;">
+                  <div id="bk-email-lookup" style="display: none; width: 100%; margin-top: 8px;">
                     <div style="position: relative;">
-                      <input type="email" id="bk-lookup-field" class="bk-input" placeholder="Introduce tu email..." style="width: 100%; padding-right: 45px;">
-                      <button type="button" id="bk-btn-do-lookup" style="position: absolute; right: 5px; top: 5px; bottom: 5px; background: var(--color-gold); border: none; border-radius: 3px; width: 35px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #000;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                      <input type="email" id="bk-lookup-field" class="bk-input" placeholder="Introduce tu email..." style="width: 100%; padding-right: 45px; height: 38px; font-size: 0.8rem;">
+                      <button type="button" id="bk-btn-do-lookup" style="position: absolute; right: 4px; top: 4px; bottom: 4px; background: var(--color-gold); border: none; border-radius: 3px; width: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #000;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                       </button>
                     </div>
-                    <p id="bk-lookup-err" style="font-size: 0.75rem; color: #e05252; margin-top: 8px; text-align: left; height: 1.2em;"></p>
+                    <p id="bk-lookup-err" style="font-size: 0.72rem; color: #e05252; margin-top: 6px; text-align: left; height: 1.2em;"></p>
                   </div>
                 </div>
               </div>
@@ -1886,30 +1918,31 @@
                   <label class="bk-label" for="bk-email">Email *</label>
                   <input class="bk-input" id="bk-email" type="email" placeholder="tu@email.com" autocomplete="email" required>
                 </div>
-                <div class="bk-field full" style="margin-top:20px; display:grid; grid-template-columns: 20px 1fr; align-items:flex-start; gap:12px; text-align:left;">
+                <div class="bk-field full" style="margin-top:14px; display:grid; grid-template-columns: 20px 1fr; align-items:flex-start; gap:12px; text-align:left;">
                   <input type="checkbox" id="bk-gdpr" style="margin-top:3px; cursor:pointer; width:20px; height:20px; accent-color:var(--color-gold);" required>
-                  <label for="bk-gdpr" style="font-size:0.85rem; color:var(--color-white); line-height:1.5; cursor:pointer; text-align:left; opacity:0.9;">
+                  <label for="bk-gdpr" style="font-size:0.78rem; color:var(--color-white); line-height:1.5; cursor:pointer; text-align:left; opacity:0.9;">
                     He leído y acepto la <a href="#privacidad" onclick="document.getElementById('modal-privacidad').classList.add('active');return false;" style="color:var(--color-gold);text-decoration:underline;font-weight:600;">Política de Privacidad</a> y el tratamiento de mis datos personales para la gestión de la cita.
                   </label>
                 </div>
               </div>
+
+              <!-- Resumen integrado -->
+              <div id="bk-summary-container" style="margin-top:28px; padding:18px; background:var(--color-bg-card); border:1px solid var(--color-border); border-radius:4px; display:none; position:relative;">
+                <div id="bk-summary-header" style="display:flex; justify-content:space-between; align-items:center;">
+                   <p id="bk-summary-compact-srv" style="font-size:0.8rem; color:var(--color-white); font-weight:600; margin:0; line-height:1.2;"></p>
+                   <p id="bk-summary-compact-total" style="font-size:0.85rem; color:var(--color-gold); font-weight:700; margin:0;"></p>
+                </div>
+                <div id="bk-summary" style="margin-top:12px; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px; display:none;"></div>
+                <button type="button" id="bk-summary-toggle" style="background:none; border:none; color:var(--color-gold); font-size:0.7rem; padding:0; margin-top:8px; cursor:pointer; text-decoration:underline;">Ver detalles</button>
+              </div>
+
               <p class="bk-error" id="bk-err-4"></p>
               <div class="bk-nav">
                 <button class="btn-outline" id="bk-prev-4">Atrás</button>
-                <div class="bk-nav-right"><button class="btn-gold" id="bk-next-4">Revisar reserva</button></div>
+                <div class="bk-nav-right"><button class="btn-gold" id="bk-next-4">Confirmar Cita</button></div>
               </div>
             </div>
 
-            <!-- PASO 5: Confirmación -->
-            <div class="bk-step" id="bk-step-5">
-              <p class="bk-step-title">Resumen de tu reserva</p>
-              <div class="bk-summary" id="bk-summary"></div>
-              <p class="bk-error" id="bk-err-5"></p>
-              <div class="bk-nav">
-                <button class="btn-outline" id="bk-prev-5">Atrás</button>
-                <div class="bk-nav-right"><button class="btn-gold" id="bk-confirm">Confirmar Cita</button></div>
-              </div>
-            </div>
 
           </div><!-- /.bk-body -->
 
@@ -1920,8 +1953,8 @@
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
             </div>
-            <h3 class="bk-success-title">¡Reserva confirmada!</h3>
-            <p class="bk-success-sub">Te esperamos en Escarcha Grooming Club.<br>Recibirás un recordatorio próximamente.</p>
+            <h3 class="bk-success-title" id="bk-success-title">¡Reserva confirmada!</h3>
+            <p class="bk-success-sub" id="bk-success-sub">Te esperamos en Escarcha Grooming Club.<br>Recibirás un recordatorio próximamente.</p>
             <p class="bk-success-sub" id="bk-success-detail"></p>
             <span class="bk-success-id" id="bk-success-id"></span>
             <div style="margin-top:32px">
@@ -2379,6 +2412,10 @@
   <script>
   (function () {
     'use strict';
+    // ── Configuración de Test (Solo para desarrollo) ────────────────────────
+    const TEST_CONFIG = {
+      forceNoDispoDate: null // Poner una fecha YYYY-MM-DD para forzar "sin disponibilidad"
+    };
 
     // ── Estado ────────────────────────────────────────────────────────────────
     const state = {
@@ -2398,6 +2435,26 @@
       slotsCache: {},
       showAllServices: false
     };
+
+    // ── Medición del Funnel (DataLayer) ──────────────────────────────────────
+    window.dataLayer = window.dataLayer || [];
+    function pushEvent(event, data = {}) {
+      const eventData = {
+        event,
+        booking_data: {
+          servicios: state.servicios.map(s => s.name),
+          precio_total: state.servicios.reduce((acc, s) => acc + s.price, 0),
+          barbero: state.barbero ? state.barbero.name : null,
+          fecha: state.fecha,
+          hora: state.hora,
+          ...data
+        }
+      };
+      window.dataLayer.push(eventData);
+      console.log(`%c[GTM Event]: ${event}`, "color: #c9a84c; font-weight: bold;", eventData.booking_data);
+    }
+
+    const FEATURED_IDS = ['corte-barba', 'corte-caballero', 'cambio-look'];
 
     // ── Helpers DOM ───────────────────────────────────────────────────────────
     const $ = id => document.getElementById(id);
@@ -2427,6 +2484,36 @@
       updateProgress(n);
       if (n === 2) loadAndRenderBarberos();
       
+      // Reset summary state & Waitlist mode on Step 4 entry
+      if (n === 4) {
+        state.summaryExpanded = false;
+        const detailsEl = $('bk-summary');
+        const toggleBtn = $('bk-summary-toggle');
+        if (detailsEl) detailsEl.style.display = 'none';
+        if (toggleBtn) toggleBtn.textContent = 'Ver detalles';
+        
+        // Ajustar CTA final si es Lista de Espera (Estilo compacto)
+        const nextBtn = $('bk-next-4');
+        if (nextBtn) {
+          if (state.isWaitlist) {
+            nextBtn.textContent = 'Entrar en lista';
+            nextBtn.style.height = '38px';
+            nextBtn.style.padding = '0 16px';
+            nextBtn.style.fontSize = '11.2px';
+            nextBtn.style.minWidth = 'auto';
+          } else {
+            nextBtn.textContent = 'Confirmar Cita';
+            nextBtn.style.height = '';    // Reset a CSS original
+            nextBtn.style.padding = '';   // Reset a CSS original
+            nextBtn.style.fontSize = '';  // Reset a CSS original
+            nextBtn.style.minWidth = '';  // Reset a CSS original
+          }
+        }
+      }
+
+      // Tracking: Vista de cada paso
+      pushEvent(`view_step_${n}`);
+
       // Ocultar botones globales cuando se inicia la reserva
       const isBookingStarted = (n > 1) || (n === 1 && state.servicios.length > 0);
       document.body.classList.toggle('booking-active', isBookingStarted);
@@ -2452,8 +2539,6 @@
       const isMobileWidth = window.innerWidth < 768;
       const needsLoadMore = isMobileWidth && sortedServices.length > 5 && !state.showAllServices;
       const servicesToRender = needsLoadMore ? sortedServices.slice(0, 5) : sortedServices;
-
-      console.log('Rendering Services:', { isMobileWidth, needsLoadMore, total: sortedServices.length });
 
       let html = servicesToRender.map(s => {
         const isSelected = state.servicios.some(x => x.id === s.id);
@@ -2498,14 +2583,67 @@
           
           if (idx > -1) {
             state.servicios.splice(idx, 1);
-            card.classList.remove('selected');
           } else {
             state.servicios.push(srv);
-            card.classList.add('selected');
           }
           
           clearErr('bk-err-1');
           document.body.classList.toggle('booking-active', state.servicios.length > 0);
+          
+          // Sincronizar: volver a renderizar ambos bloques
+          pushEvent('select_service');
+          renderFeaturedServices();
+          renderServicioCards();
+        });
+      });
+    }
+
+    function renderFeaturedServices() {
+      const container = $('bk-featured-services');
+      if (!container) return;
+
+      // Buscar los objetos de servicio completos en todas las categorías
+      const featuredList = [];
+      FEATURED_IDS.forEach(id => {
+        SERVICIOS_CATS.forEach(cat => {
+          const found = cat.servicios.find(s => s.id === id);
+          if (found && !featuredList.some(x => x.id === id)) featuredList.push(found);
+        });
+      });
+
+      container.innerHTML = featuredList.map(s => {
+        const isSelected = state.servicios.some(x => x.id === s.id);
+        const priceStr = Number.isInteger(s.precio) ? s.precio : s.precio.toFixed(2).replace('.',',');
+        return `
+        <button class="bk-card bk-card-compact${isSelected ? ' selected' : ''}"
+                data-id="${escHtml(s.id)}" data-name="${escHtml(s.name)}" data-price="${s.precio}" data-dur="${escHtml(s.dur)}">
+          <p class="bk-card-name">${escHtml(s.name)}</p>
+          ${s.sub ? `<p class="bk-card-desc" style="color:var(--color-gold); opacity:.8;">${escHtml(s.sub)}</p>` : ''}
+          <div class="bk-card-price-area">
+            <span class="bk-card-price">${priceStr} €</span>
+            <span class="bk-card-dur">${escHtml(s.dur)}</span>
+          </div>
+        </button>`;
+      }).join('');
+
+      container.querySelectorAll('.bk-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const srv = { id: card.dataset.id, name: card.dataset.name, price: parseFloat(card.dataset.price), dur: card.dataset.dur };
+          const idx = state.servicios.findIndex(x => x.id === srv.id);
+          
+          if (idx > -1) {
+            state.servicios.splice(idx, 1);
+          } else {
+            state.servicios.push(srv);
+          }
+          
+          clearErr('bk-err-1');
+          document.body.classList.toggle('booking-active', state.servicios.length > 0);
+          
+          // Sincronizar: volver a renderizar ambos bloques
+          pushEvent('select_service');
+          renderFeaturedServices();
+          renderServicioCards();
         });
       });
     }
@@ -2534,10 +2672,12 @@
     }
 
     renderCatTabs();
+    renderFeaturedServices();
     renderServicioCards();
 
     $('bk-next-1').addEventListener('click', () => {
       if (state.servicios.length === 0) { setErr('bk-err-1', 'Por favor selecciona al menos un servicio.'); return; }
+      pushEvent('continue_to_step_2');
       showStep(2);
     });
 
@@ -2600,6 +2740,7 @@
           container.querySelectorAll('.bk-card-barber').forEach(c => c.classList.remove('selected'));
           btn.classList.add('selected');
           state.barbero = { id: b.id, name: fullName };
+          pushEvent('select_barber');
           state.slotsCache = {}; // Limpiar caché al cambiar barbero
           clearErr('bk-err-2');
         });
@@ -2610,6 +2751,7 @@
     $('bk-prev-2').addEventListener('click', () => showStep(1));
     $('bk-next-2').addEventListener('click', () => {
       if (!state.barbero) { setErr('bk-err-2', 'Por favor selecciona un barbero.'); return; }
+      pushEvent('continue_to_step_3');
       showStep(3);
       renderCalendar();
     });
@@ -2628,6 +2770,10 @@
     }
 
     async function fetchSlots(fecha) {
+      if (TEST_CONFIG.forceNoDispoDate && fecha === TEST_CONFIG.forceNoDispoDate) {
+        return [];
+      }
+
       // Usar caché por fecha y barbero para evitar conflictos
       const cacheKey = `${fecha}_${state.barbero.id}`;
       if (state.slotsCache[cacheKey] !== undefined) return state.slotsCache[cacheKey];
@@ -2637,17 +2783,21 @@
           ? `/api/disponibilidad?fecha=${fecha}` 
           : `/api/disponibilidad?fecha=${fecha}&barbero=${state.barbero.id}`;
         
-        const r = await fetch(url);
+        const r = await fetch(url, { cache: 'no-store' });
         const data = await r.json();
         
-        let result = data;
-        if (state.barbero.id === 'any') {
-          const uniqueHours = {};
-          data.forEach(s => {
-            if (!uniqueHours[s.hora]) uniqueHours[s.hora] = s;
-          });
-          result = Object.values(uniqueHours);
-        }
+        // FILTRADO CRÍTICO: Asegurar que solo procesamos la fecha solicitada
+        // incluso si el backend devuelve más datos de los pedidos.
+        const filteredByDate = data.filter(s => s.fecha === fecha);
+
+        let result = filteredByDate;
+        
+        // Deduplicar horas (especialmente útil para "Cualquier profesional")
+        const uniqueHours = {};
+        filteredByDate.forEach(s => {
+          if (!uniqueHours[s.hora]) uniqueHours[s.hora] = s;
+        });
+        result = Object.values(uniqueHours);
         
         state.slotsCache[cacheKey] = result;
         return result;
@@ -2706,8 +2856,28 @@
             // Limpiar selected en otros días
             grid.querySelectorAll('.bk-cal-day').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
+            pushEvent('select_date');
             renderSlots(iso);
             clearErr('bk-err-3');
+
+            // Mejora Mobile-First: Auto-scroll a las horas si es móvil (Corregido con Offset)
+            if (window.innerWidth < 768) {
+              setTimeout(() => {
+                const target = document.getElementById('bk-step-3');
+                if (target) {
+                  const offset = 80; // Compensación para Header + Margen
+                  const bodyRect = document.body.getBoundingClientRect().top;
+                  const elementRect = target.getBoundingClientRect().top;
+                  const elementPosition = elementRect - bodyRect;
+                  const offsetPosition = elementPosition - offset;
+
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }, 150);
+            }
           });
         }
         grid.appendChild(btn);
@@ -2716,11 +2886,79 @@
       if (state.fecha) renderSlots(state.fecha);
     }
 
+    async function checkNextAvailability(startDateStr) {
+      const box = $('bk-waitlist-box');
+      if (!box) return;
+      
+      box.style.display = 'block';
+      box.innerHTML = `
+        <p style="font-size:0.8rem; color:var(--color-white); margin-bottom:6px; font-weight:600;">No quedan huecos libres este día.</p>
+        <p style="font-size:0.72rem; color:var(--color-gray); margin-bottom:8px;">Buscando el próximo hueco disponible...</p>
+      `;
+
+      let current = new Date(startDateStr + 'T00:00:00');
+      let found = null;
+
+      // Buscar en los próximos 14 días
+      for (let i = 1; i <= 14; i++) {
+        current.setDate(current.getDate() + 1);
+        const dateStr = isoDate(current.getFullYear(), current.getMonth(), current.getDate());
+        const slots = await fetchSlots(dateStr);
+        if (slots && slots.length > 0) {
+          // Ordenar para coger la primera hora
+          const sorted = [...slots].sort((a,b) => a.hora.localeCompare(b.hora));
+          found = { fecha: dateStr, hora: sorted[0].hora };
+          break;
+        }
+      }
+
+      if (found) {
+        const d = new Date(found.fecha + 'T00:00:00');
+        const fechaFmt = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        const capitalizedFecha = fechaFmt.charAt(0).toUpperCase() + fechaFmt.slice(1);
+
+        box.innerHTML = `
+          <p style="font-size:0.8rem; color:var(--color-white); margin-bottom:4px; font-weight:600;">No quedan huecos libres este día.</p>
+          <p style="font-size:0.75rem; color:var(--color-gray); margin-bottom:10px;">El próximo hueco disponible es el <strong>${capitalizedFecha}</strong> a las <strong>${found.hora}</strong>.</p>
+          <button class="btn-gold" id="bk-btn-go-next" style="width:100%; height:38px; margin-bottom:10px; font-size:0.7rem;">Ir a esa fecha</button>
+          <div style="text-align:center;"><a href="javascript:void(0)" id="bk-link-waitlist" style="font-size:0.68rem; color:var(--color-gold); text-decoration:underline; opacity:0.9;">Entrar en lista de espera</a></div>
+        `;
+
+        $('bk-btn-go-next').onclick = () => {
+          state.fecha = found.fecha;
+          state.hora = found.hora;
+          state.isWaitlist = false; // Reset al elegir fecha real
+          renderCalendar();
+          renderSlots(found.fecha);
+        };
+        $('bk-link-waitlist').onclick = () => {
+          state.isWaitlist = true;
+          renderSummary();
+          showStep(4);
+        };
+      } else {
+        // Fallback: Solo lista de espera
+        box.innerHTML = `
+          <p style="font-size:0.8rem; color:var(--color-white); margin-bottom:10px; font-weight:600;">No quedan huecos libres este día.</p>
+          <p style="font-size:0.72rem; color:var(--color-gray); margin-bottom:16px;">No hay huecos próximos, pero puedes apuntarte y te avisaremos.</p>
+          <div style="text-align:center;"><a href="javascript:void(0)" id="bk-btn-waitlist-only" style="font-size:11.2px; color:var(--color-gold); text-decoration:underline; font-weight:600;">Entrar en lista</a></div>
+        `;
+        $('bk-btn-waitlist-only').onclick = () => {
+          state.isWaitlist = true;
+          renderSummary();
+          showStep(4);
+        };
+      }
+    }
+
     async function renderSlots(fecha) {
       if (!fecha) return;
-      console.log('renderSlots for:', fecha);
       const wrap  = $('bk-slots');
       const title = $('bk-slots-title');
+      
+      // Reset isWaitlist al empezar a renderizar slots de un día
+      state.isWaitlist = false;
+      
       wrap.innerHTML = '<span class="bk-slots-empty" style="opacity:0.5">Cargando horas…</span>';
 
       try {
@@ -2728,13 +2966,13 @@
         title.textContent = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
 
         const slots = await fetchSlots(fecha);
-        console.log('Slots received:', slots?.length);
         
         wrap.innerHTML = '';
 
         if (!slots || !slots.length) {
+          pushEvent('no_availability');
           wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles este día.</span>';
-          $('bk-waitlist-box').style.display = 'block';
+          checkNextAvailability(fecha);
           return;
         }
 
@@ -2759,6 +2997,7 @@
         }
 
         if (filteredSlots.length === 0 && sortedSlots.length > 0) {
+           pushEvent('no_availability');
            wrap.innerHTML = '<span class="bk-slots-empty">No hay horas disponibles para lo que queda de hoy.</span>';
            return;
         }
@@ -2771,6 +3010,7 @@
           btn.type = 'button';
           btn.addEventListener('click', () => {
             state.hora = s.hora;
+            pushEvent('select_time');
             wrap.querySelectorAll('.bk-slot').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             clearErr('bk-err-3');
@@ -2798,35 +3038,101 @@
     $('bk-next-3').addEventListener('click', () => {
       if (!state.fecha) { setErr('bk-err-3', 'Por favor selecciona un día.'); return; }
       if (!state.hora)  { setErr('bk-err-3', 'Por favor selecciona una hora.'); return; }
+      pushEvent('continue_to_step_4');
+      renderSummary();
       showStep(4);
+      $('bk-summary-container').style.display = 'block';
     });
 
     // ── Paso 4: Datos personales ──────────────────────────────────────────────
     const emailStrictRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     $('bk-prev-4').addEventListener('click', () => showStep(3));
-    $('bk-next-4').addEventListener('click', () => {
+    $('bk-next-4').addEventListener('click', async () => {
       const nombre   = $('bk-nombre').value.trim();
       const email    = $('bk-email').value.trim();
       const telefono = $('bk-telefono').value.trim();
       const gdpr     = $('bk-gdpr').checked;
-      const phoneClean = telefono.replace(/[\s\-()]/g, ''); // Limpiar espacios, guiones y paréntesis
-      const phoneRegex = /^(\+?\d{1,4})?\d{9,14}$/; // Regex más flexible para números internacionales
+      const phoneClean = telefono.replace(/[\s\-()]/g, ''); 
+      const phoneRegex = /^(\+?\d{1,4})?\d{9,14}$/;
 
-      if (!nombre)                         { setErr('bk-err-4', 'El nombre es obligatorio.'); return; }
-      if (!phoneRegex.test(phoneClean))    { setErr('bk-err-4', 'Introduce un teléfono válido (ej: 600000000 o +34600000000).'); return; }
-      if (!email || !emailStrictRegex.test(email)) { setErr('bk-err-4', 'Introduce un email válido (debe contener @ y un dominio válido).'); return; }
-      if (!gdpr)                           { setErr('bk-err-4', 'Debes aceptar la política de privacidad.'); return; }
+      if (!nombre)                         { pushEvent('form_error', { error: 'nombre' }); setErr('bk-err-4', 'El nombre es obligatorio.'); return; }
+      if (!phoneRegex.test(phoneClean))    { pushEvent('form_error', { error: 'telefono' }); setErr('bk-err-4', 'Introduce un teléfono válido.'); return; }
+      if (!email || !emailStrictRegex.test(email)) { pushEvent('form_error', { error: 'email' }); setErr('bk-err-4', 'Introduce un email válido.'); return; }
+      if (!gdpr)                           { pushEvent('form_error', { error: 'gdpr' }); setErr('bk-err-4', 'Debes aceptar la política de privacidad.'); return; }
+      
       state.nombre   = nombre;
       state.email    = email;
       state.telefono = telefono;
       clearErr('bk-err-4');
 
+      pushEvent('form_submit');
+
       if (state.isWaitlist) {
         enviarAListaEspera();
-      } else {
-        renderSummary();
-        showStep(5);
+        return;
+      }
+
+      // Lógica de confirmación real (antes en Paso 5)
+      const btn = $('bk-next-4');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Confirmando…';
+      
+      try {
+        const r = await fetch('/api/reservas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            servicio:  state.servicios.map(s => s.name).join(' + '),
+            precio:    state.servicios.reduce((acc, s) => acc + s.price, 0),
+            barbero:   state.barbero.id,
+            fecha:     state.fecha,
+            hora:      state.hora,
+            nombre:    state.nombre,
+            email:     state.email,
+            telefono:  state.telefono,
+            gdpr_aceptado: true
+          }),
+        });
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || 'Error al confirmar');
+        
+        // Manejar caso donde el backend deriva a lista de espera (Overbooking control)
+        if (data.waitlist) {
+          $('bk-success-title').textContent = '¡Apuntado en lista de espera!';
+          $('bk-success-sub').textContent = data.message || 'No quedaban huecos libres, te hemos anotado en la lista de espera.';
+          $('bk-success-detail').textContent = '';
+          $('bk-success-id').textContent = '';
+          
+          document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
+          $('bk-progress').style.display = 'none';
+          $('bk-success').classList.add('active');
+          document.body.classList.remove('booking-active');
+          return;
+        }
+        
+        // Éxito
+        const fechaObj = new Date(state.fecha + 'T00:00:00');
+        const fechaFmt = fechaObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        const srvNames = state.servicios.map(s => s.name).join(' + ');
+        
+        pushEvent('booking_success', { reserva_id: data.id });
+
+        $('bk-success-detail').textContent = `${srvNames} · ${state.barbero.name} · ${fechaFmt} a las ${state.hora}`;
+        $('bk-success-id').textContent = `Referencia: ${data.id}`;
+        state.slotsCache = {}; // Limpiar todo el caché para forzar recarga de disponibilidad
+        
+        document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
+        $('bk-progress').style.display = 'none';
+        $('bk-success').classList.add('active');
+        document.body.classList.remove('booking-active');
+        document.body.classList.add('booking-done');
+      } catch (err) {
+        pushEvent('form_error', { error: 'api_error', message: err.message });
+        setErr('bk-err-4', err.message || 'Error de conexión. Inténtalo de nuevo.');
+        btn.disabled = false;
+        btn.textContent = originalText;
       }
     });
 
@@ -2850,7 +3156,7 @@
         if (!r.ok) throw new Error('Error al apuntarse');
         
         $('bk-success-title').textContent = '¡Apuntado con éxito!';
-        $('bk-success-sub').textContent = 'Hemos recibido tu solicitud. Te avisaremos en cuanto quede un hueco libre para el ' + state.fecha + '.';
+        $('bk-success-sub').textContent = 'Hemos recibido tu solicitud. Contactaremos contigo en cuanto haya una cancelación para el ' + state.fecha + '.';
         $('bk-success-detail').textContent = '';
         $('bk-success-id').textContent = '';
         
@@ -2871,95 +3177,43 @@
     function renderSummary() {
       const fecha = new Date(state.fecha + 'T00:00:00');
       const fechaFmt = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      
       const totalPrecio = state.servicios.reduce((acc, s) => acc + s.price, 0);
       const srvListHtml = state.servicios.map(s => `
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.85rem">
-          <span>${s.name}</span>
-          <span>${s.price.toFixed(2).replace('.',',')} €</span>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem">
+          <span style="color:var(--color-white)">${s.name}</span>
+          <span style="color:var(--color-gold)">${s.price.toFixed(2).replace('.',',')} €</span>
         </div>
       `).join('');
 
+      // Compact Part (Always visible)
+      const srvNames = state.servicios.map(s => s.name).join(' + ');
+      $('bk-summary-compact-srv').textContent = srvNames;
+      $('bk-summary-compact-total').textContent = `${totalPrecio.toFixed(2).replace('.',',')} €`;
+
+      // Detailed Part (Dynamic)
+      const horaLabel = state.isWaitlist ? 'Prioridad' : 'Hora';
+      const horaValue = state.isWaitlist ? '<span style="color:var(--color-gold)">Lista de espera</span>' : state.hora;
+      
+      // Fix: Don't show individual list if srvNames is already showing the same
+      const srvListHtmlFinal = state.servicios.length > 1 ? `<div style="margin-bottom:12px">${srvListHtml}</div>` : '';
+
       $('bk-summary').innerHTML = `
-        <div class="bk-summary-row" style="display:block">
-          <span class="bk-summary-label">Servicios</span>
-          <div style="margin-top:10px">${srvListHtml}</div>
-        </div>
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Barbero</span>
-          <span class="bk-summary-value">${state.barbero.name}</span>
-        </div>
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Fecha</span>
-          <span class="bk-summary-value">${fechaFmt}</span>
-        </div>
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Hora</span>
-          <span class="bk-summary-value">${state.hora}</span>
-        </div>
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Nombre</span>
-          <span class="bk-summary-value">${state.nombre}</span>
-        </div>
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Email</span>
-          <span class="bk-summary-value">${state.email}</span>
-        </div>
-        <div class="bk-summary-row">
-          <span class="bk-summary-label">Teléfono</span>
-          <span class="bk-summary-value">${state.telefono}</span>
-        </div>
-        <div class="bk-summary-row bk-summary-total">
-          <span class="bk-summary-label">Total</span>
-          <span class="bk-summary-value">${totalPrecio.toFixed(2).replace('.',',')} €</span>
+        ${srvListHtmlFinal}
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px;">
+          <div><span style="font-size:0.65rem; color:var(--color-gray); text-transform:uppercase;">Barbero</span><p style="font-size:0.85rem; color:var(--color-white); margin:2px 0 0;">${state.barbero.id === 'any' ? 'Profesional por asignar' : state.barbero.name}</p></div>
+          <div><span style="font-size:0.65rem; color:var(--color-gray); text-transform:uppercase;">Fecha</span><p style="font-size:0.85rem; color:var(--color-white); margin:2px 0 0;">${fechaFmt}</p></div>
+          <div><span style="font-size:0.65rem; color:var(--color-gray); text-transform:uppercase;">${horaLabel}</span><p style="font-size:0.85rem; color:var(--color-white); margin:2px 0 0;">${horaValue}</p></div>
+          <div style="text-align:right;"><span style="font-size:0.65rem; color:var(--color-gold); text-transform:uppercase;">Total estim.</span><p style="font-size:1.1rem; color:var(--color-gold); font-weight:700; margin:0;">${totalPrecio.toFixed(2).replace('.',',')} €</p></div>
         </div>
       `;
     }
 
-    $('bk-prev-5').addEventListener('click', () => showStep(4));
-    $('bk-confirm').addEventListener('click', async () => {
-      const btn = $('bk-confirm');
-      btn.disabled = true;
-      btn.textContent = 'Confirmando…';
-      clearErr('bk-err-5');
-      try {
-        const r = await fetch('/api/reservas', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            servicio:  state.servicios.map(s => s.name).join(' + '),
-            precio:    state.servicios.reduce((acc, s) => acc + s.price, 0),
-            barbero:   state.barbero.id,
-            fecha:     state.fecha,
-            hora:      state.hora,
-            nombre:    state.nombre,
-            email:     state.email,
-            telefono:  state.telefono,
-            gdpr_aceptado: true
-          }),
-        });
-        const data = await r.json();
-        if (!r.ok) throw new Error(data.error || 'Error al confirmar');
-        // Éxito
-        const fecha = new Date(state.fecha + 'T00:00:00');
-        const fechaFmt = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-        const srvNames = state.servicios.map(s => s.name).join(' + ');
-        $('bk-success-detail').textContent = `${srvNames} · ${state.barbero.name} · ${fechaFmt} a las ${state.hora}`;
-        $('bk-success-id').textContent = `Referencia: ${data.id}`;
-        // Limpiar cache del slot reservado
-        delete state.slotsCache[state.fecha];
-        // Mostrar éxito
-        document.querySelectorAll('.bk-step').forEach(el => el.classList.remove('active'));
-        $('bk-progress').style.display = 'none';
-        $('bk-success').classList.add('active');
-        document.body.classList.remove('booking-active');
-        document.body.classList.add('booking-done');
-      } catch (err) {
-        setErr('bk-err-5', err.message || 'Error de conexión. Inténtalo de nuevo.');
-        btn.disabled = false;
-        btn.textContent = 'Confirmar Cita';
-      }
+    $('bk-summary-toggle').addEventListener('click', () => {
+      state.summaryExpanded = !state.summaryExpanded;
+      $('bk-summary').style.display = state.summaryExpanded ? 'block' : 'none';
+      $('bk-summary-toggle').textContent = state.summaryExpanded ? 'Ocultar detalles' : 'Ver detalles';
     });
+
 
     // ── Reset ─────────────────────────────────────────────────────────────────
     function initGoogle() {
@@ -2972,7 +3226,7 @@
       if (btn) {
         google.accounts.id.renderButton(
           btn,
-          { theme: "filled_black", size: "large", type: "standard", shape: "rectangular", text: "continue_with", locale: "es", width: 280 }
+          { theme: "filled_black", size: "medium", type: "standard", shape: "rectangular", text: "continue_with", locale: "es", width: 240 }
         );
       }
     }

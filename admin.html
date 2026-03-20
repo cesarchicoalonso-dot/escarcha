@@ -129,6 +129,10 @@
           <div class="adm-stat-label">Ingresos Totales (€)</div>
         </div>
         <div class="adm-stat">
+          <div class="adm-stat-val" id="fac-total-pendiente">—</div>
+          <div class="adm-stat-label">Pendiente Facturar (€)</div>
+        </div>
+        <div class="adm-stat">
           <div class="adm-stat-val" id="fac-total-reservas">—</div>
           <div class="adm-stat-label">Citas Facturables</div>
         </div>
@@ -136,6 +140,26 @@
           <div class="adm-stat-val" id="fac-ticket-medio">—</div>
           <div class="adm-stat-label">Ticket Medio (€)</div>
         </div>
+      </div>
+
+      <!-- Tabla Operativa de Facturación -->
+      <h3 style="font-family:var(--font-display);font-size:0.95rem;color:var(--color-gold);margin-bottom:16px;letter-spacing:0.05em;">Operativa de Facturación</h3>
+      <div id="fac-tabla-wrap" class="adm-table-wrap" style="margin-bottom:48px">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Servicio</th>
+              <th>Precio</th>
+              <th>Barbero</th>
+              <th>Pago</th>
+              <th>Factura / Acción</th>
+            </tr>
+          </thead>
+          <tbody id="fac-tbody"></tbody>
+        </table>
+        <div class="adm-empty" id="fac-empty" style="display:none;">No hay datos para estos filtros.</div>
       </div>
 
       <div class="fact-grid">
@@ -259,13 +283,15 @@
           <option value="19:45">19:45</option>
         </select>
       </div>
-      <div class="modal-field">
-        <label class="modal-label" for="rm-servicio">Servicio *</label>
-        <input class="modal-input" id="rm-servicio" type="text" placeholder="Corte + Barba">
+      <div class="modal-field full">
+        <label class="modal-label">Servicios (selecciona varios) *</label>
+        <div id="rm-servicios-list" class="srv-list-container">
+          <!-- Se puebla dinámicamente desde admin.js -->
+        </div>
       </div>
       <div class="modal-field">
-        <label class="modal-label" for="rm-precio">Precio (€)</label>
-        <input class="modal-input" id="rm-precio" type="number" placeholder="25" min="0" step="0.5">
+        <label class="modal-label" for="rm-precio">Precio Total (€)</label>
+        <input class="modal-input" id="rm-precio" type="number" placeholder="0" min="0" step="0.5">
       </div>
       <div class="modal-field">
         <label class="modal-label" for="rm-nombre">Nombre Cliente *</label>

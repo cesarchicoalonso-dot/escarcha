@@ -527,9 +527,43 @@
       font-family: var(--font-body); font-size: 0.88rem;
       padding: 10px 12px; border-radius: 3px; outline: none;
       transition: border-color var(--transition);
+      color-scheme: dark;
     }
     .modal-input:focus, .modal-textarea:focus { border-color: var(--color-gold); }
     .modal-textarea { resize: vertical; min-height: 76px; }
+
+    /* Multi-select de servicios */
+    .srv-list-container {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 8px;
+    }
+    .srv-group-label {
+      font-size: 0.6rem;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 8px 0 4px 4px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .srv-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background var(--transition);
+    }
+    .srv-item:hover { background: var(--color-bg-hover); }
+    .srv-item input { accent-color: var(--color-gold); cursor: pointer; }
+    .srv-item-name { font-size: 0.8rem; flex: 1; }
+    .srv-item-price { font-size: 0.75rem; color: var(--color-gold); font-weight: 600; }
+
     .modal-foto-preview {
       width: 72px; height: 72px; border-radius: 50%;
       object-fit: cover; border: 1px solid var(--color-border);

@@ -683,7 +683,7 @@
     "barbero": "BARB01",
     "fecha": "2026-03-19",
     "hora": "18:15",
-    "ocupado": true
+    "ocupado": false
   },
   {
     "id": "2C5E6E82",
@@ -746,7 +746,7 @@
     "barbero": "BARB01",
     "fecha": "2026-03-20",
     "hora": "19:45",
-    "ocupado": false
+    "ocupado": true
   },
   {
     "id": "A34F4748",
@@ -1166,7 +1166,7 @@
     "barbero": "BARB01",
     "fecha": "2026-03-26",
     "hora": "11:30",
-    "ocupado": false
+    "ocupado": true
   },
   {
     "id": "93BB8A10",
@@ -1334,7 +1334,7 @@
     "barbero": "BARB02",
     "fecha": "2026-03-26",
     "hora": "11:30",
-    "ocupado": false
+    "ocupado": true
   },
   {
     "id": "795187E9",
@@ -1712,7 +1712,7 @@
     "barbero": "BARB02",
     "fecha": "2026-03-20",
     "hora": "19:45",
-    "ocupado": false
+    "ocupado": true
   },
   {
     "id": "D101BB30",
@@ -1915,7 +1915,7 @@
     "barbero": "BARB01",
     "fecha": "2026-03-17",
     "hora": "13:00",
-    "ocupado": true
+    "ocupado": false
   },
   {
     "id": "8FC1A11A",
@@ -2006,7 +2006,7 @@
     "barbero": "BARB01",
     "fecha": "2026-03-20",
     "hora": "11:30",
-    "ocupado": false
+    "ocupado": true
   },
   {
     "id": "CB46810B",
@@ -2363,6 +2363,2771 @@
     "barbero": "BARB01",
     "fecha": "2026-04-01",
     "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "84100C22",
+    "barbero": "any",
+    "fecha": "2026-03-20",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "DEBBA04C",
+    "barbero": "any",
+    "fecha": "2026-03-26",
+    "hora": "11:30",
+    "ocupado": true
+  },
+  {
+    "id": "55DB1965",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "8AE569F4",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "E0501FC1",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "F40A4A9A",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "F9F02D7F",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "898A2059",
+    "barbero": "BARB02",
+    "fecha": "2026-03-23",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "9764B773",
+    "barbero": "BARB02",
+    "fecha": "2026-03-24",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "69F36321",
+    "barbero": "BARB02",
+    "fecha": "2026-03-24",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "CEA4F4EE",
+    "barbero": "BARB02",
+    "fecha": "2026-03-24",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "D1CFF6F5",
+    "barbero": "BARB02",
+    "fecha": "2026-03-24",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "CEAB3EA4",
+    "barbero": "BARB02",
+    "fecha": "2026-03-24",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "8BD54011",
+    "barbero": "BARB02",
+    "fecha": "2026-03-24",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "46C8D048",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "F368C001",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "F0DC2A65",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "351D417F",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "9EAECC6A",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "AC49B182",
+    "barbero": "BARB02",
+    "fecha": "2026-03-25",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "C6200DC0",
+    "barbero": "BARB02",
+    "fecha": "2026-03-27",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "A3DF6642",
+    "barbero": "BARB02",
+    "fecha": "2026-03-27",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "3323A489",
+    "barbero": "BARB02",
+    "fecha": "2026-03-27",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "3D0F6D35",
+    "barbero": "BARB02",
+    "fecha": "2026-03-27",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "83198F74",
+    "barbero": "BARB02",
+    "fecha": "2026-03-27",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "312C5C05",
+    "barbero": "BARB02",
+    "fecha": "2026-03-27",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "27AFCA22",
+    "barbero": "BARB02",
+    "fecha": "2026-03-28",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "10130F40",
+    "barbero": "BARB02",
+    "fecha": "2026-03-28",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "707C4D41",
+    "barbero": "BARB02",
+    "fecha": "2026-03-28",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "4935EC67",
+    "barbero": "BARB02",
+    "fecha": "2026-03-28",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "734EF8E6",
+    "barbero": "BARB02",
+    "fecha": "2026-03-28",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "2141DF25",
+    "barbero": "BARB02",
+    "fecha": "2026-03-28",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "C72312F8",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "1406F353",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "4541166E",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "44B3A0F1",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "535EFCF5",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "45081BE0",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "3CDA86C2",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "BC3BFE8A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "128984DA",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "E1309580",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "62050A1E",
+    "barbero": "BARB01",
+    "fecha": "2026-04-02",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "DFC52774",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "405C6B6E",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "12DD8387",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "62365299",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "A5AC3CA9",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "6021C97B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "DC980DAE",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "1CE956B5",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "F9284D0D",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "763C64D4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "51444294",
+    "barbero": "BARB01",
+    "fecha": "2026-04-03",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "45101325",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "F3A579DD",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "01BECA1F",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "D2DAE818",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "F4D120C3",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "0A41F441",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "C23BF10A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "DA554D0B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "879D74BC",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "CC44AFDF",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "F4379C2A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-04",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "E292E4C9",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "BC589285",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "2C2A4F0E",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "01977596",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "8363E30C",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "B8AA379E",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "D8D2B1A4",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "E61BA8F7",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "1F5B21A6",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "32305CB2",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "F093ED10",
+    "barbero": "BARB02",
+    "fecha": "2026-03-30",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "BD0105A0",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "566AEBC6",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "A7A37E2A",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "670C0569",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "0451505D",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "F9BB5EF9",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "A25B2473",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "643EB5A4",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "9C13EA77",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "8885C70D",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "EFB4A4F6",
+    "barbero": "BARB02",
+    "fecha": "2026-03-31",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "1E0ABF85",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "34422F04",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "D607AB47",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "94720793",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "3FFD1886",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "CD6CFB00",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "47257CA0",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "8FF71D24",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "FDF8A31F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "E99E4B34",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "ED138C7E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-01",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "9B0124FF",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "923FC034",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "55DF02D2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "7B97223A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "3E3E2055",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "606D2858",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "96D2DC32",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "531AF078",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "8C30A5C2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "6D2DB7C1",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "EC2BFA2E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-02",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "C850574C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "16483DEE",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "4CEA82B5",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "DDE64EBC",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "0E2F17A3",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "91E8FFD8",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "5A274185",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "4586013F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "FD4EF744",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "BC0A5614",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "14744721",
+    "barbero": "BARB02",
+    "fecha": "2026-04-03",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "21D09A4F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "05C6529E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "22533644",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "65B1BC97",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "15E85AD5",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "B4781507",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "DAB1A5BE",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "113D5C04",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "3E34DD91",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "62542BC2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "E85DCC58",
+    "barbero": "BARB02",
+    "fecha": "2026-04-04",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "613BA5B1",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "692A2CB7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "065C45B4",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "4F14BBB7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "B5D81C50",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "13EA5C08",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "0915C5E8",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "BA504F51",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "04E4CADB",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "E2DD80C4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "5F6B7472",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "73ED1A2C",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "4865D0DE",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "8D467D05",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "57624A41",
+    "barbero": "BARB01",
+    "fecha": "2026-04-06",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "F0F25499",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "34230671",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "D8C896D4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "3B99C9A9",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "0EA1B808",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "EDA0D8CA",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "E362A746",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "7BFD7F36",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "94937742",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "CBC05F82",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "3A9939C8",
+    "barbero": "BARB01",
+    "fecha": "2026-04-07",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "2B8C097A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "1BB5442A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "A6111C98",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "DA5E821F",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "8E50A58E",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "3FAFC829",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "BD4CFE24",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "7A8AD36E",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "E1341B93",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "F9FE6A22",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "75C90B65",
+    "barbero": "BARB01",
+    "fecha": "2026-04-08",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "434281F0",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "1FA0B9CB",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "F9872F97",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "9999BBB7",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "E39C870B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "93F06241",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "D3DDA835",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "76ABF72E",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "3EC2CE3A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "C8F1131C",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "9427311D",
+    "barbero": "BARB01",
+    "fecha": "2026-04-09",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "8A078BE8",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "29304C49",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "533C3AC7",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "CCE313B4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "AC72B6F1",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "5B50C9D7",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "8FD3AA95",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "62C565FC",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "2C79E74B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "730E7DD9",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "C3F191D9",
+    "barbero": "BARB01",
+    "fecha": "2026-04-10",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "9ABCBA57",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "39CEA970",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "32DD4325",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "FD4CC8D8",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "9E7C48D6",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "CAA99FB6",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "6DC27F8F",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "6B55CF5B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "5EF1A384",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "A90B3E75",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "6F0B20D0",
+    "barbero": "BARB01",
+    "fecha": "2026-04-11",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "867D507C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "816B019D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "037B3F21",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "CD33C38F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "C10CEBB8",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "A77A36E7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "C0260D34",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "1E4E3C0E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "4A3D2C4C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "8829AEAB",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "7904CCAD",
+    "barbero": "BARB02",
+    "fecha": "2026-04-06",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "54A721DF",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "D77DC015",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "2DAA8748",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "E5331A68",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "3E864463",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "4A15A8F9",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "E035138C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "81BB4A06",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "D656BE25",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "F8198A4B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "C9308B1B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-07",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "B0F602A2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "F0F05061",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "CC4C2FC5",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "48BCBEB5",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "E5E9DE11",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "72EB9EF7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "CCCF13FD",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "53FEEB4F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "D41C3E1C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "0B7D6D58",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "A786C2FC",
+    "barbero": "BARB02",
+    "fecha": "2026-04-08",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "E391A67C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "03CDB105",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "81F59096",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "D616113C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "B1066167",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "B9377C6A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "0959EE65",
+    "barbero": "BARB02",
+    "fecha": "2026-04-09",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "50A43253",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "749E453E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "CB286128",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "CD309A76",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "865F9D87",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "304703F0",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "69A7743B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "C55DC7A9",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "8373D514",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "43977DD3",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "1C10B0D4",
+    "barbero": "BARB02",
+    "fecha": "2026-04-10",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "9CE54589",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "AB5E0B09",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "5C6DD96E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "4ACB0FA2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "445357A3",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "343F6693",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "41A9F7FD",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "8D31EB29",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "4F2598D9",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "516E067B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "262CF3E2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-11",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "F5BAF069",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "7846C8CA",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "937CCA42",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "681C27A9",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "F549088D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "7E8E0358",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "8008ADBA",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "FB136DB6",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "08D5FC2C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "1CA9B0A9",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "B7B673FE",
+    "barbero": "BARB02",
+    "fecha": "2026-04-13",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "7F3360A6",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "1C611FC7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "2433555A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "F0843600",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "C97860D2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "9CE9B61B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "CDC12A05",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "4A5C0ED7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "780623AE",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "77ED4843",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "C5593899",
+    "barbero": "BARB02",
+    "fecha": "2026-04-14",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "FEE55402",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "52CF488A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "61A5B4AB",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "E2DEE6ED",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "6B424CA7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "F2982B2D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "11DD9B64",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "0B2B1A7C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "0F2FB356",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "751BC48B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "97D7804D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-15",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "905873EF",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "D4C165B2",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "D4923B71",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "D383B35F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "2223FA13",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "9006076A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "04C9FB2B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "A582E36E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "BC142F0F",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "4D627C9D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "57EA45D3",
+    "barbero": "BARB02",
+    "fecha": "2026-04-16",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "EACE851B",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "CF579D56",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "E1EDAAE8",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "6855FD2D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "A679C83A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "9DAB4AC7",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "39948533",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "D7CD0C9E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "80197225",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "87D05493",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "5EE1609A",
+    "barbero": "BARB02",
+    "fecha": "2026-04-17",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "57547C9C",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "4E85A1AB",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "13114503",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "76D36FAA",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "4EAE8EAE",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "C6473A91",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "7AE89D7D",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "59690140",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "A35397A0",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "B2E4FE2E",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "93B68633",
+    "barbero": "BARB02",
+    "fecha": "2026-04-18",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "18C1D875",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "E672FE04",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "6DC51CD3",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "C002E00F",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "C82A3FA1",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "DEED92F1",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "614FCC13",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "A7B6BA0B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "EDDF34DA",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "90DFC270",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "5DF76F35",
+    "barbero": "BARB01",
+    "fecha": "2026-04-13",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "B1ED2EEA",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "45B072D4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "BC78A15B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "15A7D491",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "2C1811CA",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "433AC7DF",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "C8BAA0E9",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "81917E85",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "50BD0903",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "5C29EA2A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "25602340",
+    "barbero": "BARB01",
+    "fecha": "2026-04-14",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "559FCB64",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "3CCD2BE1",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "5C1554AF",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "60D6E307",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "E90333C2",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "A9677D70",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "B873AFA1",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "F6D74017",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "18108739",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "FE19B691",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "CCEB8821",
+    "barbero": "BARB01",
+    "fecha": "2026-04-15",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "09ACF500",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "6BCD2022",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "7BC9CC7D",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "7E223FB7",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "6B47B97C",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "ADD40DAD",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "83756592",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "BE7E49F3",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "05EAE3F5",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "C4FD7EB3",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "CBDADE87",
+    "barbero": "BARB01",
+    "fecha": "2026-04-16",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "FA4FD05D",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "AFCE5BE4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "2478E462",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "7E54B133",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "7D1EF44A",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "BF96C781",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "B9E9972F",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "2864BBC6",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "323FD8C9",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "AE290EF7",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "7ED164B6",
+    "barbero": "BARB01",
+    "fecha": "2026-04-17",
+    "hora": "19:45",
+    "ocupado": false
+  },
+  {
+    "id": "24A11A17",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "10:00",
+    "ocupado": false
+  },
+  {
+    "id": "8C944C6B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "10:45",
+    "ocupado": false
+  },
+  {
+    "id": "2D415DDF",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "11:30",
+    "ocupado": false
+  },
+  {
+    "id": "BF7B7DBC",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "12:15",
+    "ocupado": false
+  },
+  {
+    "id": "DA20D0B3",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "13:00",
+    "ocupado": false
+  },
+  {
+    "id": "3A4DB9E3",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "16:00",
+    "ocupado": false
+  },
+  {
+    "id": "6D14C2BB",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "16:45",
+    "ocupado": false
+  },
+  {
+    "id": "7719E8E4",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "17:30",
+    "ocupado": false
+  },
+  {
+    "id": "5B3B16B7",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "18:15",
+    "ocupado": false
+  },
+  {
+    "id": "A8521640",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "19:00",
+    "ocupado": false
+  },
+  {
+    "id": "E6B0774B",
+    "barbero": "BARB01",
+    "fecha": "2026-04-18",
+    "hora": "19:45",
     "ocupado": false
   }
 ]

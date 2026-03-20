@@ -1,0 +1,26 @@
+[
+  {
+    "id": "W1234567",
+    "nombre": "Eduardo Camavinga",
+    "email": "edu@example.com",
+    "telefono": "688990011",
+    "fecha": "2026-03-22",
+    "hora": "12:00",
+    "servicio": "Corte Caballero",
+    "barberoSolicitado": "any",
+    "creadoEn": "2026-03-20T08:00:00.000Z",
+    "notificado": false
+  },
+  {
+    "id": "W7654321",
+    "nombre": "Federico Valverde",
+    "email": "fede@example.com",
+    "telefono": "699001122",
+    "fecha": "2026-03-23",
+    "hora": "16:45",
+    "servicio": "Ciencia y Naturaleza",
+    "barberoSolicitado": "BARB01",
+    "creadoEn": "2026-03-20T09:30:00.000Z",
+    "notificado": false
+  }
+]
