@@ -9,8 +9,7 @@
   function getBarberoName(id) {
     const b = barberosData.find(x => x.id === id);
     if (b) return `${b.nombre} ${b.apellido||''}`.trim();
-    const leg = { andrea:'Andrea Escarcha', carlos:'Carlos', lucas:'Lucas' };
-    return leg[id] || id;
+    return id; // Si no lo encuentra, mostramos ID como último recurso but focus is on using real names
   }
 
   // ── Toast ────────────────────────────────────────────────────────────────
@@ -78,8 +77,21 @@
   function showAdmin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-screen').style.display = 'block';
-    loadBarberos();
-    loadReservas();
+    loadBarberos().then(() => {
+      // Poblar selectores de barberos una vez cargados los datos
+      const selectors = ['flt-barbero', 'fac-barbero', 'disp-barbero'];
+      selectors.forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        const currentVal = sel.value;
+        sel.innerHTML = (id === 'disp-barbero' ? '' : '<option value="">Todos los barberos</option>') + 
+          barberosData.filter(b => b.activo !== false && b.id !== 'BARB03').map(b => 
+            `<option value="${b.id}">${b.nombre} ${b.apellido||''}</option>`
+          ).join('');
+        if (currentVal) sel.value = currentVal;
+      });
+      loadReservas();
+    });
   }
 
   const stored = sessionStorage.getItem('esc_admin_token');
@@ -107,7 +119,7 @@
   async function loadReservas() {
     try {
       const data = await api('GET', '/api/reservas');
-      allReservas = Array.isArray(data) ? data : [];
+      allReservas = Array.isArray(data) ? data.filter(r => r.barbero !== 'BARB03') : [];
       renderReservas();
       updateStats();
     } catch (err) {
@@ -200,10 +212,12 @@
         <td class="td-small col-wa">${renderNotifBadge(waEnviado)}<br>${btnWA}</td>
         <td class="td-small col-fidel">${renderNotifBadge(fidEnviada)}<br>${btnFid}</td>
         <td>
-          ${r.estado === 'pendiente' ? `<button class="adm-action" data-action="confirmar" data-id="${r.id}">Confirmar</button>` : ''}
-          ${r.estado !== 'cancelada' && r.estado !== 'no-show' ? `<button class="adm-action danger" data-action="cancelar" data-id="${r.id}">Cancelar</button>` : ''}
-          ${r.estado !== 'no-show' && r.estado !== 'cancelada' ? `<button class="adm-action danger" data-action="noshow" data-id="${r.id}" style="font-size:0.64rem">No-Show</button>` : ''}
-          ${r.estado !== 'pagada' ? `<button class="adm-action" data-action="pagada" data-id="${r.id}" style="font-size:0.64rem">Cobrada</button>` : ''}
+          ${r.estado !== 'pagada' ? `
+            ${r.estado === 'pendiente' ? `<button class="adm-action" data-action="confirmar" data-id="${r.id}">Confirmar</button>` : ''}
+            ${r.estado !== 'cancelada' && r.estado !== 'no-show' ? `<button class="adm-action danger" data-action="cancelar" data-id="${r.id}">Cancelar</button>` : ''}
+            ${r.estado !== 'no-show' && r.estado !== 'cancelada' ? `<button class="adm-action danger" data-action="noshow" data-id="${r.id}" style="font-size:0.64rem">No-Show</button>` : ''}
+            <button class="adm-action" data-action="pagada" data-id="${r.id}" style="font-size:0.64rem">Cobrada</button>
+          ` : '<span style="color:var(--color-success);font-size:0.7rem;font-weight:600">✓ Cita Cerrada</span>'}
         </td>
       `;
       tbody.appendChild(tr);
@@ -343,7 +357,7 @@
     // Poblar select de barberos
     const sel = document.getElementById('rm-barbero');
     sel.innerHTML = '<option value="">Selecciona barbero...</option>';
-    barberosData.filter(b => b.activo !== false).forEach(b => {
+    barberosData.filter(b => b.activo !== false && b.id !== 'BARB03').forEach(b => {
       const o = document.createElement('option');
       o.value = b.id; o.textContent = `${b.nombre} ${b.apellido||''}`.trim();
       sel.appendChild(o);
